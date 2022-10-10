@@ -53,6 +53,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('prestamoP', 'PrestamoPersonalController');
 
     // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
+    
 
     Route::get('usuarios/addusuarios', 'UserAdminController@create')->name('addusuario');
     Route::post('usuarios/addusuarios', 'UserAdminController@store')->name('addUsuarios');
