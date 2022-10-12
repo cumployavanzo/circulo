@@ -1,41 +1,31 @@
 @extends('layouts.AdminLTE.index')
 
-@section('title', 'Cartera')
-@section('header', 'Cartera')
+@section('title', 'Cobros')
+@section('header', 'Cobros')
 
 @section('content')
     
     <div class="card">
         <div class="card-header with-border">
-            <h3 class="card-title">Lista de Pagos</h3>
+            <h3 class="card-title">Lista de pendientes</h3>
         </div>
         <div class="card-body">
-            <form class="form-horizontal" autocomplete="off">
-                <div class="form-group row text-right">
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control form-control-sm text-uppercase" placeholder="Introduce nombre a buscar " id="txt_name" name="txt_name" value="{{$name}}">    
-                    </div> 
-                    <div class="col-sm-2 text-left">
-                        <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-search-plus"></i>&nbsp; Buscar</button>
-                    </div>
-                </div>
-            </form>
             <div class="form-group float-right">
                 <div class="d-flex">
-                    <form action="{{ route('admin.vencimiento.index') }}">
+                    <form action="{{ route('admin.cobro.index') }}">
                         @csrf
-                        <input type="hidden" id="estatus" name="estatus" value="Cobrado">
+                        <input type="hidden" id="bandera" name="bandera" value="Aportacion">
                         <button type="submit" class="btn btn-app">
-                            <span class="badge bg-success">{{$stateCobrado->count()}}</span>
-                            <i class="fas fa-hand-holding-usd"></i> Cobrado
+                            <span class="badge bg-success"></span>
+                            <i class="fas fa-money-check-alt"></i> Cobros
                         </button>
                     </form>
-                    <form action="{{ route('admin.vencimiento.index') }}">
+                    <form action="{{ route('admin.cobro.index') }}">
                         @csrf
-                        <input type="hidden" id="estatus" name="estatus" value="No cobrado">
+                        <input type="hidden" id="bandera" name="bandera" value="Cartera">
                         <button type="submit" class="btn btn-app">
-                            <span class="badge bg-danger">{{$stateNocobrado->count()}}</span>
-                            <i class="fas fa-hand-holding"></i> No cobrado
+                            <span class="badge bg-danger"></span>
+                            <i class="fas fa-users-slash"></i> Cartera
                         </button>
                     </form>
                 </div>

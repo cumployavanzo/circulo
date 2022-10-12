@@ -25,7 +25,7 @@ class VencimientoController extends Controller
             ->join('analisis_credito', 'analisis_credito.id', '=', 'tabla_amortizacion.analisis_credito_id')
             ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
             ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
-            ->orderBy('tabla_amortizacion.fecha_pago', 'DESC')
+            ->orderBy('tabla_amortizacion.fecha_pago', 'ASC')
             ->paginate(10);
         }else if($request->estatus == 'No cobrado'){
             \DB::statement("SET SQL_MODE=''");
@@ -35,16 +35,25 @@ class VencimientoController extends Controller
             ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
             ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
             ->whereDate('tabla_amortizacion.fecha_pago', '<=', $hoy)
-            ->orderBy('tabla_amortizacion.fecha_pago', 'DESC')
+            ->orderBy('tabla_amortizacion.fecha_pago', 'ASC')
             ->paginate(10);
-        }else{
+        }else if($request->get('txt_name')){
             \DB::statement("SET SQL_MODE=''");
             $vencimientos = Vencimiento::select('tabla_amortizacion.*','clientes.nombre','clientes.apellido_paterno','clientes.apellido_materno')
             ->join('analisis_credito', 'analisis_credito.id', '=', 'tabla_amortizacion.analisis_credito_id')
             ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
             ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
             ->name($name)
-            ->orderBy('tabla_amortizacion.fecha_pago', 'DESC')
+            ->orderBy('tabla_amortizacion.fecha_pago', 'ASC')
+            ->paginate(10);
+        }else{
+            \DB::statement("SET SQL_MODE=''");
+            $vencimientos = Vencimiento::select('tabla_amortizacion.*','clientes.nombre','clientes.apellido_paterno','clientes.apellido_materno')
+            ->where('tabla_amortizacion.estatus', 'No cobrado')
+            ->join('analisis_credito', 'analisis_credito.id', '=', 'tabla_amortizacion.analisis_credito_id')
+            ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
+            ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+            ->orderBy('tabla_amortizacion.fecha_pago', 'ASC')
             ->paginate(10);
         }
        

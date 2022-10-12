@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Carbon\Carbon;
 use App\Gasto;
 use App\Caja;
 use App\Banco;
@@ -9,6 +10,7 @@ use App\Cuenta;
 use App\DetalleGasto;
 use App\DetalleCobro;
 use App\MovimientoGasto;
+use App\Vencimiento;
 
 
 use Illuminate\Http\Request;
@@ -16,10 +18,29 @@ use Illuminate\Http\Request;
 class CobroController extends Controller
 {
     //
-    public function index()
+    public function index(Request $request)
     {
-        $gastos = Gasto::where('concepto','=', 'APORTACIONES DE CAPITAL')->paginate(10);
-        return view('admin.cobros.index', compact('gastos'));
+        // dd($request);
+        $hoy = Carbon::today();
+        \DB::statement("SET SQL_MODE=''");
+        $vencimientos = Vencimiento::select('tabla_amortizacion.*','clientes.nombre','clientes.apellido_paterno','clientes.apellido_materno')
+        ->where('tabla_amortizacion.estatus', 'No cobrado')
+        ->join('analisis_credito', 'analisis_credito.id', '=', 'tabla_amortizacion.analisis_credito_id')
+        ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
+        ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+        ->whereDate('tabla_amortizacion.fecha_pago', '<=', $hoy)
+        ->orderBy('tabla_amortizacion.fecha_pago', 'ASC')
+        ->paginate(10);
+       if($request->bandera == 'Aportacion'){
+            $gastos = Gasto::where('concepto','=', 'APORTACIONES DE CAPITAL')->paginate(10);
+            return view('admin.cobros.index_aportacion', compact('gastos'));
+       }else{
+            $stateCobrado = Vencimiento::where('estatus', 'Cobrado')->get();
+            $stateNocobrado = Vencimiento::where('estatus', 'No cobrado')->whereDate('fecha_pago', '<=', $hoy)->get();
+            return view('admin.cobros.index_principal', compact('vencimientos','stateCobrado','stateNocobrado'));
+       }
+        
+        
     }
 
     public function edit($gasto_id)

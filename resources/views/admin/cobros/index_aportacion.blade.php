@@ -14,16 +14,18 @@
                 <div class="d-flex">
                     <form action="{{ route('admin.cobro.index') }}">
                         @csrf
+                        <input type="hidden" id="bandera" name="bandera" value="Aportacion">
                         <button type="submit" class="btn btn-app">
                             <span class="badge bg-success"></span>
-                            <i class="fas fa-money-check-alt"></i> Aportaciones
+                            <i class="fas fa-money-check-alt"></i> Cobros
                         </button>
                     </form>
-                    <form action="{{ route('admin.vencimiento.index') }}">
+                    <form action="{{ route('admin.cobro.index') }}">
                         @csrf
+                        <input type="hidden" id="bandera" name="bandera" value="Cartera">
                         <button type="submit" class="btn btn-app">
                             <span class="badge bg-danger"></span>
-                            <i class="fas fa-users-slash"></i> Vencimientos
+                            <i class="fas fa-users-slash"></i> Cartera
                         </button>
                     </form>
                 </div>
