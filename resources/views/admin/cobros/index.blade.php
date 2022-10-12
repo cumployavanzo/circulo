@@ -10,7 +10,24 @@
             <h3 class="card-title">Lista de pendientes</h3>
         </div>
         <div class="card-body">
-            
+            <div class="form-group float-right">
+                <div class="d-flex">
+                    <form action="{{ route('admin.cobro.index') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-success"></span>
+                            <i class="fas fa-money-check-alt"></i> Aportaciones
+                        </button>
+                    </form>
+                    <form action="{{ route('admin.vencimiento.index') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-danger"></span>
+                            <i class="fas fa-users-slash"></i> Vencimientos
+                        </button>
+                    </form>
+                </div>
+            </div>
             <table class="table table-striped projects">
                 <thead>
                     <tr>
