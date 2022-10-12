@@ -24,7 +24,7 @@
                     @foreach($movimientoGastos as $movgasto)
                     <tr>
                         <td>#{{ $movgasto->id}}</td>
-                        @if ($movgasto->bandera == 'Desembolso')
+                        @if ($movgasto->bandera == 'Desembolso' || $movgasto->bandera == 'Vencimiento')
                             <td>{{ date('d/m/Y', strtotime($movgasto->fecha_pago))}}</td>
                         @else
                             <td>{{ date('d/m/Y', strtotime($movgasto->compra->fecha_compra))}}</td>

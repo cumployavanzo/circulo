@@ -10,6 +10,7 @@ use App\Caja;
 use App\Banco;
 use App\Articulo;
 use App\Analisis_credito;
+use App\Vencimiento;
 
 
 use Illuminate\Http\Request;
@@ -86,6 +87,18 @@ class MovimientoGastoController extends Controller
         }elseif($movimientoGastos->bandera == 'No deducible'){    
             $gastoP = DetalleGasto::where('compras_id', $movimientoGastos->compras_id)->first();
             return view('admin.movimientos.editNoDeducible', compact('gasto', 'gastoProducto','articulos','gastoP','movimientoGastos'));
+        }elseif($movimientoGastos->bandera == 'Vencimiento'){
+            $vencimiento = Vencimiento::find($movimientoGastos->tabla_amortizacion_id);
+            $detalle = MovimientoGasto::where('tabla_amortizacion_id', $movimientoGastos->tabla_amortizacion_id)->first();
+            if($detalle->tipo_pago == 'Efectivo' || $detalle->tipo_pago == 'Especie'){
+                $cuentaTipoPago = Cuenta::where('id', $detalle->cuentas_id)->first(); //// es el id del catalogo de cuentas
+            }elseif($detalle->tipo_pago == 'Transferencia' || $detalle->tipo_pago == 'Cheque'){
+                $cuentaTipoPago = Banco::where('id', $detalle->cuentas_id)->first(); //// es el id del catalogo de bancos
+            }
+            $cuentaCliente = Vencimiento::where('id',$movimientoGastos->tabla_amortizacion_id)->first()->analisisC->solicitud->cliente->cuentas;
+            $cuentaProducto = Vencimiento::where('id',$movimientoGastos->tabla_amortizacion_id)->first()->analisisC->solicitud->producto->cuentas;
+            $producto = Vencimiento::where('id',$movimientoGastos->tabla_amortizacion_id)->first()->analisisC->solicitud->producto;
+            return view('admin.movimientos.editVencimiento', compact('vencimiento','cuentaTipoPago','bancos','cuentasCaja','cuentaActivo','detalle','cuentaCliente','producto','cuentaProducto'));
         }
        
     }

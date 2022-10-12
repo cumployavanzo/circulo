@@ -6,6 +6,7 @@ use App\Solicitud;
 use App\Cliente;
 use App\VariablesRiesgo;
 use App\Analisis_credito;
+use App\TablaAmortizacion;
 use DateTime;
 use Carbon\Carbon;
 use App\Exports\ColocacionExport;
@@ -50,19 +51,63 @@ class AnalisisCreditoController extends Controller
         $analisis->var = $request->input('txt_var_val');
         $analisis->estatus = $request->input('txt_estatus_analisis');
         $analisis->save();
+        $idAnalis= $analisis["id"];
+
         Solicitud::where('id', $request->input('txt_idSolicitud'))->update([
             'estatus' => $request->input('txt_estatus_analisis'),
         ]);
-        // return view('admin.analisis_credito.index', compact('solicitudes'));
+        $this->guardarTablaAmortizacion($request,$idAnalis);
+        // $this->guardarTablaAmortizacion($request);
         return redirect()->route('admin.analisis_credito.index');
     }
 
     
-    public function show($id)
+    public function guardarTablaAmortizacion(Request $request,$idAnalis)
     {
-        //
+        $plazo = $request->txt_plazo;
+        $frecuencia_pago = $request->txt_frecuencia_pago;
+        $monto_solicitado = (str_replace(",","",$request->txt_monto_solicitado));
+        $monto_autorizado = (str_replace(",","",$request->txt_monto_autorizado));
+        $tasa = $request->txt_tasa; ////40
+        $porcentaje = $tasa * (1/100);
+        $saldo = (($monto_autorizado * $porcentaje) + $monto_autorizado); ////3500
+        $capital = $monto_autorizado / $plazo; //178.77;
+        $cuota = $saldo / $plazo; // 250;
+        $interes = ($monto_autorizado * $porcentaje) / $plazo;
+        $plazo = range(1,$plazo);
+        $gasto_por_cobranza = '10.00';
+        $dateS =  str_replace('/', '-', $request->txt_fdesembolso);
+        $fecha_desembolso = date('Y-m-d', strtotime($dateS));
+        $fecha_pago = Carbon::parse($fecha_desembolso);
+       
+        foreach($plazo as $plazos) {
+           $tablaAmort = new TablaAmortizacion();
+                // calcular
+            $saldo = $saldo - $cuota;
+            $fecha_pago = Carbon::parse($fecha_pago);
+            if($frecuencia_pago == 'DIARIO'){
+                $fecha_pago->addDays(1)->format('d/m/Y');
+            }else if($frecuencia_pago == 'SEMANAL'){
+                $fecha_pago->addDays(7)->format('d/m/Y');
+            }else if($frecuencia_pago == 'QUINCENAL'){
+                $fecha_pago->addDays(15)->format('d/m/Y');
+            }else if($frecuencia_pago == 'MENSUAL'){
+                $fecha_pago->addDays(30)->format('d/m/Y');
+            }else{
+                $fecha_pago->addDays(7)->format('d/m/Y');
+            }
+           
+            $tablaAmort->analisis_credito_id = $idAnalis;
+            $tablaAmort->solicituds_id = $request->input('txt_idSolicitud');
+            $tablaAmort->fecha_pago = $fecha_pago;
+            $tablaAmort->pago = $cuota;
+            $tablaAmort->capital = $capital;
+            $tablaAmort->interes = $interes;
+            $tablaAmort->saldo_pendiente = $saldo;
+            $tablaAmort->gasto_x_cobranza = $gasto_por_cobranza;
+            $tablaAmort->save();     
+        }
     }
-
     
     public function edit($id)
     {
