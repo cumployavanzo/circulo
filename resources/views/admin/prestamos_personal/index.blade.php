@@ -8,8 +8,17 @@
     <div class="card">
         <div class="card-header with-border">
             <h3 class="card-title">Lista de Prestamos Personales</h3>
-            <div class="card-tools pull-right">
-                <a href="{{ route('admin.prestamoP.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Prestamo"><li class="fas fa-plus"></li>&nbsp; Nuevo</a>
+            <div class="card-tools">
+                <div class="form-group float-right">
+                    <div class="d-flex">
+                        <a href="{{ route('admin.prestamoP.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Prestamo"><li class="fas fa-plus"></li>&nbsp; Nuevo</a>&nbsp;                        
+                        <form action="{{ route('admin.reportePrestamos') }}" method="POST">
+                            @method('post')
+                            @csrf
+                            <button class="btn btn-sm btn-info" title="Generar Reporte" type="submit" href="#"><i class="fas fa-file-excel"></i> Reporte</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-body">

@@ -7,6 +7,9 @@ use App\PrestamoPersonal;
 use App\Personal;
 use App\ConceptoNomina;
 use App\DetallePrestamo;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\PrestamosExport;
+
 
 class PrestamoPersonalController extends Controller
 {
@@ -48,4 +51,14 @@ class PrestamoPersonalController extends Controller
     
         // return redirect()->route('admin.pago.show', [$request->input('idGasto')]);
     }
+
+    public function reportePrestamos(){
+        // \DB::statement("SET SQL_MODE=''");
+        $data = PrestamoPersonal::select('prestamo_personal.*','personals.nombre','personals.apellido_paterno','personals.apellido_materno')
+        ->join('personals', 'personals.id', '=', 'prestamo_personal.personals_id')
+        ->orderBy('personals.nombre', 'ASC')
+        ->orderBy('personals.apellido_paterno', 'ASC')
+        ->get();
+        return Excel::download(new PrestamosExport($data), 'Prestamos'. '.xlsx');
+     }
 }

@@ -175,12 +175,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::delete('nominas/deleteEmpleadoNom/{idNomina}/{idDetalle}', 'NominaController@destroy')->name('deleteEmpleadoNom');
 
     Route::post('movNomina/verificarPrestamos/', 'MovimientoNominaController@detallesPrestamoP')->name('detallesPrestamoP');
-
-
-
-
-    // Route::get('concepto/addConceptos', 'ConceptosController@create')->name('addNuevoConcepto');
     Route::get('concepto/detalleConcepto/{id}', 'ConceptoNominaController@verDetallesConcepto')->name('verDetallesConcepto');
+
+    Route::post('prestamoP/reportePrestamo/','PrestamoPersonalController@reportePrestamos')->name('reportePrestamos');
+
 
 
 
