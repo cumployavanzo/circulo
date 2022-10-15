@@ -178,6 +178,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('concepto/detalleConcepto/{id}', 'ConceptoNominaController@verDetallesConcepto')->name('verDetallesConcepto');
 
     Route::post('prestamoP/reportePrestamo/','PrestamoPersonalController@reportePrestamos')->name('reportePrestamos');
+    Route::get('detallesPrestamos/{id}', 'PrestamoPersonalController@show');
 
 
 

@@ -110,17 +110,15 @@ class UserAdminController extends Controller
         $state = User::where('id', $id)->pluck('state');
         if ($state[0] == 1) {
             User::where('id', $id)->update([
-                'state' => 0
+                'state' => '0',
             ]);
-        }
-        else
-        {
+        } else{
             User::where('id', $id)->update([
-                'state' => 1
+                'state' => '1'
             ]);
         }
         
-        return response()->json(["data" => "ok"]);
+        // return response()->json(["data" => "ok"]);
     }
 
     public function destroy($id)

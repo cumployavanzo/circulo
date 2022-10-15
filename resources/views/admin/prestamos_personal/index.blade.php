@@ -32,6 +32,7 @@
                         <th>Monto Prestamo</th>
                         <th>Plazo</th>
                         <th>Pagos Descontados</th>
+                        <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,9 +45,9 @@
                         <td>$ {{number_format($prestamo->total_prestamo, 2, '.', '')}}</td>
                         <td>{{ $prestamo->num_pagos }}</td>
                         <td class="text-bold">{{ $prestamo->detallesPrestamo->where('estatus','Descontado')->count() }} / {{ $prestamo->detallesPrestamo->count() }}</td>
-                        {{-- <td>
-                            <a class="btn btn-info btn-sm" href="{{ route('admin.nomina.edit', [$nomina->id]) }}"><i class="fas fa-eye"></i></a>
-                        </td> --}}
+                        <td>
+                            <a class="btn btn-info btn-sm" href="{{ route('admin.prestamoP.show', [$prestamo->id]) }}"><i class="fas fa-eye"></i></a>
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>

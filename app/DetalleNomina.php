@@ -16,4 +16,7 @@ class DetalleNomina extends Model
     public function personals (){
         return $this->hasOne(Personal::class, 'id', 'personals_id');
     }
+    public function nomina (){
+        return $this->hasOne(Nomina::class, 'id', 'nomina_id');
+    }
 }

@@ -52,6 +52,18 @@ class PrestamoPersonalController extends Controller
         // return redirect()->route('admin.pago.show', [$request->input('idGasto')]);
     }
 
+    public function show($id)
+    {
+        $prestamos = PrestamoPersonal::find($id);
+        $detalles = DetallePrestamo::where('prestamo_personal_id',$id)->paginate(6);
+        $descuentos = DetallePrestamo::selectRaw('SUM(monto_pago) as monto')
+        ->where('detalle_prestamos.prestamo_personal_id', $id)
+        ->where('detalle_prestamos.estatus','=','Descontado')
+        ->groupBy('detalle_prestamos.prestamo_personal_id')
+        ->first();
+        return view('admin.prestamos_personal.showPrestamo', compact('prestamos','descuentos','detalles'));
+    }
+
     public function reportePrestamos(){
         // \DB::statement("SET SQL_MODE=''");
         $data = PrestamoPersonal::select('prestamo_personal.*','personals.nombre','personals.apellido_paterno','personals.apellido_materno')
