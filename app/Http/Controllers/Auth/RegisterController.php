@@ -5,9 +5,18 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Personal;
+use App\Mail\MessageReceived;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
+
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+
+
 
 class RegisterController extends Controller
 {
@@ -50,24 +59,64 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            // 'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
 
+    public function index()
+    {
+        // $areas = Area::paginate(10);
+        return view('auth.registro');
+    }
     /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+  
+    public function store(Request $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        $personal = Personal::where('clave_elector', $data->input('txt_clave'))->where('state','Activo')->first();///valida que exista como empleado y este activo
+        if($personal){
+            $usuario = User::where('personals_id', $personal->id)->where('state','1')->first(); /// verifica si ya tiene un usuario
+            $correo = User::where('email', $data->input('txt_email'))->where('state','1')->first(); /// verifica que el correo no este registrado
+            if($usuario || $correo){
+                return redirect()->route('registro.index')->with('error', 'Ya cuenta con un usuario.');    
+            }else{
+                $confirmation_code =  Str::random(10);
+                $user =  User::create([
+                    'personals_id' => $personal->id,
+                    'email' => $data->input('txt_email'),
+                    'email_verified_at' => $data->input('txt_emailC'),
+                    'roles_id' => '2',
+                    'confirmation_code' => $confirmation_code,
+                    'password' => bcrypt($data->input('txt_pass'))
+                ]);
+    
+                Mail::to($user->email)->send(new MessageReceived($user));
+                return redirect()->route('registro.index')->with('titulo', '¡Gracias por Registrarse!')->with('mensaje', 'Comprobar en la carpeta de "Spam" del correo proporcionado.');
+            } 
+        }else{
+            return redirect()->route('registro.index')->with('error', 'El registro no es posible.');    
+        }
+       
+    }
+
+
+    public function verify($code)
+    {
+        $user = User::where('confirmation_code', $code)->first();
+
+        // if(! $user){
+        //     return redirect('/')
+        // }
+
+        $user->confirmed = true;
+        // $user->confirmation_code = null;
+        $user->save();
+        return redirect()->route('login')->with('notification', '¡Has confirmado correctamente tu correo!');
     }
 }

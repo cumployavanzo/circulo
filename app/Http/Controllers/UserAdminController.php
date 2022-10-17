@@ -44,6 +44,7 @@ class UserAdminController extends Controller
         $usuario->roles_id = $request->input('txt_rol');
         $usuario->email = $request->input('txt_email');
         $usuario->password = bcrypt($request->input('txt_pass'));
+        $usuario->confirmed = TRUE;
         $usuario->save();
         return redirect()->route('admin.usuario.index');
         // return redirect('admin/usuarios/addusuarios')->with('success', 'Se ha agregado el Usuario exitosamente');

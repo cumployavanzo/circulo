@@ -52,7 +52,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-building"></i></span>
                             </div>
-                            <select class="form-control" id="txt_modalidad" name="txt_modalidad" onchange="allDetallesEmpleado()">
+                            <select class="form-control" id="txt_modalidad" name="txt_modalidad">
                                 <option>SEMANAL</option>
                                 <option>QUINCENAL</option>
                                 <option>MENSUAL</option>
@@ -68,7 +68,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                                 </div>
-                                <select type="select" id="Fk_empleado" name="Fk_empleado" class="form-control select2 " required onchange="allDetallesEmpleado()">
+                                <select type="select" id="Fk_empleado" name="Fk_empleado" class="form-control select2 " required>
                                     <option value="">Selecciona</option>
                                     @foreach($personals as $personal)
                                         <option {{ old('Fk_empleado') == $personal->id ? 'selected' : '' }} value="{{$personal->id}}">{{$personal->getFullName()}}</option>

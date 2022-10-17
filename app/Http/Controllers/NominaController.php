@@ -107,8 +107,20 @@ class NominaController extends Controller
     
     public function store(Request $request)
     {
-        //    dd($request);
+        $datosEmpleado = Personal::where('id',$request->input('Fk_empleado'))->first();
+        if($datosEmpleado->sueldo_mensual == null) {
+            session()->flash('errorMessage', 'Favor de agregar el sueldo al Empleado: '.$datosEmpleado->nombre.' '.$datosEmpleado->apellido_paterno.' '.$datosEmpleado->apellido_materno);
+            return redirect()->back();
+        } 
+        $sueldo_diario = $datosEmpleado->sueldo_mensual /30;
         if($request->idNomina == 0){
+            if($request->input('txt_modalidad') == 'SEMANAL'){
+                $sueldo = $sueldo_diario * 7;  
+            }else if($request->input('txt_modalidad') == 'QUINCENAL'){
+                $sueldo = $sueldo_diario * 15;
+            }else if($request->input('txt_modalidad') == 'MENSUAL'){
+                $sueldo = $sueldo_diario * 30;
+            }
             $nomina = new Nomina();
             $nomina->users_id = auth()->user()->id;
             $nomina->modalidad = mb_strtoupper($request->input('txt_modalidad'), 'UTF-8');
@@ -121,21 +133,25 @@ class NominaController extends Controller
             $detalle = new DetalleNomina();
             $detalle->nomina_id = $nominaID;
             $detalle->personals_id = $request->input('Fk_empleado');
-            $detalle->sueldo = $request->input('sueldo');
+            $detalle->sueldo = $sueldo;
             $detalle->save();  
-
         }else{
-
             $employee = DetalleNomina::where('nomina_id', $request->idNomina)->where('personals_id',$request->input('Fk_empleado'))->first();
             if($employee) {
                 session()->flash('errorMessage', 'Este empleado ya se encuentra asignado a la Nomina');
                 return redirect()->back();
             } 
-    
+            if($request->input('modalidad') == 'SEMANAL'){
+                $sueldo = $sueldo_diario * 7;  
+            }else if($request->input('modalidad') == 'QUINCENAL'){
+                $sueldo = $sueldo_diario * 15;
+            }else if($request->input('modalidad') == 'MENSUAL'){
+                $sueldo = $sueldo_diario * 30;
+            }
             $detalle = new DetalleNomina();
             $detalle->nomina_id = $request->idNomina;
             $detalle->personals_id = $request->input('Fk_empleado');
-            $detalle->sueldo = $request->input('sueldo');
+            $detalle->sueldo = $sueldo;
             $detalle->save();  
             $nominaID= $request->idNomina;
 

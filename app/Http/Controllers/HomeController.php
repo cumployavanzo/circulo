@@ -10,26 +10,32 @@ use App\Producto;
 use App\Solicitud;
 use App\SucursalRuta;
 use App\Analisis_credito;
+use App\User;
 
 class HomeController extends Controller
 {
     public function index()
     {
-        if (auth()->check()) {
-            $clientes = Cliente::count();
-            $avales = Aval::count();
-            $productos = Producto::count();
-            $solicitudes = Solicitud::count();
-            $rutas = SucursalRuta::count();
-            $empleados = Personal::where('state','Activo')->count();
-            $solAutorizadas = Solicitud::where('estatus','Autorizado')->count();
-            $solDesembolsadas = Analisis_credito::where('desembolso','Desembolsado')->count();
-            return view('index', compact('clientes','empleados','avales','productos','solicitudes','rutas','solAutorizadas','solDesembolsadas'));
-            // return view('index');
-        } else {
-            return redirect()->to('login/');
+        if(User::where('confirmed','1')->first() ){
+            if (auth()->check()) {
+                $clientes = Cliente::count();
+                $avales = Aval::count();
+                $productos = Producto::count();
+                $solicitudes = Solicitud::count();
+                $rutas = SucursalRuta::count();
+                $empleados = Personal::where('state','Activo')->count();
+                $solAutorizadas = Solicitud::where('estatus','Autorizado')->count();
+                $solDesembolsadas = Analisis_credito::where('desembolso','Desembolsado')->count();
+                return view('index', compact('clientes','empleados','avales','productos','solicitudes','rutas','solAutorizadas','solDesembolsadas'));
+                // return view('index');
+            } else {
+                return redirect()->to('login/');
+            }
+        }else{
+            return redirect()->to('login/')->withErrors([
+                'invalido' => 'Usuario no confirmado.',
+            ]);
         }
-        
     }
 
     public function login()

@@ -14,6 +14,7 @@
             @if ($nomina->state == 'Proceso')
             <input type="hidden" id="idNomina" name="idNomina" value="{{$nomina->id}}">
             <input type="hidden" id="sueldo" name="sueldo" value="">
+            <input type="hidden" id="modalidad" name="modalidad" value="{{$nomina->modalidad}}">
             <div class="form-group">
                 <div class="row">   
                     <div class="col-lg-4">
@@ -52,7 +53,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1"><i class="fas fa-building"></i></span>
                         </div>
-                        <select class="form-control" id="txt_modalidad" name="txt_modalidad" disabled>
+                        <select class="form-control disabled" id="txt_modalidad" name="txt_modalidad" readonly="">
                             <option {{ $nomina->modalidad == 'SEMANAL' ? 'selected' : ''}} value="SEMANAL">SEMANAL</option>
                             <option {{ $nomina->modalidad == 'QUINCENAL' ? 'selected' : ''}} value="QUINCENAL">QUINCENAL</option>
                             <option {{ $nomina->modalidad == 'MENSUAL' ? 'selected' : ''}} value="MENSUAL">MENSUAL</option>
@@ -69,7 +70,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                             </div>
-                            <select type="select" id="Fk_empleado" name="Fk_empleado" class="form-control select2 " onchange="allDetallesEmpleado()">
+                            <select type="select" id="Fk_empleado" name="Fk_empleado" class="form-control select2 ">
                                 <option value="">Selecciona</option>
                                 @foreach($personals as $personal)
                                     <option {{ old('Fk_empleado') == $personal->id ? 'selected' : '' }} value="{{$personal->id}}">{{$personal->getFullName()}}</option>

@@ -15,6 +15,8 @@ Route::get('/', 'HomeController@index')->name('index');
 Route::get('login', 'HomeController@login')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'HomeController@logout')->name('logout');
+Route::resource('registro', 'Auth\RegisterController');
+Route::get('register/verify/{code}', 'Auth\RegisterController@verify')->name('verificacion');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('index');

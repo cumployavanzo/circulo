@@ -2,6 +2,22 @@
 
 @section('content')
   <div class="card">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container">
+          <a class="navbar-brand" href="Sistema.php">CFOWOLF</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+              <ul class="navbar-nav ml-auto">
+                  
+                  <li class="nav-item">
+                      <a class="nav-link active" href="{{ route('registro.index') }}">Registrarse</a>
+                  </li>
+              </ul>
+          </div>
+      </div>
+    </nav>
     {{-- <div class="card-header text-center">
       <a href="../../index2.html" class="h1"><b>CFO</b>WOLF</a>
     </div> --}}
@@ -10,7 +26,11 @@
         <h2>Bienvenido</h2>
     </div>
     <div class="card-body">
-      {{-- <p class="login-box-msg">Ingresa tus datos para iniciar sesión</p> --}}
+      @if (session('notification'))
+          <div class="alert alert-success">
+              {{session('notification')}}
+          </div>
+      @endif
       <form method="POST" action="{{ route('login') }}">
         @csrf
         <div class="input-group mb-3">
