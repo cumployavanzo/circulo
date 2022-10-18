@@ -66,8 +66,13 @@
                    $activeM = "";
                    $menuOpen = "";
                 @endphp
+
                 @forelse ($menu as $item)
+                    @if (!empty($item))
+                        
                         @foreach($item->submenus as $subitem)
+                        @if (!empty($subitem))
+                            
                             @php
                                 $ruta = route($subitem->route);
                                 $path = str_replace($domain, '', $ruta); //.'/*';
@@ -83,6 +88,7 @@
                                 }
                             @endphp
                        
+                        @endif
                         @endforeach
                    
                     <li class="nav-item {{$menuOpen}}">
@@ -94,30 +100,35 @@
                             </p>
                         </a>
                         <ul class="nav nav-treeview">
-                            @foreach($item->submenus as $subitem)
-                            @php
-                                $ruta = route($subitem->route);
-                                $path = str_replace($domain, '', $ruta); //.'/*';
-                                $sub_path = str_replace($domain, '', $ruta).'/*';
-                                $is_route = request()->is($path) ;
-                                $is_sub_route = request()->is($sub_path) ;
-                                $active = '';
 
-                                if($is_route || $is_sub_route) {
-                                    $active = 'active';
-                                    $activeM = "";
-                                    $menuOpen = "";
-                                }
-                            @endphp
-                            <li class="nav-item">
-                                <a href="{{route ($subitem->route) }}" class="nav-link {{$active}}">
-                                    <i class="far fa-circle nav-icon"></i>
-                                    <p> {{ $subitem->nombre }}</p>
-                                </a>
-                            </li>
+                            {{-- dd($item->submenus, $item, $menu)--}}
+                            @foreach($item->submenus as $subitem)
+                            @if (!empty($subitem))
+                                @php
+                                    $ruta = route($subitem->route);
+                                    $path = str_replace($domain, '', $ruta); //.'/*';
+                                    $sub_path = str_replace($domain, '', $ruta).'/*';
+                                    $is_route = request()->is($path) ;
+                                    $is_sub_route = request()->is($sub_path) ;
+                                    $active = '';
+
+                                    if($is_route || $is_sub_route) {
+                                        $active = 'active';
+                                        $activeM = "";
+                                        $menuOpen = "";
+                                    }
+                                @endphp
+                                <li class="nav-item">
+                                    <a href="{{route ($subitem->route) }}" class="nav-link {{$active}}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p> {{ $subitem->nombre }}</p>
+                                    </a>
+                                </li>
+                            @endif
                             @endforeach
                         </ul>
                     </li>
+                    @endif
                 @empty
                     
                 @endforelse

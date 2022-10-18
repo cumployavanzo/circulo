@@ -33,4 +33,8 @@ class User extends Authenticatable
         return $this->hasOne(Rol::class, 'id', 'roles_id');
     }
 
+    public function permisos (){
+        return $this->hasMany(Permiso::class, 'roles_id', 'roles_id');
+    }
+
 }
