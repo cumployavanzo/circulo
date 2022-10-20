@@ -48,7 +48,7 @@ class PermisosMiddleware
     public function handle($request, Closure $next)
     {       
         if (!auth()->check()) {
-            return false;
+            abort(404);
         }
         $usuario_id = auth()->user()->id;
         $usuario = User::where('id', $usuario_id)->first();
