@@ -153,6 +153,16 @@
                                                     <textarea id="num_serie" class="form-control text-uppercase" rows="2" type="text" name="num_serie" placeholder="Introduce Modelo/Número de serie"></textarea>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                                                <label class="col-lg-1 col-form-label">Placas</label>
+                                                <div class="col-lg-3">
+                                                    <input id="placas" class="form-control text-uppercase"  name="placas"  placeholder="Placas">
+                                                </div>
+                                                <label class="col-lg-2 col-form-label">Num. Economico</label>
+                                                <div class="col-lg-5">
+                                                    <input id="num_economico" class="form-control text-uppercase"  name="num_economico"  placeholder="Num. Economico">
+                                                </div>
+                                            </div>
                                             <hr class="m-6">
                                             <button type="submit" class="btn btn-block btn-info">Agregar</button>
                                         </div>

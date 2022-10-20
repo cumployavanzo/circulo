@@ -8,7 +8,7 @@
                 Nueva solicitud
             </h4>
         </div>
-        <form action="{{ route('admin.addNuevaSolicitud') }}" method="POST" autocomplete="off"> 
+        <form action="{{ route('admin.addNuevoActivo') }}" method="POST" autocomplete="off"> 
             @csrf
             <div class="card-body">
                 <div class="form-group">
@@ -153,6 +153,16 @@
                                                 <textarea id="num_serie" class="form-control text-uppercase" rows="2" type="text" name="num_serie" placeholder="Introduce Modelo/Número de serie"></textarea>
                                             </div>
                                         </div>
+                                        <div class="form-group row">
+                                            <label class="col-lg-1 col-form-label">Placas</label>
+                                            <div class="col-lg-3">
+                                                <input id="placas" class="form-control text-uppercase"  name="placas"  placeholder="Placas">
+                                            </div>
+                                            <label class="col-lg-2 col-form-label">Num. Economico</label>
+                                            <div class="col-lg-5">
+                                                <input id="num_economico" class="form-control text-uppercase"  name="num_economico"  placeholder="Num. Economico">
+                                            </div>
+                                        </div>
                                         <hr class="m-6">
                                         <button type="submit" class="btn btn-block btn-info">Agregar</button>
                                     </div>
@@ -204,7 +214,7 @@
                                         <td style="width:5%">{{ $producto->p_risr }}</td>
                                         <td style="width:5%">{{ $producto->total }}</td>
                                         <td style="width:5%">
-                                            <form action="{{ route('admin.deleteProductoGasto', ['idProducto'=>$producto->id, 'idCompra'=>$producto->compras_id]) }}" method="POST">
+                                            <form action="{{ route('admin.deleteProductoActivo', ['idProducto'=>$producto->id, 'idCompra'=>$producto->compras_id]) }}" method="POST">
                                                 @method('delete')
                                                 @csrf
                                                 <button class="btn btn-danger btn-sm" type="submit" href="#"><i class="fas fa-times"></i></button>

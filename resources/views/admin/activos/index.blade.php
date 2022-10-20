@@ -53,12 +53,12 @@
                             @if ($gasto->movimiento->state == 'Pendiente')
                                 <td><small class="badge badge-warning"><i class="far fa-clock"></i> {{ $gasto->movimiento->state }}</small></td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.gasto.edit', [$gasto->id]) }}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('admin.activo.edit', [$gasto->id]) }}"><i class="fas fa-pencil-alt"></i></a>
                                 </td>
                             @elseif($gasto->movimiento->state == 'Proceso')
                                 <td><small class="badge badge-info"><i class="fas fa-check"></i> {{ $gasto->movimiento->state }}</small></td>
                                 <td>
-                                    <a class="btn btn-info btn-sm" href="{{ route('admin.gasto.edit', [$gasto->id]) }}"><i class="fas fa-pencil-alt"></i></a>
+                                    <a class="btn btn-info btn-sm" href="{{ route('admin.activo.edit', [$gasto->id]) }}"><i class="fas fa-pencil-alt"></i></a>
                                 </td>
                             @elseif($gasto->movimiento->state == 'Contabilizado')
                                 <td><small class="badge badge-success"><i class="fas fa-check"></i> {{ $gasto->movimiento->state }}</small></td>

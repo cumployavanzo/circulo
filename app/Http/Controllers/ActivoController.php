@@ -75,6 +75,8 @@ class ActivoController extends Controller
             $producto->articulos_id = $request->input('Fk_articulo');
             $producto->cantidad = $request->input('cantidades');
             $producto->numero_serie = mb_strtoupper($request->input('num_serie'), 'UTF-8');
+            $producto->placas = mb_strtoupper($request->input('placas'), 'UTF-8');
+            $producto->numero_economico = mb_strtoupper($request->input('num_economico'), 'UTF-8');
             $producto->costo_unitario = (str_replace(",","",$request->input('costo_unitario')));
             $producto->importe = (str_replace(",","",$request->input('costo_unitario'))) * $request->input('cantidades');
             $producto->p_iva = $producto->importe * $articulo->first()->iva;
@@ -147,5 +149,13 @@ class ActivoController extends Controller
     public function verAreaActivo($id){
         $personalsArea = Personal::where('id', $id)->first()->puestoid->areas;
         return response()->json(["personalsArea" => $personalsArea]);
+    }
+
+    public function destroy($idProducto,$idCompra)
+    {
+        // $movimiento = MovimientoGasto::where('compras_id',$idCompra)->delete(); ///borrar cuando se elimine la compra
+        $detalleArticulo = DetalleGasto::find($idProducto);
+        $detalleArticulo->delete();
+        return redirect()->route('admin.activo.edit', [$idCompra]);
     }
 }

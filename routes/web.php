@@ -51,8 +51,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('cobro', 'CobroController')->middleware('permiso');
     Route::resource('noDeducible', 'NoDeducibleController')->middleware('permiso');
     Route::resource('nomina', 'NominaController')->middleware('permiso');
-    Route::resource('concepto', 'ConceptoNominaController')->middleware('permiso');
-    Route::resource('movNomina', 'MovimientoNominaController')->middleware('permiso');
+    Route::resource('concepto', 'ConceptoNominaController');
+    Route::resource('movNomina', 'MovimientoNominaController');
     Route::resource('prestamoP', 'PrestamoPersonalController')->middleware('permiso');
     Route::resource('vencimiento', 'VencimientoController')->middleware('permiso');
 
@@ -146,6 +146,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('activo/articulosActivo/{id}', 'ActivoController@verArticuloactivo')->name('verArticuloactivo');
     Route::get('activo/rfcProveedorActivo/{id}', 'ActivoController@verRfcActivo')->name('verRfcActivo');
     Route::get('activo/areaPersonalsActivo/{id}', 'ActivoController@verAreaActivo')->name('verAreaActivo');
+    Route::delete('activo/deleteProductoActivo/{idProducto}/{idCompra}', 'ActivoController@destroy')->name('deleteProductoActivo');
+
 
 
     Route::get('banco/addbancos', 'BancoController@create')->name('addbanco');
