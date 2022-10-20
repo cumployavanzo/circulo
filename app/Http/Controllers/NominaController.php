@@ -134,6 +134,7 @@ class NominaController extends Controller
             $detalle->nomina_id = $nominaID;
             $detalle->personals_id = $request->input('Fk_empleado');
             $detalle->sueldo = $sueldo;
+            $detalle->neto_pagar = $sueldo;
             $detalle->save();  
         }else{
             $employee = DetalleNomina::where('nomina_id', $request->idNomina)->where('personals_id',$request->input('Fk_empleado'))->first();
@@ -152,6 +153,7 @@ class NominaController extends Controller
             $detalle->nomina_id = $request->idNomina;
             $detalle->personals_id = $request->input('Fk_empleado');
             $detalle->sueldo = $sueldo;
+            $detalle->neto_pagar = $sueldo;
             $detalle->save();  
             $nominaID= $request->idNomina;
 

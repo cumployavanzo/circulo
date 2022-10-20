@@ -99,7 +99,7 @@
                                 <tr>
                                     <td>SUELDO</td>
                                     <td>Persepción</td>
-                                    <td>{{$detalleNomina->sueldo}}</td>
+                                    <td>{{number_format($detalleNomina->sueldo, 2, '.', '')}}</td>
                                     <td>-- --</td>
                                     <td>-- --</td>
                                 </tr>
@@ -139,9 +139,9 @@
                                     <tr class="text-bold">
                                         <td>TOTAL</td>
                                         <td></td>
-                                        <td class="text-info" id="totalPersepcion">$ {{number_format($totalPersepcion, 4, '.', '')}}</td>
-                                        <td class="text-danger" id="totalDeduccion">$ {{number_format($totalDeduccion, 4, '.', '')}}</td>
-                                        <td class="text-success" id="netoPagar" name="netoPagar">$ {{number_format($netoPagar, 4, '.', '')}}</td>
+                                        <td class="text-info" id="totalPersepcion">$ {{number_format($totalPersepcion, 2, '.', '')}}</td>
+                                        <td class="text-danger" id="totalDeduccion">$ {{number_format($totalDeduccion, 2, '.', '')}}</td>
+                                        <td class="text-success" id="netoPagar" name="netoPagar">$ {{number_format($netoPagar, 2, '.', '')}}</td>
                                     </tr>
                             </tbody>
                            @endif

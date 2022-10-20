@@ -109,7 +109,7 @@
                                 <tr>
                                     <td>{{$detalle->personals->getFullName()}}</td>
                                     <td>{{$detalle->personals->curp}}</td>
-                                    <td>{{number_format($detalle->neto_pagar, 4, '.', '')}}</td>
+                                    <td>{{number_format($detalle->neto_pagar, 2, '.', '')}}</td>
                                     <td>{{$detalle->nomina_id}}</td>
                                     <td>
                                         <div class="btn-group btn-group-sm">
