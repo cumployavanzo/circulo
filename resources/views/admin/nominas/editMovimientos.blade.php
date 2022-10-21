@@ -42,7 +42,7 @@
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-list"></i></span>
                                                     </div>
-                                                    <select type="select" id="txt_concepto_nomina" name="txt_concepto_nomina" class="form-control select2 " required onchange="validarPrestamo({{$detalleNomina->personals_id}})">
+                                                    <select type="select" id="txt_concepto_nomina" name="txt_concepto_nomina" class="form-control select2 " required>
                                                         <option value="">Selecciona</option>
                                                         @foreach($conceptoNomina as $conceptoNom)
                                                             <option {{ old('txt_concepto_nomina') == $conceptoNom->id ? 'selected' : '' }} value="{{$conceptoNom->id}}">{{$conceptoNom->conceptos}}</option>

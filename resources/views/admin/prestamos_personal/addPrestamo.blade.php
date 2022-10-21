@@ -79,7 +79,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1"><i class="fab fa-slack-hash"></i></span>
                             </div>
-                            <input id="num_pagos" class="form-control text-uppercase" type="number" name="num_pagos" placeholder="N° de Nomina" required="" maxlength="20">
+                            <input id="num_pagos" class="form-control text-uppercase" type="number" name="num_pagos" placeholder="N° de Pagos" required="" maxlength="20">
                         </div>
                     </div> 
                     <div class="col-lg-3">

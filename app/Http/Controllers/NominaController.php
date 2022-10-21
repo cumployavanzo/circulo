@@ -5,6 +5,9 @@ use App\Nomina;
 use App\Personal;
 use App\ConceptoNomina;
 use App\DetalleNomina;
+use App\PrestamoPersonal;
+use App\DetallePrestamo;
+use App\MovimientoNomina;
 use PDF;
 use Illuminate\Http\Request;
 
@@ -108,10 +111,14 @@ class NominaController extends Controller
     public function store(Request $request)
     {
         $datosEmpleado = Personal::where('id',$request->input('Fk_empleado'))->first();
+
+       
+
         if($datosEmpleado->sueldo_mensual == null) {
             session()->flash('errorMessage', 'Favor de agregar el sueldo al Empleado: '.$datosEmpleado->nombre.' '.$datosEmpleado->apellido_paterno.' '.$datosEmpleado->apellido_materno);
             return redirect()->back();
         } 
+        $prestamos = PrestamoPersonal::where('personals_id', $request->Fk_empleado)->where('estatus','Activo')->count();
         $sueldo_diario = $datosEmpleado->sueldo_mensual /30;
         if($request->idNomina == 0){
             if($request->input('txt_modalidad') == 'SEMANAL'){
@@ -135,7 +142,13 @@ class NominaController extends Controller
             $detalle->personals_id = $request->input('Fk_empleado');
             $detalle->sueldo = $sueldo;
             $detalle->neto_pagar = $sueldo;
-            $detalle->save();  
+            $detalle->save();
+            $detalleID= $detalle["id"];
+
+            if(!empty($prestamos)){
+                $this->addDescuentoPrestamoPersonal($request,$sueldo,$detalleID);
+            }
+
         }else{
             $employee = DetalleNomina::where('nomina_id', $request->idNomina)->where('personals_id',$request->input('Fk_empleado'))->first();
             if($employee) {
@@ -155,13 +168,87 @@ class NominaController extends Controller
             $detalle->sueldo = $sueldo;
             $detalle->neto_pagar = $sueldo;
             $detalle->save();  
+            $detalleID= $detalle["id"];
             $nominaID= $request->idNomina;
 
+            if(!empty($prestamos)){
+                $this->addDescuentoPrestamoPersonal($request,$sueldo,$detalleID);
+            }
         }
     
         return redirect()->route('admin.nomina.edit', [$nominaID]);
     }
     
+
+    public function addDescuentoPrestamoPersonal(Request $request,$sueldo, $detalleID)
+    {
+        
+        $prestamos = PrestamoPersonal::where('personals_id', $request->Fk_empleado)->where('estatus','Activo')->get();
+           
+        foreach($prestamos as $val){
+            $movimientoNomina = new MovimientoNomina();
+            $pagosP = DetallePrestamo::where('prestamo_personal_id',$val->id)->where('estatus','Pendiente')->first();
+            $movimientoNomina->detalle_nomina_id = $detalleID;
+            $movimientoNomina->monto = $pagosP->monto_pago;
+            $movimientoNomina->conceptos_nomina_id = $val->conceptos_nomina_id;
+            $movimientoNomina->save();
+            $movimientoID= $movimientoNomina["id"];
+
+            DetallePrestamo::where('id', $pagosP->id)->update([
+                'estatus' => 'Descontado',
+                'detalle_nomina_id' => $detalleID,
+                'users_id' => auth()->user()->id,
+            ]);
+
+            $numPrestamos = DetallePrestamo::where('prestamo_personal_id', $val->id)->where('estatus','Pendiente')->count();
+            if($numPrestamos == 0){
+                PrestamoPersonal::where('id', $val->id)->update([
+                    'estatus' => 'Inactivo',
+                ]);
+            }
+          
+        }
+        
+        
+        $totalPersepcion = 0;
+        $totalDeduccion = 0;
+        
+        $detalleP = MovimientoNomina::select('movimiento_nomina.*')
+        ->where('detalle_nomina_id', $detalleID)
+        ->where('tipo','=','Persepcion')
+        ->join('conceptos_nomina', 'conceptos_nomina.id', '=', 'movimiento_nomina.conceptos_nomina_id')
+        ->get();
+
+        foreach($detalleP as $persepcion){
+            $totalPersepcion += $persepcion->monto;
+        }
+        $detalleD = MovimientoNomina::select('movimiento_nomina.*')
+        ->where('detalle_nomina_id', $detalleID)
+        ->where('tipo','=','Deduccion')
+        ->join('conceptos_nomina', 'conceptos_nomina.id', '=', 'movimiento_nomina.conceptos_nomina_id')
+        ->get();
+
+        foreach($detalleD as $deduccion){
+            $totalDeduccion += $deduccion->monto;
+        }
+
+        $detalleMovimiento = MovimientoNomina::where('id', $movimientoID)->get();
+        if($detalleMovimiento[0]->concepto->tipo == 'Persepcion'){
+            DetalleNomina::where('id', $detalleID)->update([
+                'tot_persepcion' => $totalPersepcion,
+            ]);
+        }else if($detalleMovimiento[0]->concepto->tipo == 'Deduccion'){
+            DetalleNomina::where('id', $detalleID)->update([
+                'tot_deduccion' => $totalDeduccion,
+            ]);
+        } 
+        DetalleNomina::where('id', $detalleID)->update([
+            // 'sueldo' => $sueldo,
+            'neto_pagar' => ($sueldo + $totalPersepcion) - $totalDeduccion,
+        ]);
+        
+
+    }
 
     public function edit(Request $request,$nominaID)
     {
