@@ -15,10 +15,13 @@ class PrestamoPersonalController extends Controller
 {
     //
 
-    public function index()
+    public function index(Request $request)
     {
-        $prestamosP = PrestamoPersonal::paginate(10);
-        return view('admin.prestamos_personal.index', compact('prestamosP'));
+        $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
+        $prestamosP = PrestamoPersonal::name($name)
+        ->join('personals', 'personals.id', '=', 'prestamo_personal.personals_id')
+        ->paginate(10);
+        return view('admin.prestamos_personal.index', compact('prestamosP','name'));
     }
 
     public function create()

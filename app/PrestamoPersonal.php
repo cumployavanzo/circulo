@@ -20,4 +20,9 @@ class PrestamoPersonal extends Model
     public function detallesPrestamo (){
         return $this->hasMany(DetallePrestamo::class, 'prestamo_personal_id', 'id');
     }
+
+    public function scopeName ($query, $name){
+        if($name)
+        return $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%$name%' ");
+    }
 }

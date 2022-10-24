@@ -20,10 +20,13 @@ class AnalisisCreditoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $solicitudes = Solicitud::paginate(10);
-        return view('admin.analisis_credito.index', compact('solicitudes'));
+        $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
+        $solicitudes = Solicitud::name($name)
+        ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+        ->paginate(10);
+        return view('admin.analisis_credito.index', compact('solicitudes','name'));
     }
 
     public function create(Request $request)

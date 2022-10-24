@@ -20,4 +20,8 @@ class Analisis_credito extends Model
         return $this->hasOne(MovimientoGasto::class, 'analisis_credito_id', 'id');
     }
     
+    public function scopeName ($query, $name){
+        if($name)
+        return $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%$name%' ");
+    }
 }

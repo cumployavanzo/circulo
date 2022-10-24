@@ -26,4 +26,9 @@ class Solicitud extends Model
     public function analisis (){
         return $this->belongsTo(Analisis_credito::class, 'id', 'solicituds_id');
     }
+    
+    public function scopeName ($query, $name){
+        if($name)
+        return $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%$name%' ");
+    }
 }

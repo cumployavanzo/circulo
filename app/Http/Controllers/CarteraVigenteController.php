@@ -12,11 +12,15 @@ class CarteraVigenteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $creditos = Analisis_credito::paginate(10);
-        $creditos = Analisis_credito::where('desembolso', 'Desembolsado')->paginate(10);
-        return view('admin.cartera_vigente.index', compact('creditos'));
+        $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
+        $creditos = Analisis_credito::name($name)
+        ->where('desembolso', 'Desembolsado')
+        ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
+        ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+        ->paginate(10);
+        return view('admin.cartera_vigente.index', compact('creditos','name'));
     }
 
     /**
