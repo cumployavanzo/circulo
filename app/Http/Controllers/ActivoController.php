@@ -75,6 +75,7 @@ class ActivoController extends Controller
             $producto->articulos_id = $request->input('Fk_articulo');
             $producto->cantidad = $request->input('cantidades');
             $producto->numero_serie = mb_strtoupper($request->input('num_serie'), 'UTF-8');
+            $producto->modelo = mb_strtoupper($request->input('modelo'), 'UTF-8');
             $producto->placas = mb_strtoupper($request->input('placas'), 'UTF-8');
             $producto->numero_economico = mb_strtoupper($request->input('num_economico'), 'UTF-8');
             $producto->costo_unitario = (str_replace(",","",$request->input('costo_unitario')));

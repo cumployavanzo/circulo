@@ -148,9 +148,13 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <label class="col-lg-1 col-form-label">Control</label>
-                                            <div class="col-lg-10">
-                                                <textarea id="num_serie" class="form-control text-uppercase" rows="2" type="text" name="num_serie" placeholder="Introduce Modelo/Número de serie"></textarea>
+                                            <label class="col-lg-1 col-form-label">Modelo</label>
+                                            <div class="col-lg-4">
+                                                <input id="modelo" class="form-control text-uppercase"  name="modelo"  placeholder="Modelo">
+                                            </div>
+                                            <label class="col-lg-2 col-form-label">Número de Serie</label>
+                                            <div class="col-lg-4">
+                                                <input id="num_serie" class="form-control text-uppercase"  name="num_serie"  placeholder="Num. Serie">
                                             </div>
                                         </div>
                                         <div class="form-group row">

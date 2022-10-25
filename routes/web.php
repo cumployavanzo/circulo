@@ -55,6 +55,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('movNomina', 'MovimientoNominaController');
     Route::resource('prestamoP', 'PrestamoPersonalController')->middleware('permiso');
     Route::resource('vencimiento', 'VencimientoController')->middleware('permiso');
+    Route::resource('asignacion', 'AsignacionController')->middleware('permiso');
 
     // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 
@@ -184,6 +185,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
     Route::post('prestamoP/reportePrestamo/','PrestamoPersonalController@reportePrestamos')->name('reportePrestamos');
     Route::get('detallesPrestamos/{id}', 'PrestamoPersonalController@show');
+
+    Route::get('asignacion/detalleActivo/{id}', 'AsignacionController@verDetalleCompraActivo')->name('verDetalleCompraActivo');
 
 
 

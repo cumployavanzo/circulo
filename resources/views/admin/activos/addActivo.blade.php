@@ -1,6 +1,6 @@
 @extends('layouts.AdminLTE.index')
-@section('title', 'Gastos')
-@section('header', 'Gastos')
+@section('title', 'Activos')
+@section('header', 'Activos')
 @section('content')
  <div class="card card-gray">
         <div class="card-header">
@@ -147,19 +147,24 @@
                                                     <input id="costo_unitario" class="form-control text-uppercase"  name="costo_unitario"  placeholder="Costo S/iva" required="">
                                                 </div>
                                             </div>
+                                           
                                             <div class="form-group row">
-                                                <label class="col-lg-1 col-form-label">Control</label>
-                                                <div class="col-lg-10">
-                                                    <textarea id="num_serie" class="form-control text-uppercase" rows="2" type="text" name="num_serie" placeholder="Introduce Modelo/Número de serie"></textarea>
+                                                <label class="col-lg-1 col-form-label">Modelo</label>
+                                                <div class="col-lg-4">
+                                                    <input id="modelo" class="form-control text-uppercase"  name="modelo"  placeholder="Modelo">
+                                                </div>
+                                                <label class="col-lg-2 col-form-label">Número de Serie</label>
+                                                <div class="col-lg-4">
+                                                    <input id="num_serie" class="form-control text-uppercase"  name="num_serie"  placeholder="Num. Serie">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label class="col-lg-1 col-form-label">Placas</label>
-                                                <div class="col-lg-3">
+                                                <div class="col-lg-4">
                                                     <input id="placas" class="form-control text-uppercase"  name="placas"  placeholder="Placas">
                                                 </div>
                                                 <label class="col-lg-2 col-form-label">Num. Economico</label>
-                                                <div class="col-lg-5">
+                                                <div class="col-lg-4">
                                                     <input id="num_economico" class="form-control text-uppercase"  name="num_economico"  placeholder="Num. Economico">
                                                 </div>
                                             </div>
