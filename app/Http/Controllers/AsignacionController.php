@@ -27,6 +27,7 @@ class AsignacionController extends Controller
     {
         $articulos_activo = Gasto::select('articulos.nombre_producto','detalles_compras.id')
         ->where('bandera', 'Activo')
+        ->where('articulos.clasificacion', 'Equipo de Transporte')
         ->join('detalles_compras', 'detalles_compras.compras_id', '=', 'compras.id')
         ->join('articulos', 'articulos.id', '=', 'detalles_compras.articulos_id')
         ->get();
