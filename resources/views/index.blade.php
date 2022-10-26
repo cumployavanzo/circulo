@@ -230,7 +230,7 @@
                   <div class="col-lg-3 col-6">
                     <div class="small-box bg-orange">
                       <div class="inner">
-                        <h4>$ {{ number_format($montoNomina[0]->sueldo_mensual,2,'.',',') }}</h4><p>Nomina</p>
+                        <h4>$ {{ number_format($montoNomina[0]->total_pagar,2,'.',',') }}</h4><p>Nomina</p>
                       </div>
                       <div class="icon">
                         <i class="fas fa-file-invoice-dollar"></i>
@@ -351,6 +351,18 @@
                   <a href="#" class="small-box-footer">TOTAL</a>
                 </div>
               </div>
+              <div class="col-lg-3 col-6">
+                <div class="small-box bg-orange">
+                  <div class="inner">
+                    <h4>$ {{ number_format($capitalMinistrado[0]->monto_autorizado,2,'.',',') }}</h4><p>Monto Desembolsado</p>
+                  </div>
+                  <div class="icon">
+                    <i class="nav-icon fas fa-comment-dollar"></i>
+                  </div>
+                  <a href="#" class="small-box-footer">TOTAL</a>
+                </div>
+              </div>
+             
               <div class="col-lg-3 col-6">
                 <div class="small-box bg-pink">
                   <div class="inner">

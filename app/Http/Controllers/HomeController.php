@@ -18,6 +18,7 @@ use App\Proveedor;
 use App\Gasto;
 use App\Banco;
 use App\Caja;
+use App\DetalleNomina;
 
 class HomeController extends Controller
 {
@@ -61,7 +62,7 @@ class HomeController extends Controller
         $plantilla = Personal::count();
         $altas = Personal::where('state','Activo')->count();
         $bajas = Personal::where('state','Inactivo')->count();
-        $montoNomina = Personal::selectRaw('SUM(sueldo_mensual) as sueldo_mensual')->where('state','Activo')->get();
+        $montoNomina = DetalleNomina::selectRaw('SUM(neto_pagar) as total_pagar')->get();
          ///** COMPRAS **///
         $articulos = Articulo::count();
         $proveedor = Proveedor::count();
