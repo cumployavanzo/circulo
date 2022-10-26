@@ -20,7 +20,8 @@ class SolicitudAdminController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $solicitudes = Solicitud::name($name)
+        $solicitudes = Solicitud::select('solicituds.*')
+        ->name($name)
         ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
         ->paginate(10);
 

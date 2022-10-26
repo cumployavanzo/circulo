@@ -15,7 +15,8 @@ class CarteraVigenteController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $creditos = Analisis_credito::name($name)
+        $creditos = Analisis_credito::select('analisis_credito.*')
+        ->name($name)
         ->where('desembolso', 'Desembolsado')
         ->join('solicituds', 'solicituds.id', '=', 'analisis_credito.solicituds_id')
         ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
