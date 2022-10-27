@@ -281,7 +281,7 @@
                   <div class="col-lg-3 col-6">
                     <div class="small-box bg-purple">
                       <div class="inner">
-                        <h4>{{$gasto}}</h4><p>Gastos</p>
+                        <h4>$ {{ number_format($gasto[0]->total_gasto,2,'.',',') }}</h4><p>Gastos</p>
                       </div>
                       <div class="icon">
                         <i class="nav-icon fas fa-store"></i>
@@ -293,7 +293,7 @@
                   <div class="col-lg-3 col-6">
                     <div class="small-box bg-success">
                       <div class="inner">
-                        <h4>{{$activo}}</h4><p>Activos</p>
+                        <h4>$ {{ number_format($activo[0]->total_activo,2,'.',',') }}</h4><p>Activos</p>
                       </div>
                       <div class="icon">
                         <i class="fas fa-chart-line"></i>
@@ -305,7 +305,7 @@
                   <div class="col-lg-3 col-6">
                     <div class="small-box bg-warning">
                       <div class="inner">
-                        <h4>{{$noDeducible}}</h4><p>No deducibles</p>
+                        <h4>$ {{ number_format($noDeducible[0]->total_noDeducible,2,'.',',') }}</h4><p>No deducibles</p>
                       </div>
                       <div class="icon">
                         <i class="fas fa-chart-bar"></i>

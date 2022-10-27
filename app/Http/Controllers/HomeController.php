@@ -66,9 +66,9 @@ class HomeController extends Controller
          ///** COMPRAS **///
         $articulos = Articulo::count();
         $proveedor = Proveedor::count();
-        $gasto = Gasto::where('bandera', 'Compra')->count();
-        $activo = Gasto::where('bandera', 'Activo')->count();
-        $noDeducible = Gasto::where('bandera', 'No deducible')->count();
+        $gasto = Gasto::selectRaw('SUM(total) as total_gasto')->where('bandera', 'Compra')->get();
+        $activo = Gasto::selectRaw('SUM(total) as total_activo')->where('bandera', 'Activo')->get();
+        $noDeducible = Gasto::selectRaw('SUM(total) as total_noDeducible')->where('bandera', 'No deducible')->get();
         ///** COMPRAS **///
         $bancos = Banco::count();
         $cajas = Caja::count();
