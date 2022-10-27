@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 use App\SucursalRuta;
-
+use App\Exports\SucursalesExport;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SucursalRutaController extends Controller
 {
@@ -11,7 +12,11 @@ class SucursalRutaController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $sucursales = SucursalRuta::name($name)->paginate(10);
+        if($request->estatus){
+            $sucursales = SucursalRuta::where('state', $request->estatus)->name($name)->paginate(10);
+        }else{
+            $sucursales = SucursalRuta::name($name)->paginate(10);
+        }
         return view('admin.sucursal_ruta.index', compact('sucursales','name'));
     }
 
@@ -64,5 +69,10 @@ class SucursalRutaController extends Controller
             ]);
         }
         return response()->json(["data" => "ok"]);
+    }
+
+    public function reporteSucursales(){
+        $data = SucursalRuta::orderBy('nombre_ruta', 'ASC');
+        return Excel::download(new SucursalesExport($data->get()), 'sucursales'. '.xlsx');
     }
 }

@@ -6,10 +6,20 @@
 @section('content')
     
     <div class="card">
+       
         <div class="card-header with-border">
             <h3 class="card-title">Lista de Sucursal</h3>
-            <div class="card-tools pull-right">
-                <a href="{{ route('admin.sucursal_ruta.create') }}"   type="button" class="btn btn-sm btn-primary" title="Agregar Caja"><li class="fas fa-plus"></li>&nbsp; Nueva Sucursal</a>
+            <div class="card-tools">
+                <div class="form-group float-right">
+                    <div class="d-flex">
+                        <a href="{{ route('admin.sucursal_ruta.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Sucursal"><li class="fas fa-plus"></li>&nbsp; Nueva Sucursal</a>&nbsp;
+                        <form action="{{ route('admin.reporteSucursales') }}" method="POST">
+                            @method('post')
+                            @csrf
+                            <button class="btn btn-sm btn-info" title="Generar Reporte" type="submit" href="#"><i class="fas fa-file-excel"></i> Reporte</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-body">
@@ -23,6 +33,26 @@
                     </div>
                 </div>
             </form>
+            <div class="form-group float-right">
+                <div class="d-flex">
+                    <form action="{{ route('admin.sucursal_ruta.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Activo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-success">0</span>
+                            <i class="fas fa-check"></i> Activos
+                        </button>
+                    </form>
+                    <form action="{{ route('admin.sucursal_ruta.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Inactivo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-danger">0</span>
+                            <i class="fas fa-times"></i> Inactivos
+                        </button>
+                    </form>
+                </div>
+            </div>
             <table class="table table-striped projects">
                 <thead>
                     <tr>

@@ -85,6 +85,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('personales/datosPersonal/{idEmpleado}', 'PersonalAdminController@verDetalleEmpleado')->name('verDetalleEmpleado');
 
 
+    Route::post('sucursal_ruta/reporteSuc/','SucursalRutaController@reporteSucursales')->name('reporteSucursales');
 
 
     Route::get('asociados/addasociados', 'AsociadoAdminController@create')->name('addasociado');
