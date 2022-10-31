@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Personal;
 use App\Puesto;
 use App\HistorialBaja;
+use App\EstadoNacimiento;
 use DateTime;
 use Carbon\Carbon;
 
@@ -40,7 +41,8 @@ class PersonalAdminController extends Controller
     public function create()
     {
         $puestos = Puesto::all();
-        return view('admin.personales.addPersonal', compact('puestos'));
+        $estados_nac = EstadoNacimiento::all();
+        return view('admin.personales.addPersonal', compact('puestos','estados_nac'));
 
     }
 
@@ -53,10 +55,10 @@ class PersonalAdminController extends Controller
         $personal->apellido_materno = mb_strtoupper($request->input('txt_apellido_materno'), 'UTF-8');
         $personal->fecha_nacimiento = $request->input('txt_fecha_nac');
         $personal->edad = $request->input('txt_edad');
-        $personal->genero = mb_strtoupper($request->input('txt_genero'), 'UTF-8');
+        $personal->genero = $request->input('txt_genero');
         $personal->ciudad_nacimiento = mb_strtoupper($request->input('txt_ciudad_nacimiento'), 'UTF-8');
         $personal->nacionalidad = mb_strtoupper($request->input('txt_nacionalidad'), 'UTF-8');
-        $personal->estado_nacimiento = mb_strtoupper($request->input('txt_estado_nacimiento'), 'UTF-8');
+        $personal->estados_nacimientos_id = $request->input('txt_estado_nacimiento');
         $personal->rfc = mb_strtoupper($request->input('txt_rfc'), 'UTF-8');
         $personal->curp = mb_strtoupper($request->input('txt_curp'), 'UTF-8');
         $personal->celular = $request->input('txt_celular');
@@ -117,7 +119,13 @@ class PersonalAdminController extends Controller
             $opcionPuesto = $personal->puestoid()->first('id')->id;
         }
 
-        return view('admin.personales.editPersonal', compact('personal','puestos','opcionPuesto'));
+        $estados_nac = EstadoNacimiento::all(); 
+        $opcionEstado = "N/A";
+        if($personal->estadoNac()->first('clave') != null){
+            $opcionEstado = $personal->estadoNac()->first('clave')->clave;
+        }
+
+        return view('admin.personales.editPersonal', compact('personal','puestos','opcionPuesto','opcionEstado','estados_nac'));
     }
 
     public function update(Request $request, $id)
@@ -128,10 +136,10 @@ class PersonalAdminController extends Controller
             'apellido_materno' => mb_strtoupper($request->txt_apellido_materno,'UTF-8'),
             'fecha_nacimiento' => $request->txt_fecha_nac,
             'edad' => $request->txt_edad,
-            'genero' => mb_strtoupper($request->txt_genero,'UTF-8'),
+            'genero' => $request->txt_genero,
             'ciudad_nacimiento' => mb_strtoupper($request->txt_ciudad_nacimiento,'UTF-8'),
             'nacionalidad' => mb_strtoupper($request->txt_nacionalidad, 'UTF-8'),
-            'estado_nacimiento' => mb_strtoupper($request->txt_estado_nacimiento,'UTF-8'),
+            'estados_nacimientos_id' => $request->txt_estado_nacimiento,
             'rfc' => mb_strtoupper($request->txt_rfc,'UTF-8'),
             'curp' => mb_strtoupper($request->txt_curp,'UTF-8'),
             'celular' => $request->txt_celular,
@@ -216,4 +224,49 @@ class PersonalAdminController extends Controller
         return json_encode($tableEmpleado);
 
     }  
+
+    public function curpEmpleado(Request $request)
+    {
+        
+        $primerApellido = urlencode($request->primerApellido);
+        $segundoApellido = urlencode($request->segundoApellido);
+        $nombre = urlencode($request->nombre);
+        $diaNacimiento ='30';
+        $mesNaciemiento = '11';
+        $anioNacimiento = '1995';
+        $sexo = $request->sexo;
+        $entidadNacimiento = $request->entidadNacimiento;
+        
+        $aContext = array(
+            'http' => array(
+                'header'=>"Accept-language: es-es,es;q=0.8,en-us;q=0.5,en;q=0.3\r\n" .
+                    "Proxy-Connection: keep-alive\r\n" .
+                    "Host: consultas.curp.gob.mx\r\n" .
+                    "User-Agent: Mozilla/5.0 (Windows; U; Windows NT 6.0; es-ES; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 (.NET CLR 3.5.30729)\r\n" .
+                    "Keep-Alive: 300\r\n" .
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\n"
+                    //, 'proxy' => 'tcp://proxy:puerto', //Si utilizas algun proxy para salir a internet descomenta esta linea y por la direccion de tu proxy y el puerto
+                    //'request_fulluri' => True //Tambien esta si utilizas algun proxy
+
+                ),
+            );
+        $cxContext = stream_context_create($aContext);
+        $URL = url('http://consultas.curp.gob.mx/CurpSP/curp1.do') . '?' . http_build_query(['primerApellido' => $primerApellido, 'segundoApellido' => $segundoApellido, 'nombre' => $nombre, 'diaNacimiento' => $diaNacimiento, 'mesNaciemiento' => $mesNaciemiento, 'anioNacimiento' => $anioNacimiento, 'entidadNacimiento' => $entidadNacimiento, 'rdbBD' => 'myoracle', 'strTipo' => 'A', 'entfija' => 'DF', 'depfija' => '04']);
+            
+        // $url = "http://consultas.curp.gob.mx/CurpSP/curp1.do?strPrimerApellido=$primerApellido&strSegundoAplido=$segundoApellido&strNombre=$nombre&strdia=$diaNacimiento&strmes=$mesNaciemiento&stranio=$anioNacimiento&sSexoA=$sexo&sEntidadA=$entidadNacimiento&rdbBD=myoracle&strTipo=A&entfija=DF&depfija=04";
+        $file = file_get_contents($url, false, $cxContext);
+        dd($url,$file);
+
+        //     preg_match_all("/var strCurp=\"(.*)\"/", $file, $curp);
+        // $curp = $curp[1][0];
+        //     if($curp){
+        //         return $curp;
+        //     }else{
+        //         $curp = "Curp no encontrado.";
+        //         return $curp;
+        //     }
+        // }
+      
+    }
+    
 }

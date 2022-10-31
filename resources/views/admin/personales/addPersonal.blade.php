@@ -12,6 +12,7 @@
         <form method="POST" action="{{ route('admin.addpersonal') }}" autocomplete="off">
             @csrf
         <div class="card-body">
+            
             <div class="d-flex justify-content-start">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -49,9 +50,9 @@
                     <div class="form-group">
                         <label for="txt_genero">Género</label>
                         <select class="form-control" id="txt_genero" name="txt_genero">
-                            <option>Masculino</option>
-                            <option>Femenino</option>
-                            <option>Indistinto</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="x">Indistinto</option>
                         </select>
                     </div>
                 </div>
@@ -66,41 +67,11 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="txt_estado_nacimiento">Estado de Nacimiento</label>
-                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required>
-                            <option value="">Seleccionar</option>
-                            <option value="AGUASCALIENTES">AGUASCALIENTES</option>
-                            <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                            <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                            <option value="CAMPECHE">CAMPECHE</option>
-                            <option value="CHIAPAS">CHIAPAS</option>
-                            <option value="CHIHUAHUA">CHIHUAHUA</option>
-                            <option value="COAHUILA">COAHUILA</option>
-                            <option value="COLIMA">COLIMA</option>
-                            <option value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                            <option value="DURANGO">DURANGO</option>
-                            <option value="GUANAJUATO">GUANAJUATO</option>
-                            <option value="GUERRERO">GUERRERO</option>
-                            <option value="HIDALGO">HIDALGO</option>
-                            <option value="JALISCO">JALISCO</option>
-                            <option value="MEXICO">MEXICO</option>
-                            <option value="MORELOS">MORELOS</option>
-                            <option value="MICHOACAN">MICHOACAN</option>
-                            <option value="NAYARIT">NAYARIT</option>
-                            <option value="NUEVO LEON">NUEVO LEON</option>
-                            <option value="OAXACA">OAXACA</option>
-                            <option value="PUEBLA">PUEBLA</option>
-                            <option value="QUERETARO">QUERETARO</option>
-                            <option value="QUINTANA ROO">QUINTANA ROO</option>
-                            <option value="SAN LUIS POTOSI">SAN LUIS POTOSI</option>
-                            <option value="SINALOA">SINALOA</option>
-                            <option value="SONORA">SONORA</option>
-                            <option value="TABASCO">TABASCO</option>
-                            <option value="TAMAULIPAS">TAMAULIPAS</option>
-                            <option value="TLAXCALA">TLAXCALA</option>
-                            <option value="VERACRUZ">VERACRUZ</option>
-                            <option value="YUCATAN">YUCATAN</option>
-                            <option value="ZACATECAS">ZACATECAS</option>
-                            <option value="EXTRANJERO">EXTRANJERO</option>
+                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required onchange="btGenCurp(this.form, '3');">
+                            <option value="">Selecciona</option>
+                            @foreach($estados_nac as $estados)
+                                <option {{ old('txt_estado_nacimiento') == $estados->clave ? 'selected' : '' }} value="{{$estados->clave}}">{{$estados->nombre}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -114,14 +85,14 @@
             <div class="d-flex justify-content-start">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="txt_rfc">RFC</label>
-                        <input type="text" id="txt_rfc" name="txt_rfc" class="form-control text-uppercase" placeholder="RFC" maxlength="13">
+                        <label for="txt_curp">CURP</label>
+                        <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" maxlength="18">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="txt_curp">CURP</label>
-                        <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" maxlength="18">
+                        <label for="txt_rfc">RFC</label>
+                        <input type="text" id="txt_rfc" name="txt_rfc" class="form-control text-uppercase" placeholder="RFC" maxlength="13">
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -364,6 +335,7 @@
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset('scripts/js/curp.js') }}"></script>
 <script>
     $("#txt_codigo_postal").focusout(function() {
         cp = $('#txt_codigo_postal').val();

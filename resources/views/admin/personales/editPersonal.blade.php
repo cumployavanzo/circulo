@@ -56,9 +56,9 @@
                     <div class="form-group">
                         <label for="txt_genero">Género</label>
                         <select class="form-control" id="txt_genero" name="txt_genero">
-                            <option {{ $personal->genero == 'MASCULINO' ? 'selected' : ''}} value="MASCULINO">Masculino</option>
-                            <option {{ $personal->genero == 'FEMENINO' ? 'selected' : ''}} value="FEMENINO">Femenino</option>
-                            <option {{ $personal->genero == 'INDISTINTO' ? 'selected' : ''}} value="INDISTINTO">Indistinto</option>
+                            <option {{ $personal->genero == 'M' ? 'selected' : ''}} value="M">Masculino</option>
+                            <option {{ $personal->genero == 'F' ? 'selected' : ''}} value="F">Femenino</option>
+                            <option {{ $personal->genero == 'x' ? 'selected' : ''}} value="x">Indistinto</option>
                         </select>
                     </div>
                 </div>
@@ -73,41 +73,11 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="txt_estado_nacimiento">Estado de Nacimiento</label>
-                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required>
+                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required onchange="btGenCurp(this.form, '3');">
                             <option value="">Seleccionar</option>
-                            <option {{ $personal->estado == 'AGUASCALIENTES' ? 'selected' : ''}} value="AGUASCALIENTES">AGUASCALIENTES</option>
-                            <option {{ $personal->estado == 'BAJA CALIFORNIA' ? 'selected' : ''}} value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                            <option {{ $personal->estado == 'BAJA CALIFORNIA SUR' ? 'selected' : ''}} value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                            <option {{ $personal->estado == 'CAMPECHE' ? 'selected' : ''}} value="CAMPECHE">CAMPECHE</option>
-                            <option {{ $personal->estado == 'CHIAPAS' ? 'selected' : ''}} value="CHIAPAS">CHIAPAS</option>
-                            <option {{ $personal->estado == 'CHIHUAHUA' ? 'selected' : ''}} value="CHIHUAHUA">CHIHUAHUA</option>
-                            <option {{ $personal->estado == 'COAHUILA' ? 'selected' : ''}} value="COAHUILA">COAHUILA</option>
-                            <option {{ $personal->estado == 'COLIMA' ? 'selected' : ''}} value="COLIMA">COLIMA</option>
-                            <option {{ $personal->estado == 'DISTRITO FEDERAL' ? 'selected' : ''}} value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                            <option {{ $personal->estado == 'DURANGO' ? 'selected' : ''}} value="DURANGO">DURANGO</option>
-                            <option {{ $personal->estado == 'GUANAJUATO' ? 'selected' : ''}} value="GUANAJUATO">GUANAJUATO</option>
-                            <option {{ $personal->estado == 'GUERRERO' ? 'selected' : ''}} value="GUERRERO">GUERRERO</option>
-                            <option {{ $personal->estado == 'HIDALGO' ? 'selected' : ''}} value="HIDALGO">HIDALGO</option>
-                            <option {{ $personal->estado == 'JALISCO' ? 'selected' : ''}} value="JALISCO">JALISCO</option>
-                            <option {{ $personal->estado == 'MEXICO' ? 'selected' : ''}} value="MEXICO">MÉXICO</option>
-                            <option {{ $personal->estado == 'MORELOS' ? 'selected' : ''}} value="MORELOS">MORELOS</option>
-                            <option {{ $personal->estado == 'MICHOACAN' ? 'selected' : ''}} value="MICHOACAN">MICHOACAN</option>
-                            <option {{ $personal->estado == 'NAYARIT' ? 'selected' : ''}} value="NAYARIT">NAYARIT</option>
-                            <option {{ $personal->estado == 'NUEVO LEON' ? 'selected' : ''}} value="NUEVO LEON">NUEVO LEON</option>
-                            <option {{ $personal->estado == 'OAXACA' ? 'selected' : ''}} value="OAXACA">OAXACA</option>
-                            <option {{ $personal->estado == 'PUEBLA' ? 'selected' : ''}} value="PUEBLA">PUEBLA</option>
-                            <option {{ $personal->estado == 'QUERETARO' ? 'selected' : ''}} value="QUERETARO">QUERETARO</option>
-                            <option {{ $personal->estado == 'QUINTANA ROO' ? 'selected' : ''}} value="QUINTANA ROO">QUINTANA ROO</option>
-                            <option {{ $personal->estado == 'SAN LUIS POTOSI' ? 'selected' : ''}} value="SAN LUIS POTOSI">SAN LUIS POTOSI</option>
-                            <option {{ $personal->estado == 'SINALOA' ? 'selected' : ''}} value="SINALOA">SINALOA</option>
-                            <option {{ $personal->estado == 'SONORA' ? 'selected' : ''}} value="SONORA">SONORA</option>
-                            <option {{ $personal->estado == 'TABASCO' ? 'selected' : ''}} value="TABASCO">TABASCO</option>
-                            <option {{ $personal->estado == 'TAMAULIPAS' ? 'selected' : ''}} value="TAMAULIPAS">TAMAULIPAS</option>
-                            <option {{ $personal->estado == 'TLAXCALA' ? 'selected' : ''}} value="TLAXCALA">TLAXCALA</option>
-                            <option {{ $personal->estado == 'VERACRUZ' ? 'selected' : ''}} value="VERACRUZ">VERACRUZ</option>
-                            <option {{ $personal->estado == 'YUCATAN' ? 'selected' : ''}} value="YUCATAN">YUCATAN</option>
-                            <option {{ $personal->estado == 'ZACATECAS' ? 'selected' : ''}} value="ZACATECAS">ZACATECAS</option>
-                            <option {{ $personal->estado == 'EXTRANJERO' ? 'selected' : ''}} value="EXTRANJERO">EXTRANJERO</option>
+                            @foreach($estados_nac as $estado)
+                                <option {{ old('txt_estado') == $estado->clave ? 'selected' : ($opcionEstado != "N/A" ? ($opcionEstado == $estado->clave ? 'selected' : '')  : '') }} value="{{$estado->clave}}">{{$estado->nombre}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -121,14 +91,14 @@
             <div class="d-flex justify-content-start">
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="txt_rfc">RFC</label>
-                        <input type="text" id="txt_rfc" name="txt_rfc" class="form-control text-uppercase" placeholder="RFC" value="{{ $personal->rfc}}" maxlength="13">
+                        <label for="txt_curp">CURP</label>
+                        <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" value="{{ $personal->curp}}" maxlength="18">
                     </div>
                 </div>
                 <div class="col-sm-4">
                     <div class="form-group">
-                        <label for="txt_curp">CURP</label>
-                        <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" value="{{ $personal->curp}}" maxlength="18">
+                        <label for="txt_rfc">RFC</label>
+                        <input type="text" id="txt_rfc" name="txt_rfc" class="form-control text-uppercase" placeholder="RFC" value="{{ $personal->rfc}}" maxlength="13">
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -371,6 +341,7 @@
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset('scripts/js/curp.js') }}"></script>
 <script>
     $("#txt_codigo_postal").focusout(function() {
         cp = $('#txt_codigo_postal').val();

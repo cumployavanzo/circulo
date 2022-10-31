@@ -83,6 +83,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('personales/detalleTablaEmpleados/', 'PersonalAdminController@tablaEmpleados')->name('tablaEmpleados');
     Route::post('personales/bajaPersonal', 'PersonalAdminController@baja')->name('bajaEmpleado');
     Route::get('personales/datosPersonal/{idEmpleado}', 'PersonalAdminController@verDetalleEmpleado')->name('verDetalleEmpleado');
+    
 
 
     Route::post('sucursal_ruta/reporteSuc/','SucursalRutaController@reporteSucursales')->name('reporteSucursales');

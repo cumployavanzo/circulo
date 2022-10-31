@@ -28,6 +28,10 @@ class Personal extends Model
         return $this->belongsTo(Puesto::class, 'puesto', 'puesto');
     }
 
+    public function estadoNac (){
+        return $this->hasOne(EstadoNacimiento::class, 'clave', 'estados_nacimientos_id');
+    }
+
     public function scopeName ($query, $name){
         if($name)
         // return $query->where('nombre','LIKE', "%$name%");
