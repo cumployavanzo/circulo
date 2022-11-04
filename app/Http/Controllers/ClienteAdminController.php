@@ -25,9 +25,17 @@ class ClienteAdminController extends Controller
         $ClienteController = new ClienteController();
         // $clientes = $ClienteController->name($name)->getClientesPaginate();
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $clientes = Cliente::name($name)->paginate(10);
         $asociados = Asociado::all(); 
-        return view('admin.clientes.index', compact('clientes','asociados','name'));
+
+        if($request->estatus){
+            $clientes = Cliente::where('estatus', $request->estatus)->name($name)->paginate(10);
+        }else{
+            $clientes = Cliente::name($name)->paginate(10);
+        }
+        $estatusInactivo = Cliente::where('estatus', 'Inactivo')->get();
+        $estatusActivo = Cliente::where('estatus', 'Activo')->get();
+
+        return view('admin.clientes.index', compact('clientes','asociados','name','estatusInactivo','estatusActivo'));
     }
 
     public function create()
@@ -191,5 +199,19 @@ class ClienteAdminController extends Controller
     public function verProspecto($id){
         $prospectos = Prospecto::where('id', $id)->first();
         return response()->json(["prospectos" => $prospectos]);
+    }
+
+    public function actualizarEstadoCliente($id){
+        $state = Cliente::where('id', $id)->pluck('estatus');
+        if($state[0] == 'Activo') {
+            Cliente::where('id', $id)->update([
+                'estatus' => 'Inactivo'
+            ]);
+        }else{
+            Cliente::where('id', $id)->update([
+                'estatus' => 'Activo'
+            ]);
+        }
+        return response()->json(["data" => "ok"]);
     }
 }

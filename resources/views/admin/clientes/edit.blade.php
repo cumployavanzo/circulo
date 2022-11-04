@@ -342,8 +342,11 @@
                 </div>
             </div>
         </div>              
-        <div class="card-footer" id="botonera">
-            <button type="submit" class="btn btn-primary float-right">Guardar</button>
+        <div class="card-footer">
+            <div class="col-12">
+                <a type="button" href="{{ route('admin.cliente.index') }}" class="btn btn-danger float-right">Cerrar</a>
+                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">Guardar</button>
+            </div>
         </div>
         </form>
     </div>

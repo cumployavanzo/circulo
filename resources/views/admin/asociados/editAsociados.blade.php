@@ -375,7 +375,10 @@
             </div>
         </div>              
         <div class="card-footer">
-            <button type="submit" class="btn btn-primary float-right">Guardar</button>
+            <div class="col-12">
+                <a type="button" href="{{ route('admin.asociado.index') }}" class="btn btn-danger float-right">Cerrar</a>
+                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">Guardar</button>
+            </div>
         </div>
         </form>
     </div>

@@ -96,12 +96,18 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('asociados/addasociados', 'AsociadoAdminController@create')->name('addasociado');
     Route::post('asociados/addasociados', 'AsociadoAdminController@store')->name('addAsociados');
     Route::delete('asociados/deleteAsociado/{id}', 'AsociadoAdminController@destroy')->name('deleteAsociado');
+    Route::post('asociados/reporteAsoc/','AsociadoAdminController@reporteAsociados')->name('reporteAsociados');
+    Route::put('asociados/{id}', 'AsociadoAdminController@actualizarEstadoAsociado');
+
+
 
     Route::get('clientes/addclientes', 'ClienteAdminController@create')->name('addcliente');
     Route::post('clientes/addclientes', 'ClienteAdminController@store')->name('addClientes');
     Route::delete('clientes/deleteCliente/{id}', 'ClienteAdminController@destroy')->name('deleteCliente');
     Route::get('clientes/validarClaveElector/{id}', 'ClienteAdminController@existeCliente');
     Route::get('clientes/cargaProspecto/{id}', 'ClienteAdminController@verProspecto')->name('verProspecto');
+    Route::put('clientes/{id}', 'ClienteAdminController@actualizarEstadoCliente');
+
 
 
 

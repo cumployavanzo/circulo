@@ -75,9 +75,9 @@
                         <td>{{ $sucursal->telefono }}</td>
                         <td>
                             @if ($sucursal->state == 'Activo')
-                                <span data-id="{{ $sucursal->id }}" class="badge bg-success badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para inactivar este Usuario">{{$sucursal->state}}</span>
+                                <span data-id="{{ $sucursal->id }}" class="badge bg-success badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para inactivar esta Ruta">{{$sucursal->state}}</span>
                             @else
-                                <span data-id="{{ $sucursal->id }}" class="badge bg-danger badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para activar este Usuario">{{$sucursal->state}}</span>
+                                <span data-id="{{ $sucursal->id }}" class="badge bg-danger badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para activar esta Ruta">{{$sucursal->state}}</span>
                             @endif
                         </td>
                         <td class="project-actions d-flex">
@@ -104,7 +104,7 @@
         id = this.getAttribute('data-id');
         var boton = $(this)
         $.ajax({
-            url: "{{ asset('admin/sucursales') }}/" + id,
+            url: "{{ asset('admin/asociados') }}/" + id,
             type: 'put',
             cache: false,
             beforeSend: function (){

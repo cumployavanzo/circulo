@@ -6,6 +6,8 @@ use App\Asociado;
 use App\Personal;
 use App\Puesto;
 use App\SucursalRuta;
+use App\Exports\AsociadosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Illuminate\Http\Request;
 
@@ -19,8 +21,14 @@ class AsociadoAdminController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $asociados = Asociado::name($name)->paginate(10);
-        return view('admin.asociados.index', compact('asociados','name'));
+        if($request->estatus){
+            $asociados = Asociado::where('estatus', $request->estatus)->name($name)->paginate(10);
+        }else{
+            $asociados = Asociado::name($name)->paginate(10);
+        }
+        $estatusInactivo = Asociado::where('estatus', 'Inactivo')->get();
+        $estatusActivo = Asociado::where('estatus', 'Activo')->get();
+        return view('admin.asociados.index', compact('asociados','name','estatusActivo','estatusInactivo'));
     }
 
     public function create()
@@ -159,5 +167,24 @@ class AsociadoAdminController extends Controller
         $asociado->delete();
         return redirect()->route('admin.asociado.index');
         // return back()->with('success','Se ha borrado el asociado exitosamente');
+    }
+
+    public function reporteAsociados(){
+        $data = Asociado::orderBy('nombre', 'ASC')->orderBy('apellido_paterno', 'ASC');
+        return Excel::download(new AsociadosExport($data->get()), 'asociados'. '.xlsx');
+    }
+
+    public function actualizarEstadoAsociado($id){
+        $state = Asociado::where('id', $id)->pluck('estatus');
+        if($state[0] == 'Activo') {
+            Asociado::where('id', $id)->update([
+                'estatus' => 'Inactivo'
+            ]);
+        }else{
+            Asociado::where('id', $id)->update([
+                'estatus' => 'Activo'
+            ]);
+        }
+        return response()->json(["data" => "ok"]);
     }
 }

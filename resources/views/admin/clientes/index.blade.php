@@ -24,6 +24,26 @@
                     </div>
                 </div>
             </form>
+            <div class="form-group float-right">
+                <div class="d-flex">
+                    <form action="{{ route('admin.cliente.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Activo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-success">{{$estatusActivo->count()}}</span>
+                            <i class="fas fa-user-check"></i> Activos
+                        </button>
+                    </form>
+                    <form action="{{ route('admin.cliente.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Inactivo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-danger">{{$estatusInactivo->count()}}</span>
+                            <i class="fas fa-user-times"></i> Inactivos
+                        </button>
+                    </form>
+                </div>
+            </div>
             <table class="table table-striped projects">
                 <thead>
                     <tr>
@@ -32,6 +52,7 @@
                         <th>Genero</th>
                         <th>Fecha Nac.</th>
                         <th>Edad</th>
+                        <th>Estatus</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -52,6 +73,13 @@
                         <td>{{ $genero }}</td>
                         <td>{{ $cliente->fecha_nacimiento }}</td>
                         <td>{{ $cliente->edad }} Años</td>
+                        <td>
+                            @if ($cliente->estatus == 'Activo')
+                                <span data-id="{{ $cliente->id }}" class="badge bg-success badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para inactivar cliente">{{$cliente->estatus}}</span>
+                            @else
+                                <span data-id="{{ $cliente->id }}" class="badge bg-danger badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para activar cliente">{{$cliente->estatus}}</span>
+                            @endif
+                        </td>
                         <td class="project-actions d-flex">
                             <a class="btn btn-info btn-sm mr-2" href="{{ route('admin.cliente.edit', [$cliente->id]) }}"><i class="fas fa-pencil-alt"></i>Editar</a>
                             {{-- <form action="{{ route('admin.deleteCliente', [$cliente->id]) }}" method="POST">
@@ -107,9 +135,41 @@
 </div>
 @push('scripts')
 <script>
+     $.ajaxSetup({
+        headers: {
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+         }
+    });
+    
     $("#txt_asociado").select2({
         theme:"bootstrap4"
     });
     
+    $(".badgebtn").on('click', function(){
+        id = this.getAttribute('data-id');
+        var boton = $(this)
+        $.ajax({
+            url: "{{ asset('admin/clientes') }}/" + id,
+            type: 'put',
+            cache: false,
+            beforeSend: function (){
+
+            },
+            success: function(data){
+                console.log(data);
+                if (boton.hasClass('bg-success')) {
+                    boton.removeClass('bg-success').addClass('bg-danger')
+                    boton.text('Inactivo')
+                    boton.attr('data-original-title', 'Haz click para activar este Cliente')
+                    
+                }
+                else if(boton.hasClass('bg-danger')) {
+                    boton.removeClass('bg-danger').addClass('bg-success')
+                    boton.text('Activo')
+                    boton.attr('data-original-title', 'Haz click para inactivar este Cliente')
+                }
+            },
+        })
+    });
 </script>
 @endpush
