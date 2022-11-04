@@ -12,6 +12,22 @@
         <form method="POST" action="{{ route('admin.cliente.store') }}" autocomplete="off">
         @csrf
         <div class="card-body">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="txt_nombre_prospecto" class="">Prospectos</label>
+                    <select type="select" id="txt_nombre_prospecto" name="txt_nombre_prospecto" class="form-control select2 " required onchange="cargarProspecto();">
+                        <option value="">Selecciona</option>
+                        @foreach($prospectos as $prospecto)
+                            <option {{ old('txt_nombre_prospecto') == $prospecto->id ? 'selected' : '' }} value="{{$prospecto->id}}">{{$prospecto->getFullname()}}</option>
+                        @endforeach
+                    </select>
+                    @error('userType')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
             <div class="d-flex justify-content-start">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -50,9 +66,9 @@
                     <div class="form-group">
                         <label for="txt_genero">Género</label>
                         <select class="form-control" id="txt_genero" name="txt_genero">
-                            <option>Masculino</option>
-                            <option>Femenino</option>
-                            <option>Indistinto</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="x">Indistinto</option>
                         </select>
                     </div>
                 </div>
@@ -67,41 +83,11 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="txt_estado_nacimiento">Estado de Nacimiento</label>
-                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required>
-                            <option value="">Seleccionar</option>
-                            <option value="AGUASCALIENTES">AGUASCALIENTES</option>
-                            <option value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                            <option value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                            <option value="CAMPECHE">CAMPECHE</option>
-                            <option value="CHIAPAS">CHIAPAS</option>
-                            <option value="CHIHUAHUA">CHIHUAHUA</option>
-                            <option value="COAHUILA">COAHUILA</option>
-                            <option value="COLIMA">COLIMA</option>
-                            <option value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                            <option value="DURANGO">DURANGO</option>
-                            <option value="GUANAJUATO">GUANAJUATO</option>
-                            <option value="GUERRERO">GUERRERO</option>
-                            <option value="HIDALGO">HIDALGO</option>
-                            <option value="JALISCO">JALISCO</option>
-                            <option value="MEXICO">MEXICO</option>
-                            <option value="MORELOS">MORELOS</option>
-                            <option value="MICHOACAN">MICHOACAN</option>
-                            <option value="NAYARIT">NAYARIT</option>
-                            <option value="NUEVO LEON">NUEVO LEON</option>
-                            <option value="OAXACA">OAXACA</option>
-                            <option value="PUEBLA">PUEBLA</option>
-                            <option value="QUERETARO">QUERETARO</option>
-                            <option value="QUINTANA ROO">QUINTANA ROO</option>
-                            <option value="SAN LUIS POTOSI">SAN LUIS POTOSI</option>
-                            <option value="SINALOA">SINALOA</option>
-                            <option value="SONORA">SONORA</option>
-                            <option value="TABASCO">TABASCO</option>
-                            <option value="TAMAULIPAS">TAMAULIPAS</option>
-                            <option value="TLAXCALA">TLAXCALA</option>
-                            <option value="VERACRUZ">VERACRUZ</option>
-                            <option value="YUCATAN">YUCATAN</option>
-                            <option value="ZACATECAS">ZACATECAS</option>
-                            <option value="EXTRANJERO">EXTRANJERO</option>
+                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required onchange="btGenCurp(this.form, '3');">
+                            <option value="">Selecciona</option>
+                            @foreach($estados_nac as $estados)
+                                <option {{ old('txt_estado_nacimiento') == $estados->clave ? 'selected' : '' }} value="{{$estados->clave}}">{{$estados->nombre}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -169,7 +155,6 @@
                     <div class="form-group" id="theSuburb">
                         <label for="txt_colonia">Colonia</label>
                         <select name="txt_colonia" id="txt_colonia" class="form-control text-uppercase theSuburbs" required>
-                            <option value=""> - </option>
                         </select>
                     </div>
                 </div>
@@ -466,6 +451,10 @@
         theme:"bootstrap4"
     });
 
+    $("#txt_nombre_prospecto").select2({
+        theme:"bootstrap4"
+    });
+
     $("#txt_cuenta").select2({
         theme:"bootstrap4"
     });
@@ -492,6 +481,37 @@
             },
         })
         return false;
+    }
+
+    function cargarProspecto(){
+        idProspecto = document.getElementById("txt_nombre_prospecto").value;
+        $.ajax({
+            url: "{{ asset('admin/clientes/cargaProspecto') }}/" + idProspecto,
+            type: 'get',
+            cache: false,
+            beforeSend(){
+
+            },
+            success: function(data){
+                console.log(data.prospectos)
+
+                $('#txt_nombre').val(data.prospectos.nombre);
+                $('#txt_apellido_paterno').val(data.prospectos.apellido_paterno);
+                $('#txt_apellido_materno').val(data.prospectos.apellido_materno);
+                $('#txt_fecha_nac').val(data.prospectos.fecha_nacimiento);
+                $('#txt_edad').val(data.prospectos.edad);
+                $('#txt_genero').val(data.prospectos.genero);
+                $('#txt_celular').val(data.prospectos.telefono);
+                $('#txt_curp').val(data.prospectos.curp);
+                $('#txt_estado_nacimiento').val(data.prospectos.clave_estado_nacimiento);
+                $('#txt_direccion').val(data.prospectos.direccion);
+                $('#txt_codigo_postal').val(data.prospectos.cp);
+                $('#txt_colonia').append($('<option>').val(data.prospectos.colonia).text(data.prospectos.colonia));
+                $('#txt_ciudad').val(data.prospectos.ciudad);
+                $('#txt_estado').val(data.prospectos.estado);
+            }
+        });
+       
     }
 </script>
 @endpush

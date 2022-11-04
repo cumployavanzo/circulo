@@ -30,6 +30,10 @@ class Cliente extends Model
         return $this->hasOne(Aval::class, 'id', 'aval_id');
     }
 
+    public function estadoNac (){
+        return $this->hasOne(EstadoNacimiento::class, 'clave', 'estados_nacimientos_clave');
+    }
+
     public function scopeName ($query, $name){
         if($name)
         return $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%$name%' ");

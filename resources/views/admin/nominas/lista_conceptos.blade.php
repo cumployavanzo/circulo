@@ -1,13 +1,13 @@
 @extends('layouts.AdminLTE.index')
 
-@section('title', 'Lista Conceptos')
-@section('header', 'Lista Conceptos')
+@section('title', 'Conceptos')
+@section('header', 'Conceptos')
 
 @section('content')
     
     <div class="card">
         <div class="card-header with-border">
-            <h3 class="card-title">Lista de Nomina</h3>
+            <h3 class="card-title">Lista de Conceptos</h3>
             <div class="card-tools pull-right">
                 <a class="btn btn-sm btn-primary" href="#" data-toggle="modal" data-target="#mymodalConceptos" title="Detalles"><li class="fas fa-plus"></li>&nbsp; Nuevo</a>
                 <a href="{{ route('admin.nomina.index') }}"  type="button" class="btn btn-sm btn-danger" title="Regresar"><i class="fas fa-arrow-left"></i>&nbsp; Regresar</a>

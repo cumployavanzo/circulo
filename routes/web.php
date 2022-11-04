@@ -56,6 +56,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('prestamoP', 'PrestamoPersonalController')->middleware('permiso');
     Route::resource('vencimiento', 'VencimientoController')->middleware('permiso');
     Route::resource('asignacion', 'AsignacionController')->middleware('permiso');
+    Route::resource('prospecto', 'ProspectoController')->middleware('permiso');
+    Route::resource('bono', 'BonoController')->middleware('permiso');
+    Route::resource('detalleBono', 'DetalleBonoController');
+
 
     // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
 
@@ -97,6 +101,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('clientes/addclientes', 'ClienteAdminController@store')->name('addClientes');
     Route::delete('clientes/deleteCliente/{id}', 'ClienteAdminController@destroy')->name('deleteCliente');
     Route::get('clientes/validarClaveElector/{id}', 'ClienteAdminController@existeCliente');
+    Route::get('clientes/cargaProspecto/{id}', 'ClienteAdminController@verProspecto')->name('verProspecto');
+
 
 
     Route::get('aval/validarClave/{id}', 'AvalController@existeCliente');
@@ -189,6 +195,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('detallesPrestamos/{id}', 'PrestamoPersonalController@show');
 
     Route::get('asignacion/detalleActivo/{id}', 'AsignacionController@verDetalleCompraActivo')->name('verDetalleCompraActivo');
+
+    Route::get('detalleBono/verDetalleBono/{id}', 'DetalleBonoController@verDetallesBono')->name('verDetallesBono');
+
 
 
 

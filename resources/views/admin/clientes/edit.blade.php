@@ -56,9 +56,9 @@
                     <div class="form-group">
                         <label for="txt_genero">Género</label>
                         <select class="form-control" id="txt_genero" name="txt_genero">
-                            <option {{ $cliente->genero == 'MASCULINO' ? 'selected' : ''}} value="MASCULINO">Masculino</option>
-                            <option {{ $cliente->genero == 'FEMENINO' ? 'selected' : ''}} value="FEMENINO">Femenino</option>
-                            <option {{ $cliente->genero == 'INDISTINTO' ? 'selected' : ''}} value="INDISTINTO">Indistinto</option>
+                            <option {{ $cliente->genero == 'M' ? 'selected' : ''}} value="M">Masculino</option>
+                            <option {{ $cliente->genero == 'F' ? 'selected' : ''}} value="F">Femenino</option>
+                            <option {{ $cliente->genero == 'x' ? 'selected' : ''}} value="x">Indistinto</option>
                         </select>
                     </div>
                 </div>
@@ -73,41 +73,11 @@
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label for="txt_estado_nacimiento">Estado de Nacimiento</label>
-                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required>
+                        <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control @error('state') is-invalid @enderror" required onchange="btGenCurp(this.form, '3');">
                             <option value="">Seleccionar</option>
-                            <option {{ $cliente->estado == 'AGUASCALIENTES' ? 'selected' : ''}} value="AGUASCALIENTES">AGUASCALIENTES</option>
-                            <option {{ $cliente->estado == 'BAJA CALIFORNIA' ? 'selected' : ''}} value="BAJA CALIFORNIA">BAJA CALIFORNIA</option>
-                            <option {{ $cliente->estado == 'BAJA CALIFORNIA SUR' ? 'selected' : ''}} value="BAJA CALIFORNIA SUR">BAJA CALIFORNIA SUR</option>
-                            <option {{ $cliente->estado == 'CAMPECHE' ? 'selected' : ''}} value="CAMPECHE">CAMPECHE</option>
-                            <option {{ $cliente->estado == 'CHIAPAS' ? 'selected' : ''}} value="CHIAPAS">CHIAPAS</option>
-                            <option {{ $cliente->estado == 'CHIHUAHUA' ? 'selected' : ''}} value="CHIHUAHUA">CHIHUAHUA</option>
-                            <option {{ $cliente->estado == 'COAHUILA' ? 'selected' : ''}} value="COAHUILA">COAHUILA</option>
-                            <option {{ $cliente->estado == 'COLIMA' ? 'selected' : ''}} value="COLIMA">COLIMA</option>
-                            <option {{ $cliente->estado == 'DISTRITO FEDERAL' ? 'selected' : ''}} value="DISTRITO FEDERAL">DISTRITO FEDERAL</option>
-                            <option {{ $cliente->estado == 'DURANGO' ? 'selected' : ''}} value="DURANGO">DURANGO</option>
-                            <option {{ $cliente->estado == 'GUANAJUATO' ? 'selected' : ''}} value="GUANAJUATO">GUANAJUATO</option>
-                            <option {{ $cliente->estado == 'GUERRERO' ? 'selected' : ''}} value="GUERRERO">GUERRERO</option>
-                            <option {{ $cliente->estado == 'HIDALGO' ? 'selected' : ''}} value="HIDALGO">HIDALGO</option>
-                            <option {{ $cliente->estado == 'JALISCO' ? 'selected' : ''}} value="JALISCO">JALISCO</option>
-                            <option {{ $cliente->estado == 'MEXICO' ? 'selected' : ''}} value="MEXICO">MÉXICO</option>
-                            <option {{ $cliente->estado == 'MORELOS' ? 'selected' : ''}} value="MORELOS">MORELOS</option>
-                            <option {{ $cliente->estado == 'MICHOACAN' ? 'selected' : ''}} value="MICHOACAN">MICHOACAN</option>
-                            <option {{ $cliente->estado == 'NAYARIT' ? 'selected' : ''}} value="NAYARIT">NAYARIT</option>
-                            <option {{ $cliente->estado == 'NUEVO LEON' ? 'selected' : ''}} value="NUEVO LEON">NUEVO LEON</option>
-                            <option {{ $cliente->estado == 'OAXACA' ? 'selected' : ''}} value="OAXACA">OAXACA</option>
-                            <option {{ $cliente->estado == 'PUEBLA' ? 'selected' : ''}} value="PUEBLA">PUEBLA</option>
-                            <option {{ $cliente->estado == 'QUERETARO' ? 'selected' : ''}} value="QUERETARO">QUERETARO</option>
-                            <option {{ $cliente->estado == 'QUINTANA ROO' ? 'selected' : ''}} value="QUINTANA ROO">QUINTANA ROO</option>
-                            <option {{ $cliente->estado == 'SAN LUIS POTOSI' ? 'selected' : ''}} value="SAN LUIS POTOSI">SAN LUIS POTOSI</option>
-                            <option {{ $cliente->estado == 'SINALOA' ? 'selected' : ''}} value="SINALOA">SINALOA</option>
-                            <option {{ $cliente->estado == 'SONORA' ? 'selected' : ''}} value="SONORA">SONORA</option>
-                            <option {{ $cliente->estado == 'TABASCO' ? 'selected' : ''}} value="TABASCO">TABASCO</option>
-                            <option {{ $cliente->estado == 'TAMAULIPAS' ? 'selected' : ''}} value="TAMAULIPAS">TAMAULIPAS</option>
-                            <option {{ $cliente->estado == 'TLAXCALA' ? 'selected' : ''}} value="TLAXCALA">TLAXCALA</option>
-                            <option {{ $cliente->estado == 'VERACRUZ' ? 'selected' : ''}} value="VERACRUZ">VERACRUZ</option>
-                            <option {{ $cliente->estado == 'YUCATAN' ? 'selected' : ''}} value="YUCATAN">YUCATAN</option>
-                            <option {{ $cliente->estado == 'ZACATECAS' ? 'selected' : ''}} value="ZACATECAS">ZACATECAS</option>
-                            <option {{ $cliente->estado == 'EXTRANJERO' ? 'selected' : ''}} value="EXTRANJERO">EXTRANJERO</option>
+                            @foreach($estados_nac as $estado)
+                                <option {{ old('txt_estado_nacimiento') == $estado->clave ? 'selected' : ($opcionEstado != "N/A" ? ($opcionEstado == $estado->clave ? 'selected' : '')  : '') }} value="{{$estado->clave}}">{{$estado->nombre}}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -380,6 +350,7 @@
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset('scripts/js/curp.js') }}"></script>
 <script>
     $("#txt_nombre_asociado").select2({
         theme:"bootstrap4"
@@ -398,6 +369,49 @@
 
     $('[data-mask]').inputmask()
 
+    $("#txt_codigo_postal").focusout(function() {
+        cp = $('#txt_codigo_postal').val();
+        if(cp.length == 5){
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/api/checkCp') }}",
+                data: {
+                    cp : cp
+                },
+                success:function(data){
+                    $(".theSuburbs").empty().trigger('change');
+                    if(data != 'Resultado no encontrado'){
+                        cpError = 0;
+                        $('#txt_codigo_postal').removeClass('is-invalid');
+                        $('#txt_codigo_postal').addClass('is-valid');
+                        $('#cpError').remove();
+                        $('#txt_ciudad').val(data.Ciudad);
+                        $('#txt_estado').val(data.Estado);
+                        let theSuburbs = data.Asentamiento;
+                        var data = {};
+
+                        theSuburbs.forEach(function(theCurrentSuburb){
+                            data.id = theCurrentSuburb;
+                            data.text = theCurrentSuburb;
+                            var newOption = new Option(data.text, data.id, false, false);
+                            $('#txt_colonia').append(newOption).trigger('change');
+                        });
+                    }
+                    else {
+                        cpError = 1;
+                        $('#txt_codigo_postal').addClass('is-invalid');
+                        $('#cpError').remove();
+                        $('#theCp').append('<span class="invalid-feedback" id="cpError" role="alert"><strong>No se ha encontrado ese C.P.</strong></span>');
+                    }
+                }
+            });
+        }
+        else {
+            $('#txt_codigo_postal').addClass('is-invalid');
+            $('#cpError').remove();
+            $('#theCp').append('<span class="invalid-feedback" id="cpError" role="alert"><strong>El código postal debe contener 5 números.</strong></span>');
+        }
+    });
     
     $(function(){
         $('#txt_fecha_nac').on('change', calcularEdad);

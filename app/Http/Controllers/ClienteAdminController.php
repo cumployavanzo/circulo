@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Asociado;
 use App\Cliente;
+use App\EstadoNacimiento;
 use App\Cuenta;
 use App\Aval;
+use App\Prospecto;
 
 use Illuminate\Http\Request;
 
@@ -33,23 +35,30 @@ class ClienteAdminController extends Controller
         $cuentas = Cuenta::all();
         $asociados = Asociado::all();
         $avales = Aval::all();
-        return view('admin.clientes.addClientes', compact('avales','asociados','cuentas'));
+        $estados_nac = EstadoNacimiento::all();
+        $prospectos = Prospecto::where('estatus','Prospecto')->get();
+        return view('admin.clientes.addClientes', compact('avales','asociados','cuentas','estados_nac','prospectos'));
     }
 
     public function store(Request $request)
     {
-        // dd($request);
+        //  dd($request);
         $cliente = new Cliente();
+        if($request->txt_nombre_prospecto){
+            Prospecto::where('id', $request->txt_nombre_prospecto)->update([
+                'estatus' => 'Cliente',
+            ]);
+        }
         $cliente->user_id = auth()->user()->id;
         $cliente->nombre = mb_strtoupper($request->input('txt_nombre'), 'UTF-8');
         $cliente->apellido_paterno = mb_strtoupper($request->input('txt_apellido_paterno'), 'UTF-8');
         $cliente->apellido_materno = mb_strtoupper($request->input('txt_apellido_materno'), 'UTF-8');
         $cliente->fecha_nacimiento = $request->input('txt_fecha_nac');
         $cliente->edad = $request->input('txt_edad');
-        $cliente->genero = mb_strtoupper($request->input('txt_genero'), 'UTF-8');
+        $cliente->genero = $request->input('txt_genero');
         $cliente->ciudad_nacimiento = mb_strtoupper($request->input('txt_ciudad_nacimiento'), 'UTF-8');
         $cliente->nacionalidad = mb_strtoupper($request->input('txt_nacionalidad'), 'UTF-8');
-        $cliente->estado_nacimiento = mb_strtoupper($request->input('txt_estado_nacimiento'), 'UTF-8');
+        $cliente->estados_nacimientos_clave = mb_strtoupper($request->input('txt_estado_nacimiento'), 'UTF-8');
         $cliente->rfc = mb_strtoupper($request->input('txt_rfc'), 'UTF-8');
         $cliente->curp = mb_strtoupper($request->input('txt_curp'), 'UTF-8');
         $cliente->celular = $request->input('txt_celular');
@@ -111,7 +120,13 @@ class ClienteAdminController extends Controller
         if($cliente->cuentas()->first('id') != null){
             $opcionCuenta = $cliente->cuentas()->first('id')->id;
         }
-        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','cuentas','opcionCuenta','avales','personAval'));
+
+        $estados_nac = EstadoNacimiento::all(); 
+        $opcionEstado = "N/A";
+        if($cliente->estadoNac()->first('clave') != null){
+            $opcionEstado = $cliente->estadoNac()->first('clave')->clave;
+        }
+        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','cuentas','opcionCuenta','avales','personAval','estados_nac','opcionEstado'));
     }
 
     public function update(Request $request, $id)
@@ -122,10 +137,10 @@ class ClienteAdminController extends Controller
             'apellido_materno' => mb_strtoupper($request->txt_apellido_materno , 'UTF-8'),
             'fecha_nacimiento' => $request->txt_fecha_nac,
             'edad' => $request->txt_edad,
-            'genero' => mb_strtoupper($request->txt_genero,'UTF-8'),
+            'genero' => $request->txt_genero,
             'ciudad_nacimiento' => mb_strtoupper($request->txt_ciudad_nacimiento,'UTF-8'),
             'nacionalidad' => mb_strtoupper($request->txt_nacionalidad, 'UTF-8'),
-            'estado_nacimiento' => mb_strtoupper($request->txt_estado_nacimiento,'UTF-8'),
+            'estados_nacimientos_clave' => mb_strtoupper($request->txt_estado_nacimiento,'UTF-8'),
             'rfc' => mb_strtoupper($request->txt_rfc,'UTF-8'),
             'curp' => mb_strtoupper($request->txt_curp,'UTF-8'),
             'celular' => $request->txt_celular,
@@ -171,5 +186,10 @@ class ClienteAdminController extends Controller
         $clientExiste = Cliente::where('clave_elector','LIKE',"%$claveElector%")->count();
         //dd($cliente);
         return response()->json(["clientExiste" => $clientExiste]);
+    }
+
+    public function verProspecto($id){
+        $prospectos = Prospecto::where('id', $id)->first();
+        return response()->json(["prospectos" => $prospectos]);
     }
 }

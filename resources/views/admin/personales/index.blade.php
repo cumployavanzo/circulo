@@ -56,11 +56,21 @@
                     </tr>
                 </thead>
                 <tbody id="tbl_empleados">
+                  
                     @foreach($personales as $personal)
+                    @php
+                        if($personal->genero == 'M'){
+                            $genero = 'MASCULINO'; 
+                        }else if($personal->genero == 'F'){
+                            $genero = 'FEMENINO';  
+                        }else{
+                            $genero = 'INDISTINTO';
+                        }
+                    @endphp
                     <tr>
                         <td>#{{ $personal->id }}</td>
                         <td><a>{{ $personal->getFullName() }}</a></td>
-                        <td>{{ $personal->genero }}</td>
+                        <td>{{ $genero }}</td>
                         <td>{{ $personal->curp }}</td>
                         <td>{{ $personal->imss }}</td>
                         @if ($personal->state == 'Activo')

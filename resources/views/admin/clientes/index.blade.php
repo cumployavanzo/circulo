@@ -37,10 +37,19 @@
                 </thead>
                 <tbody>
                     @foreach($clientes as $cliente)
+                    @php
+                        if($cliente->genero == 'M'){
+                            $genero = 'MASCULINO'; 
+                        }else if($cliente->genero == 'F'){
+                            $genero = 'FEMENINO';  
+                        }else{
+                            $genero = 'INDISTINTO';
+                        }
+                    @endphp
                     <tr>
                         <td>#{{ $cliente->id }}</td>
                         <td>{{ $cliente->getFullName() }}</td>
-                        <td>{{ $cliente->genero }}</td>
+                        <td>{{ $genero }}</td>
                         <td>{{ $cliente->fecha_nacimiento }}</td>
                         <td>{{ $cliente->edad }} Años</td>
                         <td class="project-actions d-flex">
