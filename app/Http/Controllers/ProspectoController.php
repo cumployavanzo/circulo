@@ -48,6 +48,8 @@ class ProspectoController extends Controller
         $prospecto->ciudad = mb_strtoupper($request->input('txt_ciudad'), 'UTF-8');
         $prospecto->estado = mb_strtoupper($request->input('txt_estado'), 'UTF-8');
         $prospecto->sucursales_id = $request->input('txt_ruta');
+        $prospecto->referencia = mb_strtoupper($request->input('txt_referencia'), 'UTF-8');
+
         $prospecto->save();
         return redirect()->route('admin.prospecto.index');
     }
@@ -85,7 +87,8 @@ class ProspectoController extends Controller
             'cp' => mb_strtoupper($request->txt_codigo_postal,'UTF-8'),
             'colonia' => mb_strtoupper($request->txt_colonia,'UTF-8'),
             'ciudad' => mb_strtoupper($request->txt_ciudad,'UTF-8'),
-            'estado' => mb_strtoupper($request->txt_estado,'UTF-8')
+            'estado' => mb_strtoupper($request->txt_estado,'UTF-8'),
+            'referencia' => mb_strtoupper($request->txt_referencia,'UTF-8')
         ]);
         return redirect()->route('admin.prospecto.edit',[$id])->with('mensaje', 'Se ha editado el Prospecto exitosamente');
         // return back()->with('mensaje', 'Se ha editado el Personal exitosamente');

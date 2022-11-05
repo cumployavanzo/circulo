@@ -367,6 +367,10 @@
         theme:"bootstrap4"
     });
 
+    $("#txt_estado_nacimiento").select2({
+        theme:"bootstrap4"
+    });
+
     $('#txt_fecha_nac').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     $('#txt_fecha_alta').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
 

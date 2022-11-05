@@ -88,8 +88,14 @@
                     </div>
                 </div>
             </div>
-           
-           
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label for="txt_referencia">Referencia</label>
+                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencia">
+                    </div>
+                </div>
+            </div>
             <div class="d-flex justify-content-start">
                 <div class="col-sm-3">
                     <div class="form-group" id="theCp">

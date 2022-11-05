@@ -46,7 +46,6 @@ class BonoController extends Controller
                 "Jueves",
                 "Viernes",
                 "Sabado",
-                "Domingo",
         );
         $dateS =  str_replace('/', '-', $request->fecha_inicial);
         $fecha = date('Y-m-d', strtotime($dateS));

@@ -15,7 +15,7 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <label for="txt_nombre_prospecto" class="">Prospectos</label>
-                    <select type="select" id="txt_nombre_prospecto" name="txt_nombre_prospecto" class="form-control select2 " required onchange="cargarProspecto();">
+                    <select type="select" id="txt_nombre_prospecto" name="txt_nombre_prospecto" class="form-control select2 " onchange="cargarProspecto();">
                         <option value="">Selecciona</option>
                         @foreach($prospectos as $prospecto)
                             <option {{ old('txt_nombre_prospecto') == $prospecto->id ? 'selected' : '' }} value="{{$prospecto->id}}">{{$prospecto->getFullname()}}</option>
@@ -363,6 +363,7 @@
 </div>
 @endsection
 @push('scripts')
+<script src="{{ asset('scripts/js/curp.js') }}"></script>
 <script>
     $("#txt_codigo_postal").focusout(function() {
         cp = $('#txt_codigo_postal').val();
@@ -459,6 +460,10 @@
     });
 
     $("#txt_cuenta").select2({
+        theme:"bootstrap4"
+    });
+
+    $("#txt_estado_nacimiento").select2({
         theme:"bootstrap4"
     });
 

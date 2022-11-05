@@ -52,8 +52,8 @@ class DetalleBonoController extends Controller
         }
 
         $bonos = DetalleBono::where('bonos_id', $request->idBono)->get(); // ->with(')
-        $porcentajeCobrado = round(($bonos->sum('porcentaje_cobrado') / 7),2);
-        $porcentajeRecuperado = round(($bonos->sum('porcentaje_recuperado') / 7),2);
+        $porcentajeCobrado = round(($bonos->sum('porcentaje_cobrado') / 6),2);
+        $porcentajeRecuperado = round(($bonos->sum('porcentaje_recuperado') / 6),2);
         Bono::where('id', $request->idBono)->update([
             'tot_porcent_cobrado' => $porcentajeCobrado,
             'tot_porcent_recuperado' => $porcentajeRecuperado,

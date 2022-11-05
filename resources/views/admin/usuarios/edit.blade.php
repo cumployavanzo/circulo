@@ -83,7 +83,10 @@
 @endsection
 @push('scripts')
 <script>
-     $("#txt_personal").select2({
+    $("#txt_personal").select2({
+        theme:"bootstrap4"
+    });
+    $("#txt_rol").select2({
         theme:"bootstrap4"
     });
 </script>

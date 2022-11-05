@@ -431,6 +431,11 @@
         
     });
 
+    $("#txt_estado_nacimiento").select2({
+        theme:"bootstrap4"
+        
+    });
+
     $("#txt_puesto").select2({
         theme:"bootstrap4"
         
