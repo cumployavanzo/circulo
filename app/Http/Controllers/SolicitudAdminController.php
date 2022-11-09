@@ -7,6 +7,7 @@ use App\Cliente;
 use App\Producto;
 use DateTime;
 use Carbon\Carbon;
+use PDF;
 
 use Illuminate\Http\Request;
 
@@ -286,5 +287,12 @@ class SolicitudAdminController extends Controller
         // dd('la tabla', $tabla);
 
         return json_encode($tabla);
+    }
+
+
+    public function pdfSolicitud($id){
+        $solicitud = Solicitud::where('id', $id)->get();
+        $pdf_name = "SOLICITUD".$id.".PDF";
+        return PDF::loadView('pdfs.solicitudCliente', compact('solicitud'))->setPaper('letter', 'portrait')->stream($pdf_name);
     }
 }

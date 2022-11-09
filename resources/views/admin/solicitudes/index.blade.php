@@ -57,7 +57,8 @@
                         @else
                             <td><small class="badge badge-success"><i class="fas fa-check"></i> {{ $solicitud->estatus }}</small></td>
                             <td class="project-actions text-right">
-                                <button class="btn btn-info btn-sm"><i class="fas fa-ban"></i></button>
+                                <a href="{{ route('admin.solicitudCredito', [$solicitud->id]) }}" target="_blank" class="btn btn-default btn-sm"><i class="fas fa-file-pdf"></i></a>
+                                {{-- <button class="btn btn-info btn-sm"><i class="fas fa-ban"></i></button> --}}
                             </td>
                         @endif
                     </tr>

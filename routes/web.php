@@ -122,6 +122,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('solicitud/detalleClienteSolicitud/{id}', 'SolicitudAdminController@obtenerDetallesCliente');
     Route::post('solicitud/detalleTablaAmortizacion/', 'SolicitudAdminController@tablaAmortizacion')->name('tablaAmortizacion');
     Route::get('solicitud/productos/{id}', 'SolicitudAdminController@verProductos')->name('verProductos');
+    Route::get('solicitud/pdf/solicitudCredito/{id}','SolicitudAdminController@pdfSolicitud')->name('solicitudCredito');
+
 
     Route::get('cuentas/addcuentas', 'CuentaController@create')->name('addcuenta');
     Route::post('cuentas/addcuentas', 'CuentaController@store')->name('addCuentas');
