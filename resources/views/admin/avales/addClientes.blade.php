@@ -328,10 +328,13 @@
                     </div>
                 </div>
             </div>
+        </div>    
+        <div class="card-footer">
+            <div class="col-12">
+                <a type="button" href="{{ route('admin.aval.index') }}" class="btn btn-danger float-right">Cerrar</a>
+                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">Guardar</button>
+            </div>
         </div>              
-        <div class="card-footer" id="botonera">
-            <button type="submit" class="btn btn-primary float-right">Guardar</button>
-        </div>
         </form>
     </div>
 </div>
@@ -389,6 +392,10 @@
         $('#txt_fecha_nac').on('change', calcularEdad);
     });
         
+    $("#txt_estado_nacimiento").select2({
+        theme:"bootstrap4"
+    });
+
     function calcularEdad(){
         var fecha=document.getElementById("txt_fecha_nac").value;
         var values=fecha.split("/");

@@ -75,27 +75,65 @@
                         <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" maxlength="18">
                     </div>
                 </div>
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        <label for="txt_direccion">Dirección</label>
-                        <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección">
-                    </div>
-                </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="txt_celular">Telefono</label>
                         <input type="text" id="txt_celular" name="txt_celular" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-8">
+                <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="txt_referencia">Referencia</label>
-                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencia">
+                        <label for="txt_vialidad">Vialidad</label>
+                        <select class="form-control" id="txt_vialidad" name="txt_vialidad">
+                            <option value="Ampliacion">Ampliación</option>
+                            <option value="Andador">Andador</option>
+                            <option value="Avenida">Avenida</option>
+                            <option value="Boulevard">Boulevard</option>
+                            <option value="Calle">Calle</option>
+                            <option value="Callejon">Callejon</option>
+                            <option value="Calzada">Calzada</option>
+                            <option value="Cerrada">Cerrada</option>
+                            <option value="Circuito">Circuito</option>
+                            <option value="Circumbalacion">Circumbalación</option>
+                            <option value="Continuacion">Continuación</option>
+                            <option value="Corredor">Corredor</option>
+                            <option value="Diagonol">Diagonol</option>
+                            <option value="Eje Vial">Eje Vial</option>
+                            <option value="Pasaje">Pasaje</option>
+                            <option value="Peatonal">Peatonal</option>
+                            <option value="Periferico">Periferico</option>
+                            <option value="Privada">Privada</option>
+                            <option value="Prolongacion">Prolongación</option>
+                            <option value="Retorno">Retorno</option>
+                            <option value="Viaducto">Viaducto</option>
+                        </select>
                     </div>
                 </div>
             </div>
+           
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_direccion">Dirección</label>
+                        <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_entre_calles">Entre calles</label>
+                        <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txt_referencia">Referencias</label>
+                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencias">
+                    </div>
+                </div>
+            </div>
+           
             <div class="d-flex justify-content-start">
                 <div class="col-sm-3">
                     <div class="form-group" id="theCp">

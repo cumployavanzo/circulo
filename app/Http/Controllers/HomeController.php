@@ -19,6 +19,8 @@ use App\Gasto;
 use App\Banco;
 use App\Caja;
 use App\DetalleNomina;
+use App\Prospecto;
+
 
 class HomeController extends Controller
 {
@@ -48,6 +50,7 @@ class HomeController extends Controller
         $avales = Aval::count();
         $clientes = Cliente::count();
         $asociados = Asociado::count();
+        $prospectos = Prospecto::where('estatus','Prospecto')->count();
         ///** CAPTACION **///
         $solicitudes = Solicitud::count();
         $solAutorizadas = Solicitud::where('estatus','Autorizado')->count();
@@ -76,7 +79,7 @@ class HomeController extends Controller
         $cobros = TablaAmortizacion::selectRaw('SUM(pago) as monto_pago')->where('estatus','Cobrado')->get();
         $capital = Gasto::selectRaw('SUM(total) as capital_invertido')->where('bandera', 'Capital')->get();
 
-        $data = compact('clientes','plantilla','altas','bajas','montoNomina','avales','productos','solicitudes','rutas','solAutorizadas','solNoDesembolsadas','asociados','solPendientes','capitalMinistrado','interesesGenerados','capitalRecuperado','interesesRecuperados','articulos','proveedor','gasto','activo','noDeducible','bancos','cajas','pagos','cobros','capital');
+        $data = compact('clientes','plantilla','altas','bajas','montoNomina','avales','productos','solicitudes','rutas','solAutorizadas','solNoDesembolsadas','asociados','solPendientes','capitalMinistrado','interesesGenerados','capitalRecuperado','interesesRecuperados','articulos','proveedor','gasto','activo','noDeducible','bancos','cajas','pagos','cobros','capital','prospectos');
         return $data;
     }
 

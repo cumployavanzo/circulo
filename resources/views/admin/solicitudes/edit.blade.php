@@ -64,9 +64,9 @@
                     <div class="form-group">
                         <label for="txt_genero">Género</label>
                         <select class="form-control" id="txt_genero" name="txt_genero">
-                            <option value="MASCULINO" >Masculino</option>
-                            <option value="FEMENINO">Femenino</option>
-                            <option value="INDISTINTO">Indistinto</option>
+                            <option value="M" >Masculino</option>
+                            <option value="F">Femenino</option>
+                            <option value="x">Indistinto</option>
                         </select>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-start">
-                <div class="col-sm-2">
+                <div class="col-sm-3">
                     <div class="form-group">
                         <label for="txt_tipo_vivienda">Tipo Vivienda</label>
                         <select class="form-control" id="txt_tipo_vivienda" name="txt_tipo_vivienda">
@@ -125,10 +125,55 @@
                         </select>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-9">
                     <div class="form-group">
                         <label for="txt_direccion">Dirección</label>
                         <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_vialidad">Vialidad</label>
+                        <select class="form-control" id="txt_vialidad" name="txt_vialidad">
+                            <option value="">-- -- --</option>
+                            <option value="Ampliacion">Ampliación</option>
+                            <option value="Andador">Andador</option>
+                            <option value="Avenida">Avenida</option>
+                            <option value="Boulevard">Boulevard</option>
+                            <option value="Calle">Calle</option>
+                            <option value="Callejon">Callejon</option>
+                            <option value="Calzada">Calzada</option>
+                            <option value="Cerrada">Cerrada</option>
+                            <option value="Circuito">Circuito</option>
+                            <option value="Circumbalacion">Circumbalación</option>
+                            <option value="Continuacion">Continuación</option>
+                            <option value="Corredor">Corredor</option>
+                            <option value="Diagonol">Diagonol</option>
+                            <option value="Eje Vial">Eje Vial</option>
+                            <option value="Pasaje">Pasaje</option>
+                            <option value="Peatonal">Peatonal</option>
+                            <option value="Periferico">Periferico</option>
+                            <option value="Privada">Privada</option>
+                            <option value="Prolongacion">Prolongación</option>
+                            <option value="Retorno">Retorno</option>
+                            <option value="Viaducto">Viaducto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_entre_calles">Entre calles</label>
+                        <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-8">
+                    <div class="form-group">
+                        <label for="txt_referencia">Referencia</label>
+                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencia">
                     </div>
                 </div>
                 <div class="col-sm-4">
@@ -174,6 +219,26 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="form-group">
+                        <label for="txt_anios_exp">Años de Experiencia</label>
+                        <input type="text" id="txt_anios_exp" name="txt_anios_exp" class="form-control text-uppercase" placeholder="Años de experencia" value="{{$solicitud->anios_exp}}">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="txt_establecimiento">Tipo de Establecimiento</label>
+                        <select class="form-control" id="txt_tipo_vivienda" name="txt_tipo_vivienda">
+                            <option value="">-- Elíge --</option>
+                            <option {{ $solicitud->tipo_establecimiento == 'Propio' ? 'selected' : ''}} value="Propio">Propio</option>
+                            <option {{ $solicitud->tipo_establecimiento == 'Ambulante' ? 'selected' : ''}} value="Ambulante">Ambulante</option>
+                            <option {{ $solicitud->tipo_establecimiento == 'Rentado' ? 'selected' : ''}} value="Rentado">Rentado</option>
+                            <option {{ $solicitud->tipo_establecimiento == 'Fijo' ? 'selected' : ''}} value="Fijo">Fijo</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-3">
+                    <div class="form-group">
                         <label for="txt_num_hijos">Número de hijos</label>
                         <input type="text" id="txt_num_hijos" name="txt_num_hijos" class="form-control text-uppercase" placeholder="Número de hijos" value="{{$solicitud->num_hijos}}">
                     </div>
@@ -183,8 +248,7 @@
                         <label for="txt_garantia">Garantía</label>
                         <textarea class="form-control text-uppercase" rows="2" id="txt_garantia" name="txt_garantia" placeholder="Garantía ..." >{{$solicitud->garantias}}</textarea>                    
                     </div>
-                </div>
-            
+                </div>            
             </div>
             <div class="d-flex justify-content-start">
                 <div class="col-sm-3">
@@ -192,7 +256,7 @@
                         <label for="txt_tipo_cliente">Tipo de Cliente</label>
                         <select class="form-control" id="txt_tipo_cliente" name="txt_tipo_cliente">
                             <option value="NUEVO">Nuevo</option>
-                            <option value="RENOVACION">Renovación</option>
+                            <option value="REINGRESO">Reingreso</option>
                         </select>
                     </div>
                 </div>
@@ -406,6 +470,9 @@
             $('#txt_ciudad').val(data.cliente.ciudad).attr('disabled', true);
             $('#txt_estado').val(data.cliente.estado).attr('disabled', true);
             $('#txt_tipo_cliente').val(data.cliente.tipo_cliente).attr('disabled', true);
+            $('#txt_entre_calles').val(data.cliente.entre_calles).attr('disabled', true);
+            $('#txt_vialidad').val(data.cliente.tipo_vialidad).attr('disabled', true);
+            $('#txt_referencia').val(data.cliente.referencia).attr('disabled', true);
         },
     })
     return false;

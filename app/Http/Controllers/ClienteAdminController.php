@@ -8,6 +8,7 @@ use App\EstadoNacimiento;
 use App\Cuenta;
 use App\Aval;
 use App\Prospecto;
+use App\Referencia;
 
 use Illuminate\Http\Request;
 
@@ -95,10 +96,13 @@ class ClienteAdminController extends Controller
         $cliente->asociado_id = $request->input('txt_nombre_asociado');
         $cliente->aval_id = $request->input('txt_nombre_aval');
         $cliente->cuentas_id = $request->input('txt_cuenta');
-
+        $cliente->tipo_vialidad = $request->input('txt_vialidad');
+        $cliente->entre_calles = mb_strtoupper($request->input('txt_entre_calles'), 'UTF-8');
         $cliente->save();
-        //  return redirect('admin/asociados/addasociados')->with('success', 'Se ha agregado el puesto exitosamente');
-         return redirect()->route('admin.cliente.index');
+        $idCliente= $cliente["id"];
+        return redirect()->route('admin.cliente.edit',[$idCliente])->with('mensaje', 'Registro exitoso');
+
+
 
     }
 
@@ -134,7 +138,9 @@ class ClienteAdminController extends Controller
         if($cliente->estadoNac()->first('clave') != null){
             $opcionEstado = $cliente->estadoNac()->first('clave')->clave;
         }
-        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','cuentas','opcionCuenta','avales','personAval','estados_nac','opcionEstado'));
+        $referencias = Referencia::where('clientes_id',$id)->get();
+
+        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','cuentas','opcionCuenta','avales','personAval','estados_nac','opcionEstado','referencias'));
     }
 
     public function update(Request $request, $id)
@@ -176,7 +182,9 @@ class ClienteAdminController extends Controller
             'tipo_cliente' => mb_strtoupper($request->txt_tipo_cliente,'UTF-8'),
             'asociado_id' => $request->txt_nombre_asociado,
             'aval_id' => $request->txt_nombre_aval,
-            'cuentas_id' => $request->txt_cuenta
+            'cuentas_id' => $request->txt_cuenta,
+            'tipo_vialidad' => $request->txt_vialidad,
+            'entre_calles' => mb_strtoupper($request->txt_entre_calles,'UTF-8')
         ]);
         return redirect()->route('admin.cliente.edit',[$id])->with('mensaje', 'Se ha editado el Cliente exitosamente');
         // return back()->with('mensaje', 'Se ha editado el Personal exitosamente');
@@ -214,4 +222,52 @@ class ClienteAdminController extends Controller
         }
         return response()->json(["data" => "ok"]);
     }
+
+    public function guardarReferencias(Request $request, $idCliente){
+    //    dd($request);
+       $referencia = new Referencia();
+       if($request->idReferencia == 0){
+            $referencia->clientes_id = $idCliente;
+            $referencia->nombre = mb_strtoupper($request->input('txt_nombre_ref'), 'UTF-8');
+            $referencia->apellido_paterno = mb_strtoupper($request->input('txt_apellido_paterno_ref'), 'UTF-8');
+            $referencia->apellido_materno = mb_strtoupper($request->input('txt_apellido_materno_ref'), 'UTF-8');
+            $referencia->parentesco = mb_strtoupper($request->input('txt_parentesco_ref'), 'UTF-8');
+            $referencia->telefono = $request->input('txt_celular_ref');
+            $referencia->tipo_referencia = mb_strtoupper($request->input('txt_tipo_ref'), 'UTF-8');
+            $referencia->direccion = mb_strtoupper($request->input('txt_direccion_ref'), 'UTF-8');
+            $referencia->referencia = mb_strtoupper($request->input('txt_referencia_ref'), 'UTF-8');
+            $referencia->cp = $request->input('txt_codigo_postal_ref');
+            $referencia->colonia = mb_strtoupper($request->input('txt_colonia_ref'), 'UTF-8');
+            $referencia->ciudad = mb_strtoupper($request->input('txt_ciudad_ref'), 'UTF-8');
+            $referencia->estado = mb_strtoupper($request->input('txt_estado_ref'), 'UTF-8');
+            $referencia->entre_calles = mb_strtoupper($request->input('txt_entre_calles_ref'), 'UTF-8');
+            $referencia->save();
+       }else{
+            Referencia::where('id', $request->idReferencia)->update([
+                'nombre' => mb_strtoupper($request->txt_nombre_ref , 'UTF-8'),
+                'apellido_paterno' => mb_strtoupper($request->txt_apellido_paterno_ref, 'UTF-8'),
+                'apellido_materno' => mb_strtoupper($request->txt_apellido_materno_ref , 'UTF-8'),
+                'parentesco' => mb_strtoupper($request->txt_parentesco_ref , 'UTF-8'),
+                'telefono' => $request->txt_celular_ref,
+                'tipo_referencia' => mb_strtoupper($request->txt_tipo_ref,'UTF-8'),
+                'direccion' => mb_strtoupper($request->txt_direccion_ref,'UTF-8'),
+                'entre_calles' => mb_strtoupper($request->txt_entre_calles_ref,'UTF-8'),
+                'referencia' => mb_strtoupper($request->txt_referencia_ref,'UTF-8'),
+                'cp' => mb_strtoupper($request->txt_codigo_postal_ref,'UTF-8'),
+                'colonia' => mb_strtoupper($request->txt_colonia_ref,'UTF-8'),
+                'ciudad' => mb_strtoupper($request->txt_ciudad_ref,'UTF-8'),
+                'estado' => mb_strtoupper($request->txt_estado_ref,'UTF-8'),
+            ]);
+            $idCliente = $request->idClienteRef;
+       }
+       
+       return redirect()->route('admin.cliente.edit',[$idCliente])->with('mensaje', 'Referencia agregada');
+    }
+
+
+    public function verReferencia($id){
+        $referencia = Referencia::where('id', $id)->first();
+        return response()->json(["referencia" => $referencia]);
+    }
+
 }

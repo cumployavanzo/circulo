@@ -334,10 +334,13 @@
                     </div>
                 </div>
             </div>
-        </div>              
-        <div class="card-footer" id="botonera">
-            <button type="submit" class="btn btn-primary float-right">Guardar</button>
-        </div>
+        </div>  
+        <div class="card-footer">
+            <div class="col-12">
+                <a type="button" href="{{ route('admin.aval.index') }}" class="btn btn-danger float-right">Cerrar</a>
+                <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">Guardar</button>
+            </div>
+        </div>            
         </form>
     </div>
 </div>
@@ -348,6 +351,9 @@
         theme:"bootstrap4"
     });
     
+    $("#txt_estado_nacimiento").select2({
+        theme:"bootstrap4"
+    });
 
     $('#txt_fecha_nac').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     $('#txt_fecha_alta').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })

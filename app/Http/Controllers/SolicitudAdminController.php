@@ -59,6 +59,8 @@ class SolicitudAdminController extends Controller
         $solicitud->tipo_negocio = mb_strtoupper($request->input('txt_tipo_negocio'), 'UTF-8');
         $solicitud->antiguedad_negocio = mb_strtoupper($request->input('txt_antiguedad_negocio'), 'UTF-8');
         $solicitud->num_hijos = mb_strtoupper($request->input('txt_num_hijos'), 'UTF-8');
+        $solicitud->anios_exp = mb_strtoupper($request->input('txt_anios_exp'), 'UTF-8');
+        $solicitud->tipo_establecimiento = $request->input('txt_establecimiento');
         $solicitud->garantias = mb_strtoupper($request->input('txt_garantia'), 'UTF-8');
         $solicitud->dependientes_economicos = $request->input('txt_dependientes_economicos');
         $solicitud->producto_id = $request->input('txt_producto');
@@ -129,11 +131,13 @@ class SolicitudAdminController extends Controller
         $dateP =  str_replace('/', '-', $request->input('txt_fprimer_pago'));
 
         Solicitud::where('id', $id)->update([
+            'anios_exp' => mb_strtoupper($request->txt_anios_exp,'UTF-8'),
             'tipo_negocio' => mb_strtoupper($request->txt_tipo_negocio,'UTF-8'),
             'antiguedad_negocio' => mb_strtoupper($request->txt_antiguedad_negocio,'UTF-8'),
             'num_hijos' => mb_strtoupper($request->txt_num_hijos,'UTF-8'),
             'garantias' => mb_strtoupper($request->txt_garantia,'UTF-8'),
             'dependientes_economicos' => $request->txt_dependientes_economicos,
+            'tipo_establecimiento' => $request->txt_establecimiento,
             'ingreso_mensual' => (str_replace(",","",$request->txt_ingreso_mensual)),
             'gasto_mensual' => (str_replace(",","",$request->txt_gasto_mensual)),
             'ciclo' => $request->txt_ciclo,

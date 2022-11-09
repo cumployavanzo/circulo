@@ -82,27 +82,65 @@
                         <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" maxlength="18" value="{{ $prospecto->curp}}">
                     </div>
                 </div>
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        <label for="txt_direccion">Dirección</label>
-                        <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección" value="{{ $prospecto->direccion}}">
-                    </div>
-                </div>
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="txt_celular">Telefono</label>
                         <input type="text" id="txt_celular" name="txt_celular" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask value="{{ $prospecto->telefono}}">
                     </div>
                 </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-8">
+                <div class="col-sm-5">
                     <div class="form-group">
-                        <label for="txt_referencia">Referencia</label>
-                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencia" value="{{ $prospecto->referencia}}">
+                        <label for="txt_vialidad">Vialidad</label>
+                        <select class="form-control" id="txt_vialidad" name="txt_vialidad">
+                            <option {{ $prospecto->tipo_vialidad == 'Ampliacion' ? 'selected' : ''}} value="Ampliacion">Ampliación</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Andador' ? 'selected' : ''}} value="Andador">Andador</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Avenida' ? 'selected' : ''}} value="Avenida">Avenida</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Boulevard' ? 'selected' : ''}} value="Boulevard">Boulevard</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Calle' ? 'selected' : ''}} value="Calle">Calle</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Callejon' ? 'selected' : ''}} value="Callejon">Callejon</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Calzada' ? 'selected' : ''}} value="Calzada">Calzada</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Cerrada' ? 'selected' : ''}} value="Cerrada">Cerrada</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Circuito' ? 'selected' : ''}} value="Circuito">Circuito</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Circumbalacion' ? 'selected' : ''}} value="Circumbalacion">Circumbalación</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Continuacion' ? 'selected' : ''}} value="Continuacion">Continuación</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Corredor' ? 'selected' : ''}} value="Corredor">Corredor</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Diagonol' ? 'selected' : ''}} value="Diagonol">Diagonol</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Eje Vial' ? 'selected' : ''}} value="Eje Vial">Eje Vial</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Pasaje' ? 'selected' : ''}} value="Pasaje">Pasaje</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Peatonal' ? 'selected' : ''}} value="Peatonal">Peatonal</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Periferico' ? 'selected' : ''}} value="Periferico">Periferico</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Privada' ? 'selected' : ''}} value="Privada">Privada</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Prolongacion' ? 'selected' : ''}} value="Prolongacion">Prolongación</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Retorno' ? 'selected' : ''}} value="Retorno">Retorno</option>
+                            <option {{ $prospecto->tipo_vialidad == 'Viaducto' ? 'selected' : ''}} value="Viaducto">Viaducto</option>
+                        </select>
                     </div>
                 </div>
             </div>
+           
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_direccion">Dirección</label>
+                        <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección" value="{{ $prospecto->direccion}}">
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_entre_calles">Entre calles</label>
+                        <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles" value="{{ $prospecto->entre_calles}}">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="txt_referencia">Referencias</label>
+                        <input type="text" id="txt_referencia" name="txt_referencia" class="form-control text-uppercase" placeholder="Referencias"  value="{{ $prospecto->referencia}}">
+                    </div>
+                </div>
+            </div>
+           
             <div class="d-flex justify-content-start">
                 <div class="col-sm-3">
                     <div class="form-group" id="theCp">

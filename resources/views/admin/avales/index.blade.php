@@ -23,6 +23,26 @@
                     </div>
                 </div>
             </form>
+            {{-- <div class="form-group float-right">
+                <div class="d-flex">
+                    <form action="{{ route('admin.aval.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Activo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-success">{{$estatusActivo->count()}}</span>
+                            <i class="fas fa-user-check"></i> Activos
+                        </button>
+                    </form>
+                    <form action="{{ route('admin.aval.index') }}">
+                        @csrf
+                        <input type="hidden" id="estatus" name="estatus" value="Inactivo">
+                        <button type="submit" class="btn btn-app">
+                            <span class="badge bg-danger">{{$estatusInactivo->count()}}</span>
+                            <i class="fas fa-user-times"></i> Inactivos
+                        </button>
+                    </form>
+                </div>
+            </div> --}}
             <table class="table table-striped projects">
                 <thead>
                     <tr>

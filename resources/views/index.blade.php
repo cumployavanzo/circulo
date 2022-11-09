@@ -68,6 +68,17 @@
                       <a href="#" type="button" class="small-box-footer">TOTAL</a>
                     </div>
                   </div>
+                  <div class="col-lg-3 col-6">
+                    <div class="small-box bg-navy">
+                      <div class="inner">
+                        <h4>{{$prospectos}}</h4><p>Prospectos</p>
+                      </div>
+                      <div class="icon">
+                        <i class="fas fa-user-tie"></i>
+                      </div>
+                      <a href="#" type="button" class="small-box-footer">TOTAL</a>
+                    </div>
+                  </div>
               </div>
               <!-- /.row -->
               <!-- Main row -->

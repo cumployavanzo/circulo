@@ -107,6 +107,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('clientes/validarClaveElector/{id}', 'ClienteAdminController@existeCliente');
     Route::get('clientes/cargaProspecto/{id}', 'ClienteAdminController@verProspecto')->name('verProspecto');
     Route::put('clientes/{id}', 'ClienteAdminController@actualizarEstadoCliente');
+    Route::post('clientes/addreferencias/{id}', 'ClienteAdminController@guardarReferencias')->name('addreferencias');
+    Route::post('clientes/editRefer/{id}', 'ClienteAdminController@editarReferencias')->name('editRefer');
+    Route::get('clientes/datosReferencia/{id}', 'ClienteAdminController@verReferencia')->name('verReferencia');
+
+
 
 
 

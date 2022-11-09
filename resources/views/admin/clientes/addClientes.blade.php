@@ -3,12 +3,17 @@
 @section('header', 'Clientes')
 @section('content')
 <div class="col-md-12">
-    <div class="card card-gray">
+    <div class="card ">
         <div class="card-header">
+            {{-- <ul class="nav nav-pills">
+                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Nuevo Cliente</a></li>
+                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Referencias</a></li>
+            </ul> --}}
             <h4 class="card-title">
                 Nuevo Cliente
             </h4>
         </div>
+        
         <form method="POST" action="{{ route('admin.cliente.store') }}" autocomplete="off">
         @csrf
         <div class="card-body">
@@ -137,6 +142,42 @@
                 </div>
             </div>
             <div class="d-flex justify-content-start">
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_vialidad">Vialidad</label>
+                        <select class="form-control" id="txt_vialidad" name="txt_vialidad">
+                            <option value="Ampliacion">Ampliación</option>
+                            <option value="Andador">Andador</option>
+                            <option value="Avenida">Avenida</option>
+                            <option value="Boulevard">Boulevard</option>
+                            <option value="Calle">Calle</option>
+                            <option value="Callejon">Callejon</option>
+                            <option value="Calzada">Calzada</option>
+                            <option value="Cerrada">Cerrada</option>
+                            <option value="Circuito">Circuito</option>
+                            <option value="Circumbalacion">Circumbalación</option>
+                            <option value="Continuacion">Continuación</option>
+                            <option value="Corredor">Corredor</option>
+                            <option value="Diagonol">Diagonol</option>
+                            <option value="Eje Vial">Eje Vial</option>
+                            <option value="Pasaje">Pasaje</option>
+                            <option value="Peatonal">Peatonal</option>
+                            <option value="Periferico">Periferico</option>
+                            <option value="Privada">Privada</option>
+                            <option value="Prolongacion">Prolongación</option>
+                            <option value="Retorno">Retorno</option>
+                            <option value="Viaducto">Viaducto</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_entre_calles">Entre calles</label>
+                        <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start">
                 <div class="col-sm-8">
                     <div class="form-group">
                         <label for="txt_referencia">Referencia</label>
@@ -244,7 +285,7 @@
                     </div>
                     <small id="msjValidacion" class="text-danger"></small>
                 </div>
-               
+            
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label for="txt_vencimiento_ine">Año de vencimiento</label>
@@ -463,9 +504,9 @@
         theme:"bootstrap4"
     });
 
-    $("#txt_estado_nacimiento").select2({
-        theme:"bootstrap4"
-    });
+    // $("#txt_estado_nacimiento").select2({
+    //     theme:"bootstrap4"
+    // });
 
     $('#txt_fecha_nac').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
     $('#txt_fecha_alta').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
@@ -517,6 +558,9 @@
                 $('#txt_colonia').append($('<option>').val(data.prospectos.colonia).text(data.prospectos.colonia));
                 $('#txt_ciudad').val(data.prospectos.ciudad);
                 $('#txt_estado').val(data.prospectos.estado);
+                $('#txt_referencia').val(data.prospectos.referencia);
+                $('#txt_vialidad').val(data.prospectos.tipo_vialidad);
+                $('#txt_entre_calles').val(data.prospectos.entre_calles);
             }
         });
        
