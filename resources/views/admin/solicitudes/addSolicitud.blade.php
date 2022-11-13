@@ -229,6 +229,48 @@
                 </div>
             </div>
             <div class="d-flex justify-content-start"> 
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_direccion_ref">Dirección</label>
+                        <input type="text" id="txt_direccion_ref" name="txt_direccion_ref" class="form-control text-uppercase" placeholder="Dirección">
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_entre_calle">Entre calles</label>
+                        <input type="text" id="txt_entre_calle" name="txt_entre_calle" class="form-control text-uppercase" placeholder="Entre Calles">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-3">
+                    <div class="form-group" id="theCpRef">
+                        <label for="txt_codigo_postal_ref">Codigo Postal</label>
+                        <input type="text" id="txt_codigo_postal_ref" name="txt_codigo_postal_ref" class="form-control" placeholder="Codigo Postal">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theSuburbRef">
+                        <label for="txt_colonia_ref">Colonia</label>
+                        <select name="txt_colonia_ref" id="txt_colonia_ref" class="form-control text-uppercase theSuburbs" required>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theCityRef">
+                        <label for="txt_ciudad_ref">Ciudad</label>
+                        <input type="text" id="txt_ciudad_ref" name="txt_ciudad_ref" class="form-control" placeholder="Ciudad">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theStateRef">
+                        <label for="txt_estado_ref">Estado</label>
+                        <input type="text" id="txt_estado_ref" name="txt_estado_ref" class="form-control" placeholder="Estado">
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex justify-content-start"> 
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label for="txt_num_hijos">Número de hijos</label>
@@ -394,11 +436,56 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('scripts/js/solicitud.js') }}"></script>
+<script src="{{ asset('scripts/js/curp.js') }}"></script>
 <script>
     $.ajaxSetup({
         headers: {
               'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
          }
+    });
+
+    $("#txt_codigo_postal_ref").focusout(function() {
+        cp = $('#txt_codigo_postal_ref').val();
+        if(cp.length == 5){
+            $.ajax({
+                type: "POST",
+                url: "{{ url('/api/checkCp') }}",
+                data: {
+                    cp : cp
+                },
+                success:function(data){
+                    $(".theSuburbsRef").empty().trigger('change');
+                    if(data != 'Resultado no encontrado'){
+                        cpErrorRef = 0;
+                        $('#txt_codigo_postal_ref').removeClass('is-invalid');
+                        $('#txt_codigo_postal_ref').addClass('is-valid');
+                        $('#cpErrorRef').remove();
+                        $('#txt_ciudad_ref').val(data.Ciudad);
+                        $('#txt_estado_ref').val(data.Estado);
+                        let theSuburbsRef = data.Asentamiento;
+                        var data = {};
+
+                        theSuburbsRef.forEach(function(theCurrentSuburbRef){
+                            data.id = theCurrentSuburbRef;
+                            data.text = theCurrentSuburbRef;
+                            var newOption = new Option(data.text, data.id, false, false);
+                            $('#txt_colonia_ref').append(newOption).trigger('change');
+                        });
+                    }
+                    else {
+                        cpErrorRef = 1;
+                        $('#txt_codigo_postal_ref').addClass('is-invalid');
+                        $('#cpErrorRef').remove();
+                        $('#theCpRef').append('<span class="invalid-feedback" id="cpErrorRef" role="alert"><strong>No se ha encontrado ese C.P.</strong></span>');
+                    }
+                }
+            });
+        }
+        else {
+            $('#txt_codigo_postal_ref').addClass('is-invalid');
+            $('#cpErrorRef').remove();
+            $('#theCpRef').append('<span class="invalid-feedback" id="cpErrorRef" role="alert"><strong>El código postal debe contener 5 números.</strong></span>');
+        }
     });
 
     $("#txt_nombre_cliente").on('change', function(){

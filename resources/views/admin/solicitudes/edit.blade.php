@@ -236,6 +236,49 @@
                     </div>
                 </div>
             </div>
+            <div class="d-flex justify-content-start"> 
+                <div class="col-sm-7">
+                    <div class="form-group">
+                        <label for="txt_direccion_ref">Dirección</label>
+                        <input type="text" id="txt_direccion_ref" name="txt_direccion_ref" class="form-control text-uppercase" placeholder="Dirección" value="{{$solicitud->direccion_negocio}}">
+                    </div>
+                </div>
+                <div class="col-sm-5">
+                    <div class="form-group">
+                        <label for="txt_entre_calle">Entre calles</label>
+                        <input type="text" id="txt_entre_calle" name="txt_entre_calle" class="form-control text-uppercase" placeholder="Entre Calles" value="{{$solicitud->entre_calles}}">
+                    </div>
+                </div>
+                
+            </div>
+            <div class="d-flex justify-content-start">
+                <div class="col-sm-3">
+                    <div class="form-group" id="theCpRef">
+                        <label for="txt_codigo_postal_ref">Codigo Postal</label>
+                        <input type="text" id="txt_codigo_postal_ref" name="txt_codigo_postal_ref" class="form-control" placeholder="Codigo Postal" value="{{$solicitud->cp}}">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theSuburbRef">
+                        <label for="txt_colonia_ref">Colonia</label>
+                        <select name="txt_colonia_ref" id="txt_colonia_ref" class="form-control text-uppercase theSuburbs" required>
+                            <option value="{{ $solicitud->colonia }}">{{ $solicitud->colonia }}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theCityRef">
+                        <label for="txt_ciudad_ref">Ciudad</label>
+                        <input type="text" id="txt_ciudad_ref" name="txt_ciudad_ref" class="form-control" placeholder="Ciudad" value="{{$solicitud->ciudad}}">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group" id="theStateRef">
+                        <label for="txt_estado_ref">Estado</label>
+                        <input type="text" id="txt_estado_ref" name="txt_estado_ref" class="form-control" placeholder="Estado" value="{{$solicitud->estado}}">
+                    </div>
+                </div>
+            </div>
             <div class="d-flex justify-content-start">
                 <div class="col-sm-3">
                     <div class="form-group">

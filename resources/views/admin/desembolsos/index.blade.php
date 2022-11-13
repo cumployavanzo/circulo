@@ -43,8 +43,11 @@
                         @elseif($credito->desembolso == 'Desembolsado')
                             <td><small class="badge badge-success">{{ $credito->desembolso }}&nbsp;&nbsp;<i class="fas fa-check"></i></small></td>
                             <td class="project-actions text-right">
-                                <button class="btn btn-info btn-sm"><i class="fas fa-ban"></i></button>
+                                <a href="{{ route('admin.solicitudCredito', [$credito->solicituds_id]) }}" target="_blank" class="btn btn-default btn-sm"><i class="fas fa-file-pdf"></i></a>
                             </td>
+                            {{-- <td class="project-actions text-right">
+                                <button class="btn btn-info btn-sm"><i class="fas fa-ban"></i></button>
+                            </td> --}}
                         @endif
                     </tr>
                     @endforeach

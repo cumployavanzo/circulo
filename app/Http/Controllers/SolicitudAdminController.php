@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Solicitud;
 use App\Cliente;
 use App\Producto;
+use App\Referencia;
+use App\TablaAmortizacion;
 use DateTime;
 use Carbon\Carbon;
 use PDF;
@@ -58,6 +60,12 @@ class SolicitudAdminController extends Controller
         $solicitud->asociado_id = $request->input('idAsociado');
         $solicitud->cliente_id = $request->input('idCliente');
         $solicitud->tipo_negocio = mb_strtoupper($request->input('txt_tipo_negocio'), 'UTF-8');
+        $solicitud->direccion_negocio = mb_strtoupper($request->input('txt_direccion_ref'), 'UTF-8');
+        $solicitud->entre_calles = mb_strtoupper($request->input('txt_entre_calle'), 'UTF-8');
+        $solicitud->cp = mb_strtoupper($request->input('txt_codigo_postal_ref'), 'UTF-8');
+        $solicitud->colonia = mb_strtoupper($request->input('txt_colonia_ref'), 'UTF-8');
+        $solicitud->ciudad = mb_strtoupper($request->input('txt_ciudad_ref'), 'UTF-8');
+        $solicitud->estado = mb_strtoupper($request->input('txt_estado_ref'), 'UTF-8');
         $solicitud->antiguedad_negocio = mb_strtoupper($request->input('txt_antiguedad_negocio'), 'UTF-8');
         $solicitud->num_hijos = mb_strtoupper($request->input('txt_num_hijos'), 'UTF-8');
         $solicitud->anios_exp = mb_strtoupper($request->input('txt_anios_exp'), 'UTF-8');
@@ -135,6 +143,12 @@ class SolicitudAdminController extends Controller
             'anios_exp' => mb_strtoupper($request->txt_anios_exp,'UTF-8'),
             'tipo_negocio' => mb_strtoupper($request->txt_tipo_negocio,'UTF-8'),
             'antiguedad_negocio' => mb_strtoupper($request->txt_antiguedad_negocio,'UTF-8'),
+            'direccion_negocio' => mb_strtoupper($request->txt_direccion_ref,'UTF-8'),
+            'entre_calles' => mb_strtoupper($request->txt_entre_calle,'UTF-8'),
+            'cp' => mb_strtoupper($request->txt_codigo_postal_ref,'UTF-8'),
+            'colonia' => mb_strtoupper($request->txt_colonia_ref,'UTF-8'),
+            'ciudad' => mb_strtoupper($request->txt_ciudad_ref,'UTF-8'),
+            'estado' => mb_strtoupper($request->txt_estado_ref,'UTF-8'),
             'num_hijos' => mb_strtoupper($request->txt_num_hijos,'UTF-8'),
             'garantias' => mb_strtoupper($request->txt_garantia,'UTF-8'),
             'dependientes_economicos' => $request->txt_dependientes_economicos,
@@ -292,7 +306,10 @@ class SolicitudAdminController extends Controller
 
     public function pdfSolicitud($id){
         $solicitud = Solicitud::where('id', $id)->get();
+        $tablaAmortizacion = TablaAmortizacion::where('solicituds_id', $id)->get();
+        $referencia_familiar = Referencia::where('clientes_id',$solicitud[0]->cliente_id)->where('tipo_referencia', 'FAMILIAR')->first();
+        $referencia_comercial = Referencia::where('clientes_id',$solicitud[0]->cliente_id)->where('tipo_referencia', 'COMERCIAL')->first();
         $pdf_name = "SOLICITUD".$id.".PDF";
-        return PDF::loadView('pdfs.solicitudCliente', compact('solicitud'))->setPaper('letter', 'portrait')->stream($pdf_name);
+        return PDF::loadView('pdfs.solicitudCliente', compact('solicitud','tablaAmortizacion','referencia_familiar','referencia_comercial'))->setPaper('letter', 'portrait')->stream($pdf_name);
     }
 }

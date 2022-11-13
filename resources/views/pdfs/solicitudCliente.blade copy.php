@@ -4,9 +4,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Solicitud</title>
-    <!-- Styles -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <style>
+</head>  
+<style>
    
         td {
             font-size: 7px;
@@ -75,10 +75,9 @@
         .wrapper-page:last-child {
             page-break-after: avoid;
         }
-    </style>
-</head>
+</style>
+
 <body>
-   {{$solicitud}}
     <table width="100%">
         <tr>
             <td width="10%" align="left">
@@ -101,58 +100,73 @@
             </td>
         </tr>
     </table>
-    <h6 class="text-center">IDENTIFICACIÓN DEL CLIENTE</h6>
-    <table class="table  ">
+    <h6 class="text-center">DATOS DEL SOLICITANTE</h6>
+    <table class="table">
         <tr class="tr-borderless">
-            <td  width="70px">Nombre Completo:</td>
-            <td  width="150px" class="answer"><b>{{$solicitud->rfc}}</b></td>
-            <td  width="60px" >Fecha Nacimiento:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="10px" >CURP:</td>
-            <td  width="95px"><b>--</b></td>
-            <td  width="10px" >Género:</td>
-            <td  width="50px"><b>--</b></td>
+            <td  width="60px">Nombre Completo:</td>
+            <td  width="150px"><b>{{$solicitud[0]->cliente->getFullName()}}</b></td>
+            <td  width="50px" >Fecha Nacimiento:</td>
+            <td  width="90px"><b>{{$solicitud[0]->cliente->fecha_nacimiento}}</b></td>
+            <td  width="10px" >Edad:</td>
+            <td  width="95px"><b>{{$solicitud[0]->cliente->edad}} Años</b></td>
+            <td  width="10px" >Telefono:</td>
+            <td  width="50px"><b>{{$solicitud[0]->cliente->celular}}</b></td>
         </tr>
     </table>
-    <table class="table  ">
+    <table class="table">
         <tr>
-            <td  width="65px" >Nacionalidad:</td>
-            <td  width="10px"  ><b>MEXICANA</b></td>
-            <td  width="50px" >País de Nacimiento:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="50px" >Ent. Fed. De Nacimiento:</td>
-            <td  width="80px"><b>--</b></td>
-            <td  width="50px" >Número de Teléfono:</td>
-            <td  width="50px"><b>--</b></td>
+            <td  width="15px">Colonia:</td>
+            <td  width="20px"><b>{{$solicitud[0]->cliente->colonia}}</b></td>
+            <td  width="5px">Ciudad:</td>
+            <td  width="50px"><b>{{$solicitud[0]->cliente->ciudad}}</b></td>
+            <td  width="15px" >Estado:</td>
+            <td  width="25px"><b>{{$solicitud[0]->cliente->estado}}</b></td>
+            <td  width="10px" >País:</td>
+            <td  width="50px"  ><b>MÉXICO</b></td>
         </tr>
     </table>
-  
-    <table class="table  ">
+    <table class="table">
         <tr>
-            <td  width="15px" >Profesión:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="15px">Ocupación:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="15px">Actividad:</td>
-            <td  width="80px"><b>--</b></td>
-            <td  width="15px" >R.F.C:</td>
-            <td  width="20px"><b>--</b></td>
-            <td  width="15px">FIEL:</td>
-            <td  width="80px"><b>NO CUENTA CON ELLA</b></td>
+            <td  width="60px" >Dirección del Hogar:</td>
+            <td  width="140px"><b>{{$solicitud[0]->cliente->direccion}}</b></td>
+            <td  width="40px">Tipo Vialidad:</td>
+            <td  width="40px"><b>{{$solicitud[0]->cliente->tipo_vialidad}}</b></td>
+            <td  width="30px">Entre calles:</td>
+            <td  width="100px"><b>{{$solicitud[0]->cliente->entre_calles}}</b></td>
+            <td  width="20px">C.P:</td>
+            <td  width="25px"><b>{{$solicitud[0]->cliente->cp}}</b></td>
         </tr>
     </table>
-    <table class="table  ">
+    <table class="table">
         <tr>
-            <td  width="50px" >Correo Electrónico:</td>
-            <td  width="100px"  ><b>--</b></td>
-            <td  width="50px" >Clave de Elector:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="15px" >Folio Identificación:</td>
-            <td  width="80px"><b>--</b></td>
+            <td  width="15px">Colonia:</td>
+            <td  width="20px"><b>{{$solicitud[0]->cliente->colonia}}</b></td>
+            <td  width="5px">Ciudad:</td>
+            <td  width="50px"><b>{{$solicitud[0]->cliente->ciudad}}</b></td>
+            <td  width="15px" >Estado:</td>
+            <td  width="25px"><b>{{$solicitud[0]->cliente->estado}}</b></td>
+            <td  width="10px" >País:</td>
+            <td  width="50px"  ><b>MÉXICO</b></td>
         </tr>
     </table>
+    <table class="table ">
+        <tbody>
+            <tr>
+                <td width="40px">Tipo de casa:</td>
+                <td width="0px"><label><input type="checkbox" class="" name="" id=""  >&nbsp;&nbsp;Propia&nbsp;&nbsp;</label></td>
+                <td width="0px"><label><input type="checkbox" class="" name="" id="" checked >&nbsp;&nbsp;Rentada&nbsp;&nbsp;</label></td>
+                <td width="0px"><label><input type="checkbox" class="" name="" id="" checked >&nbsp;&nbsp;Familiar&nbsp;&nbsp;</label></td>
+                <td  width="15px" >Estado:</td>
+            <td  width="25px"><b>{{$solicitud[0]->cliente->estado}}</b></td>
+            <td  width="10px" >País:</td>
+            <td  width="50px"  ><b>MÉXICO</b></td>
+
+            </tr>
+           
+        </tbody>
+    </table>   
     <h6 class="text-center">DOMICILIO DE LA IDENTIFICACIÓN OFICIAL</h6>
-    <table class="table  ">
+    <table class="table ">
         <tr>
             <td  width="15px" >Calle y Número:</td>
             <td  width="200px" ><b>--</b></td>
@@ -165,31 +179,16 @@
             <td  width="25px"  ><b>--</b></td>
         </tr>
     </table>
-    <table class="table  ">
-        <tr>
-            <td  width="15px" >Municipio:</td>
-            <td  width="20px"  ><b>--</b></td>
-            <td  width="5px">Localidad:</td>
-            <td  width="50px"><b>--</b></td>
-            <td  width="15px" >Estado:</td>
-            <td  width="25px"><b>--</b></td>
-            <td  width="10px" >País:</td>
-            <td  width="50px"  ><b>MÉXICO</b></td>
-        </tr>
-    </table>
+   
     <h6 class="text-center">DOMICILIO DEL COMPROBANTE DE DOMICILIO</h6>
-    <table class="table  ">
+    <table class="table">
         <tr>
             <td  width="15px" >Calle y Número:</td>
             <td  width="200px"  ><b>--</b></td>
-            <!-- <td  width="30px" >No. Ext.:</td>
-            <td  width="10px"><b>1112</b></td>
-            <td  width="30px" >No. Int.:</td>
-            <td  width="10px"><b></b></td>  -->
             <td  width="20px" >Colonia:</td>
             <td  width="100px"  ><b>--</b></td>
             <td  width="50px" >C.P:</td>
-            <td  width="25px"  ><b>-- </b></td>
+            <td  width="25px"><b>-- </b></td>
         </tr>
     </table>
     <table class="table  ">
@@ -286,30 +285,6 @@
                     
                 </td>
             </tr>
-            <!-- <tr>
-                <td>Cargo que desempeña:</td>
-                <td></td>
-                <td>Nombre del familiar:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Dependencia o Institución:</td>
-                <td></td>
-                <td>Cargo de DEpendencia:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>Periodo:</td>
-                <td></td>
-                <td>Parentesco:</td>
-                <td></td>
-            </tr>
-            <tr>
-                <td>País:</td>
-                <td></td>
-                <td>Periodo:</td>
-                <td></td>
-            </tr>  -->
         </tbody>
     </table>
 
@@ -347,11 +322,9 @@
                         <input type="checkbox" class="" name="" id=""  >&nbsp;&nbsp;Otros:&nbsp;&nbsp;
                     </label>
                 </td>
-                <td> <b></b> </td>
             </tr>
         </tbody>
-    </table>
-    
+    </table>   
     <table class="table ">
         <tbody>
             <tr>
@@ -461,84 +434,7 @@
             </tr>
         </tbody>
     </table>
-    <table class="table ">
-        <tbody>
-            <!-- <tr>
-                <td>Ingresos mensuales:</td>
-                <td><b>$--</b></td>
-                <td>Egresos mensuales:</td>
-                <td><b>$--</b></td>
-                
-            </tr>  -->
-        </tbody>
-    </table>
    
-    <table class="table  signatures " style="width: 90% !important">
-        <tbody>
-            <tr >
-                <td width="305px" align="center"><b>DECLARACIÓN DEL EJECUTIVO</b></td>
-                <td width="305px" align="center"><b>DECLARACIONES, MANIFIESTOS Y COMPROMISOS</b></td>
-            </tr>
-            <tr class="tr-borderless">
-                <td align="justify" style="padding: 5px 10px 5px 0px!important;">   
-                    
-                        La información contenida en la presente solicitud se requisita conforme a los documentos e información aportada y
-                        manifestada por el solicitante y declaro haberla cotejado contra los documentos originales, además de validar la
-                        existencia de la actividad económica e información financiera; por lo que en caso de que fueren falsos, apócrifos y/o
-                        alterados, desde ahora, acepto mi responsabilidad que derivado de ello, puede constituir delitos y generar problemas
-                        en la recuperación de este crédito, así como mi recisión de la relación laboral sin responsabilidad para A CRECER
-                        EUM, S.A. DE C.V., SOFOM, E.N.R. con independencia de las acciones civiles y penales que son de mi conocimiento y
-                        que procedan conforme a derecho.
-                    
-                </td>
-                <td width="305px" align="justify" style="padding: 5px 10px 5px 10px! !important;">
-                    
-                        Bajo protesta de decir verdad, declaro que la información proporcionada a A Crecer EUM, los datos en la presente
-                        solicitud, así como la documentación presentada es verídica. De igual forma manifiesto bajo protesta de decir verdad
-                        que todas las operaciones así como los actos jurídicos que solicito o me comprometo y obligo con A CRECER EUM, S.A.
-                        de C.V., SOFOM, E.N.R., su destino o finalidad y su procedencia son lícitos.En atención a lo anterior me comprometo a
-                        actualizar y proporcionar la información o documentación adicional que me sea solicitada por esta institución con los
-                        fines relacionados a la operación y/o operaciones que tengo comprometidas con A CRECER EUM, S.A. de C.V., SOFOM,
-                        E.N.R. por lo cual me obligo a brindar las facilidades que sean requeridas a esta empresa o a las personas que
-                        representen sus intereses.
-                    
-                </td>
-            </tr>
-            <tr class="tr-borderless">
-                <td class="" style="font-size:7px !important;" width="305px" align="center">
-                    <b class="text-center">-----
-                        ______________________________________________________________________________________________
-                    </b>
-                    <b class="text-center">Nombre y Firma del Ejecutivo de Cuenta</b>
-                </td>
-                <td width="305px" align="center">
-                    
-                </td>
-            </tr>
-            <tr class="tr-borderless">
-                <td width="305px"></td>
-                <td width="305px" align="justify" style="padding: 5px 10px 5px 10px! !important; margin-top: -30px !important">
-                    <center><b>AVISO DE PRIVACIDAD</b></center> <br/>
-                        A CRECER EUM, S.A. DE C.V., SOFOM E.N.R., con domicilio en 11 norte poniente, número 1112, colonia Vista Hermosa, Tuxtla Gutiérrez,
-                        código postal 29030, Chiapas, utilizará sus datos personales recabados para (i) Verificar su identidad, localizarlo y contactarlo; (ii) Integrar
-                        su expediente como solicitante y como acreditado; (iii) Realizar las consultas a las Sociedades de Información Crediticia y conocer su
-                        historial crediticio (iv) Actualizar nuestras bases de datos y sistemas de administración de cartera; (v) atender sus solicitudes, dudas,
-                        quejas, aclaraciones y sugerencias. Adicionalmente y como finalidades secundarias, sus datos personales podrán ser tratados para: (vi)
-                        Fines estadísticos (vii) Fines mercadotécnicos y/o publicitarios y (viii) Prospección comercial. Para mayor información acerca del
-                        tratamiento y de los derechos que puede hacer valer, usted puede acceder al aviso de privacidad integral a través de la página de internet
-                        http://www.acrecercc.com.
-                    
-                </td>
-            </tr>
-            <tr class="tr-borderless">
-                <td width="305px"></td>
-                <td class="" style="font-size:7px !important;" width="305px" align="center">
-                    <b style="margin-buttom: -555 px;">---</b>
-                    <b> ______________________________________________________________________________________________</b>
-                    <b class="text-center ">Nombre y Firma del Solicitante</b>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+   
 </body>
 </html>
