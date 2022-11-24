@@ -69,7 +69,7 @@
                         <div class="d-flex justify-content-start">
                             <div class="col-sm-5">
                                 <div class="form-group">
-                                    <label for="txt_tipo_pago">Tipos de Pago</label>
+                                    <label for="txt_tipo_pago">Tipos de Desembolso</label>
                                     <select class="form-control" id="txt_tipo_pago" name="txt_tipo_pago" onchange="cuentaTipoPago()" disabled>
                                         <option>-- Selecciona --</option>
                                         <option {{ $detalle->tipo_pago == 'Transferencia' ? 'selected' : ''}} value="Transferencia">Transferencia</option>
@@ -80,7 +80,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <label for="fecha_pago">Fecha de Pago</label>
+                                <label for="fecha_pago">Fecha de Desembolso</label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>

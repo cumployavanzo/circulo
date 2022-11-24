@@ -110,6 +110,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('clientes/addreferencias/{id}', 'ClienteAdminController@guardarReferencias')->name('addreferencias');
     Route::post('clientes/editRefer/{id}', 'ClienteAdminController@editarReferencias')->name('editRefer');
     Route::get('clientes/datosReferencia/{id}', 'ClienteAdminController@verReferencia')->name('verReferencia');
+    Route::post('clientes/clientesimport', 'ClienteAdminController@import')->name('importClients');
 
 
 
@@ -117,6 +118,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
 
 
     Route::get('aval/validarClave/{id}', 'AvalController@existeCliente');
+    Route::put('avales/{id}', 'AvalController@actualizarEstadoAval');
+    Route::post('avales/reporteAval/','AvalController@reporteAvales')->name('reporteAvales');
+
+
 
 
     Route::get('solicitud/detalleClienteSolicitud/{id}', 'SolicitudAdminController@obtenerDetallesCliente');

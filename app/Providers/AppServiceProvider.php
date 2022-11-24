@@ -3,6 +3,8 @@
 namespace App\Providers;
 use App\Modulo;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Schema;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Schema::defaultStringLength(191);
         // view()->composer('layouts.AdminLTE.sidebar', function($view) {
         //     $view->with('modulos', Modulo::menus());
         // });

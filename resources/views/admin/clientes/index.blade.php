@@ -4,15 +4,40 @@
 @section('header', 'Clientes')
 
 @section('content')
-    
+    @if(Session::has('mensaje'))
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    {{Session::get('mensaje')}}
+    </div>  
+    @endif 
     <div class="card">
         <div class="card-header with-border">
             <h3 class="card-title">Lista de Clientes</h3>
-            <div class="card-tools pull-right">
-                <a href="{{ route('admin.cliente.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Cliente"><li class="fas fa-plus"></li>&nbsp; Nuevo Cliente</a>
-                <a href="#" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-info" title="Generar Reporte"><i class="fas fa-file-excel"></i>&nbsp; Reporte Clientes</a>
+            <div class="form-group float-right">
+              
+                <div class="d-flex">
+                    <div class="col-sm-7">
+                        <form action="{{ route('admin.importClients') }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group row text-right">
+                                <div class="col-sm-6">
+                                    <input type="file" class="form-control form-control-sm text-uppercase" id="documento" name="documento">  
+                                </div>
+                                <div class="col-sm-4">
+                                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-file-upload btn-icon-wrapper"> </i>&nbsp; Importar</button>
+                                </div>  
+                            </div>  
+                        </form>
+                    </div>  
+                    <div class="col-sm-6">
+                        <a href="{{ route('admin.cliente.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Cliente"><li class="fas fa-plus"></li>&nbsp; Nuevo Cliente</a>
+                        <a href="#" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-info" title="Generar Reporte"><i class="fas fa-file-excel"></i>&nbsp; Reporte Clientes</a>
+                    </div>  
+                
+                </div>
             </div>
         </div>
+       
         <div class="card-body">
             <form class="form-horizontal" autocomplete="off">
                 <div class="form-group row text-right">

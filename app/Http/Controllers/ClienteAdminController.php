@@ -9,6 +9,9 @@ use App\Cuenta;
 use App\Aval;
 use App\Prospecto;
 use App\Referencia;
+use App\Imports\ClientesImport;
+use Excel;
+
 
 use Illuminate\Http\Request;
 
@@ -270,4 +273,85 @@ class ClienteAdminController extends Controller
         return response()->json(["referencia" => $referencia]);
     }
 
+   
+    // public function import(Request $request)
+    // {
+    //     $file = $request->file('documento');
+    //     Excel::import(new ClientesImport, $file);
+
+    //     return back();
+    // }
+
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'documento'  => 'required|mimes:xls,xlsx'
+        ]);
+
+        $path = $request->file('documento')->getRealPath();
+        $array = Excel::toArray(new ClientesImport, $request->file('documento'));
+        $n = 1;
+        $error = '';
+        foreach($array as $array1){
+            foreach($array1 as $key => $array2){
+                $n++;
+                $sameCurp = Cliente::where('curp', '=' ,$array2['curp'])->get()->count();
+                if($sameCurp > 0){
+                    $error .= 'Error en la fila '. $n .' curp repetido'. "\n";
+                }
+               
+                if($sameCurp > 0){
+                    continue;
+                }
+               
+                $cliente = new Cliente();
+                $cliente->user_id = $array2['user_id'] ?? '';
+                $cliente->aval_id = $array2['aval_id'] ?? '';
+                $cliente->asociado_id = $array2['asociado_id'] ?? '';
+                $cliente->cuentas_id = $array2['cuentas_id'] ?? '';
+                $cliente->nombre = mb_strtoupper($array2['nombre'], 'UTF-8');
+                $cliente->apellido_paterno = mb_strtoupper($array2['apellido_paterno'], 'UTF-8');
+                $cliente->apellido_materno = mb_strtoupper($array2['apellido_materno'], 'UTF-8');
+                $cliente->fecha_nacimiento = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($array2['fecha_nacimiento'])->format('d/m/Y');
+                $cliente->ciudad_nacimiento = mb_strtoupper($array2['ciudad_nacimiento'], 'UTF-8');
+                $cliente->estado_nacimiento = mb_strtoupper($array2['estado_nacimiento'], 'UTF-8');
+                $cliente->estados_nacimientos_clave = $array2['estados_nacimientos_clave'] ?? '7';
+                $cliente->genero = mb_strtoupper($array2['genero'], 'UTF-8') ?? 'x';
+                $cliente->rfc = mb_strtoupper($array2['rfc'], 'UTF-8');
+                $cliente->curp = mb_strtoupper($array2['curp'], 'UTF-8');
+                $cliente->edad = $array2['edad'];
+                $cliente->tipo_vivienda = mb_strtoupper($array2['tipo_vivienda'], 'UTF-8');
+                $cliente->direccion = mb_strtoupper($array2['direccion'], 'UTF-8');
+                $cliente->anios_residencia = mb_strtoupper($array2['anios_residencia'], 'UTF-8');
+                $cliente->referencia = mb_strtoupper($array2['referencia'], 'UTF-8');
+                $cliente->cp = $array2['cp'];
+                $cliente->colonia = mb_strtoupper($array2['colonia'], 'UTF-8');
+                $cliente->ciudad = mb_strtoupper($array2['ciudad'], 'UTF-8');
+                $cliente->estado = mb_strtoupper($array2['estado'], 'UTF-8');
+                $cliente->celular = $array2['celular'];
+                $cliente->fecha_alta = $array2['fecha_alta'];
+                $cliente->escolaridad = mb_strtoupper($array2['escolaridad'], 'UTF-8');
+                $cliente->profesion = mb_strtoupper($array2['profesion'], 'UTF-8');
+                $cliente->religion = mb_strtoupper($array2['religion'], 'UTF-8');
+                $cliente->estado_civil = mb_strtoupper($array2['estado_civil'], 'UTF-8');
+                $cliente->clave_elector = mb_strtoupper($array2['clave_elector'], 'UTF-8');
+                $cliente->anio_vencimiento_ine = mb_strtoupper($array2['anio_vencimiento_ine'], 'UTF-8');
+                $cliente->folio_ine = mb_strtoupper($array2['folio_ine'], 'UTF-8');
+                $cliente->ocr = mb_strtoupper($array2['ocr'], 'UTF-8');
+                $cliente->numero_tarjeta = $array2['numero_tarjeta'];
+                $cliente->numero_cuenta = $array2['numero_cuenta'];
+                $cliente->clave_interbancaria = $array2['clave_interbancaria'];
+                $cliente->banco = mb_strtoupper($array2['banco'], 'UTF-8');
+                $cliente->tipo_cliente = $array2['tipo_cliente'] ?? 'Nuevo';
+                $cliente->nacionalidad = mb_strtoupper($array2['nacionalidad'], 'UTF-8');
+                $cliente->tipo_vialidad = $array2['tipo_vialidad'] ?? 'Calle';
+                $cliente->entre_calles = mb_strtoupper($array2['entre_calles'], 'UTF-8');                
+                $cliente->save();
+            }
+        }
+        if($error != ''){
+            return back()->with('mensaje', $error);
+        }
+        return back()->with('mensaje', 'Se realizo la carga exitosamente');
+    }
 }

@@ -346,7 +346,8 @@
                 <td>Capital</td>
                 <td>Interes</td>
                 <td>Saldo Pendiente</td>
-                <td>Gasto por cobranza</td>
+                <td>Firma Cliente</td>
+                <td>Firma Asesor</td>
             </tr>
         <tbody>
             @php
@@ -363,7 +364,8 @@
                 <td>{{ $tAmortizacion->capital }}</td>
                 <td>{{ $tAmortizacion->interes }}</td>
                 <td>{{ $tAmortizacion->saldo_pendiente }}</td>
-                <td>{{ $tAmortizacion->gasto_x_cobranza }}</td>
+                <td></td>
+                <td></td>
             </tr>
             @endforeach
         </tbody>

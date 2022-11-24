@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Aval;
+use App\Exports\AvalesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 use Illuminate\Http\Request;
@@ -12,8 +14,14 @@ class AvalController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $avales = Aval::name($name)->paginate(10);
-        return view('admin.avales.index', compact('avales','name'));
+        if($request->estatus){
+            $avales = Aval::where('state', $request->estatus)->name($name)->paginate(10);
+        }else{
+            $avales = Aval::name($name)->paginate(10);
+        }
+        $estatusInactivo = Aval::where('state', 'Inactivo')->get();
+        $estatusActivo = Aval::where('state', 'Activo')->get();
+        return view('admin.avales.index', compact('avales','name','estatusActivo','estatusInactivo'));
     }
 
     public function create()
@@ -117,5 +125,24 @@ class AvalController extends Controller
         $clientExiste = Aval::where('clave_elector','LIKE',"%$claveElector%")->count();
         //dd($cliente);
         return response()->json(["clientExiste" => $clientExiste]);
+    }
+
+    public function reporteAvales(){
+        $data = Aval::orderBy('nombre', 'ASC')->orderBy('apellido_paterno', 'ASC');
+        return Excel::download(new AvalesExport($data->get()), 'avales'. '.xlsx');
+    }
+
+    public function actualizarEstadoAval($id){
+        $state = Aval::where('id', $id)->pluck('state');
+        if($state[0] == 'Activo') {
+            Aval::where('id', $id)->update([
+                'state' => 'Inactivo'
+            ]);
+        }else{
+            Aval::where('id', $id)->update([
+                'state' => 'Activo'
+            ]);
+        }
+        return response()->json(["data" => "ok"]);
     }
 }

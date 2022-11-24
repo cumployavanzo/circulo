@@ -8,6 +8,7 @@ use App\Vencimiento;
 use App\Caja;
 use App\Banco;
 use App\Articulo;
+use App\Cuenta;
 use App\MovimientoGasto;
 
 

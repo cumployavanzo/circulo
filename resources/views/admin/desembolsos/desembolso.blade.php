@@ -73,7 +73,7 @@
                       <div class="d-flex justify-content-start">
                           <div class="col-sm-5">
                               <div class="form-group">
-                                  <label for="txt_tipo_pago">Tipos de Pago</label>
+                                  <label for="txt_tipo_pago">Tipos de Desembolso</label>
                                   <select class="form-control" id="txt_tipo_pago" name="txt_tipo_pago" onchange="cuentaTipoPago()">
                                       <option>-- Selecciona --</option>
                                       <option value="Transferencia">Transferencia</option>
@@ -84,7 +84,7 @@
                               </div>
                           </div>
                           <div class="col-lg-4">
-                              <label for="fecha_pago">Fecha de Pago</label>
+                              <label for="fecha_pago">Fecha de Desembolso</label>
                               <div class="input-group">
                                   <div class="input-group-prepend">
                                   <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
@@ -113,7 +113,7 @@
                                   <select type="select" id="txt_cuenta_efectivo" name="txt_cuenta_efectivo" class="form-control select2 ">
                                       <option value="">Selecciona</option>
                                       @foreach($cuentasCaja as $cuentaC)
-                                          <option {{ old('txt_cuenta_efectivo') == $cuentaC->id ? 'selected' : '' }} value="{{$cuentaC->cuentas_id}}">{{$cuentaC->cuenta->nombre_cuenta}}</option>
+                                          <option {{ old('txt_cuenta_efectivo') == $cuentaC->id ? 'selected' : '' }} value="{{$cuentaC->cuentas_id}}">{{$cuentaC->nombre_caja}}</option>
                                       @endforeach
                                   </select>
                               </div>
@@ -204,15 +204,17 @@ calcularTablaAmortizacionRiesgo();
     let frecuencia_pago = document.getElementById("txt_frecuencia_pago").value;
     let monto_autorizado = document.getElementById("txt_monto_autorizado").value;
     let fecha_desembolso = document.getElementById("txt_fdesembolso").value;
-    csrfc = $('meta[name="csrf-token"]').attr('content')
+    // csrfc = $('meta[name="csrf-token"]').attr('content')
 
     $.ajax({
         type: 'POST',
-        url: '/admin/analisis_credito/detalleTablaAmortizacion',
+        // url: '/admin/analisis_credito/detalleTablaAmortizacion',
+        url: "{{ asset('admin/analisis_credito/detalleTablaAmortizacion') }}",
+
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
         dataType:"json",
         data: {
-            _token: csrfc,
+            // _token: csrfc,
             monto_autorizado : monto_autorizado,
             fecha_desembolso : fecha_desembolso,
             cuota : cuota,
