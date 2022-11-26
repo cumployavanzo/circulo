@@ -17,6 +17,8 @@ Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'HomeController@logout')->name('logout');
 Route::resource('registro', 'Auth\RegisterController');
 Route::get('register/verify/{code}', 'Auth\RegisterController@verify')->name('verificacion');
+Route::get('/encuesta-prospecto', 'ProspectoController@loginCliente')->name('loginCliente'); // primera vista que verá el cliente al hacer la encuesta
+Route::post('/encuesta-prospecto', 'ProspectoController@listadoEncuestas')->name('listadoEncuestas');
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('index');
@@ -150,6 +152,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('productos/addproductos', 'ProductoController@store')->name('addProductos');
     Route::delete('productos/deleteProducto/{id}', 'ProductoController@destroy')->name('deleteProducto');
     Route::get('productos/numCuenta/{id}', 'ProductoController@verNumCuenta')->name('verNumCuenta');
+    Route::post('productos/reporteSuc/','ProductoController@reporteSucursales')->name('reporteSucursales');
 
 
     Route::get('articulos/addarticulos', 'ArticuloController@create')->name('addarticulo');

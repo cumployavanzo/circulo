@@ -23,6 +23,8 @@
     </div> --}}
     <div class="card-header text-center mx-auto">
         <img class="rounded-circle mx-auto d-block" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"><b>CFO</b>WOLF
+        {{-- <img class="rounded-circle mx-auto d-block m-2 logo" style="width: 25%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"> PARA MEGANA--}}
+
         <h2>Bienvenido</h2>
     </div>
     <div class="card-body">

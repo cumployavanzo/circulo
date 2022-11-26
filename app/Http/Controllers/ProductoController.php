@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Producto;
 use App\Cuenta;
 use Illuminate\Http\Request;
+use App\Exports\ProductosExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductoController extends Controller
 {
@@ -91,5 +93,10 @@ class ProductoController extends Controller
     public function verNumCuenta($id){
         $cuenta = Cuenta::where('id', $id)->first();
         return response()->json(["cuenta" => $cuenta]);
+    }
+
+    public function reporteSucursales(){
+        $data = Producto::orderBy('nombre', 'ASC');
+        return Excel::download(new ProductosExport($data->get()), 'productos'. '.xlsx');
     }
 }

@@ -9,7 +9,16 @@
         <div class="card-header with-border">
             <h3 class="card-title">Lista de Productos</h3>
             <div class="card-tools pull-right">
-                <a href="{{ route('admin.producto.create') }}"   type="button" class="btn btn-sm btn-primary" title="Agregar Producto"><li class="fas fa-plus"></li>&nbsp; Nuevo Producto</a>
+                <div class="form-group float-right">
+                    <div class="d-flex">
+                        <a href="{{ route('admin.producto.create') }}"   type="button" class="btn btn-sm btn-primary" title="Agregar Producto"><li class="fas fa-plus"></li>&nbsp; Nuevo Producto</a>&nbsp;
+                        <form action="{{ route('admin.reporteSucursales') }}" method="POST">
+                            @method('post')
+                            @csrf
+                            <button class="btn btn-sm btn-info" title="Generar Reporte" type="submit" href="#"><i class="fas fa-file-excel"></i> Reporte</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="card-body">

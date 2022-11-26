@@ -100,4 +100,40 @@ class ProspectoController extends Controller
         return redirect()->route('admin.prospecto.edit',[$id])->with('mensaje', 'Se ha editado el Prospecto exitosamente');
         // return back()->with('mensaje', 'Se ha editado el Personal exitosamente');
     }
+
+    public function loginCliente(){
+        $estados_nac = EstadoNacimiento::all();
+        return view('admin.prospectos.loginCliente', compact('estados_nac'));
+    }
+
+    public function listadoEncuestas(Request $request){
+        if($request->txt_curp){
+            $prospectos = Prospecto::where('curp','LIKE',"%$request->txt_curp%")->count();
+            if(!empty($prospectos)){
+                return back()->with('mensaje', 'Este Cliente ya existe');
+            }else{
+                $prospecto = new Prospecto();
+                $prospecto->nombre = mb_strtoupper($request->input('nombres'), 'UTF-8');
+                $prospecto->apellido_paterno = mb_strtoupper($request->input('apellido_paterno'), 'UTF-8');
+                $prospecto->apellido_materno = mb_strtoupper($request->input('apellido_materno'), 'UTF-8');
+                $prospecto->direccion = mb_strtoupper($request->input('direccion'), 'UTF-8');
+                $prospecto->telefono = $request->input('txt_celular');
+                $prospecto->fecha_nacimiento = $request->input('txt_fecha_nac');
+                $prospecto->edad = mb_strtoupper($request->input('txt_edad'), 'UTF-8');
+                $prospecto->genero = mb_strtoupper($request->input('genero'), 'UTF-8');
+                $prospecto->clave_estado_nacimiento = $request->input('txt_estado_nacimiento');
+                $prospecto->curp = mb_strtoupper($request->input('txt_curp'), 'UTF-8');
+                $prospecto->cp = $request->input('txt_codigo_postal');
+                $prospecto->colonia = mb_strtoupper($request->input('txt_colonia'), 'UTF-8');
+                $prospecto->ciudad = mb_strtoupper($request->input('txt_ciudad'), 'UTF-8');
+                $prospecto->estado = mb_strtoupper($request->input('txt_estado'), 'UTF-8');
+                $prospecto->referencia = mb_strtoupper($request->input('referencias'), 'UTF-8');
+                $prospecto->entre_calles = mb_strtoupper($request->input('entre_calles'), 'UTF-8');
+                $prospecto->save();
+                return back()->with('mensaje', 'Tus datos se han enviado exitosamente');
+            }
+        }
+    }
+    
+
 }
