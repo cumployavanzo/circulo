@@ -7,6 +7,7 @@ use App\Cliente;
 use App\Producto;
 use App\Referencia;
 use App\TablaAmortizacion;
+use App\Empresa;
 use DateTime;
 use Carbon\Carbon;
 use PDF;
@@ -23,12 +24,23 @@ class SolicitudAdminController extends Controller
     public function index(Request $request)
     {
         $name =  mb_strtoupper($request->get('txt_name'), 'UTF-8');
-        $solicitudes = Solicitud::select('solicituds.*')
-        ->name($name)
-        ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
-        ->paginate(10);
+       
+        if($request->estatus){
+            $solicitudes = Solicitud::select('solicituds.*')->where('solicituds.estatus', $request->estatus) ->name($name)
+            ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+            ->paginate(10);
+        }else{
+            $solicitudes = Solicitud::select('solicituds.*')
+            ->name($name)
+            ->join('clientes', 'clientes.id', '=', 'solicituds.cliente_id')
+            ->paginate(10);
+        }
 
-        return view('admin.solicitudes.index', compact('solicitudes','name'));
+        $statePendiente = Solicitud::where('estatus', 'Pendiente')->get();
+        $stateProceso = Solicitud::where('estatus', 'Proceso')->get();
+        $stateTerminado = Solicitud::where('estatus', 'Autorizado')->get();
+
+        return view('admin.solicitudes.index', compact('solicitudes','name','statePendiente','stateProceso','stateTerminado'));
     }
 
     public function create()
@@ -306,10 +318,18 @@ class SolicitudAdminController extends Controller
 
     public function pdfSolicitud($id){
         $solicitud = Solicitud::where('id', $id)->get();
+        $empresa = Empresa::where('status', 'Activo')->first();
         $tablaAmortizacion = TablaAmortizacion::where('solicituds_id', $id)->get();
         $referencia_familiar = Referencia::where('clientes_id',$solicitud[0]->cliente_id)->where('tipo_referencia', 'FAMILIAR')->first();
         $referencia_comercial = Referencia::where('clientes_id',$solicitud[0]->cliente_id)->where('tipo_referencia', 'COMERCIAL')->first();
         $pdf_name = "SOLICITUD".$id.".PDF";
-        return PDF::loadView('pdfs.solicitudCliente', compact('solicitud','tablaAmortizacion','referencia_familiar','referencia_comercial'))->setPaper('letter', 'portrait')->stream($pdf_name);
+        return PDF::loadView('pdfs.solicitudCliente', compact('solicitud','empresa','tablaAmortizacion','referencia_familiar','referencia_comercial'))->setPaper('letter', 'portrait')->stream($pdf_name);
+    }
+
+    public function pdfTablePagos($id){
+        $solicitud = Solicitud::where('id', $id)->get();
+        $tablaAmortizacion = TablaAmortizacion::where('solicituds_id', $id)->get();
+        $pdf_name = "TablaPagos".$id.".PDF";
+        return PDF::loadView('pdfs.tarjetaPagos', compact('solicitud','tablaAmortizacion'))->setPaper('letter', 'portrait')->stream($pdf_name);
     }
 }

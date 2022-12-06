@@ -292,6 +292,7 @@ class ClienteAdminController extends Controller
         $array = Excel::toArray(new ClientesImport, $request->file('documento'));
         $n = 1;
         $error = '';
+
         foreach($array as $array1){
             foreach($array1 as $key => $array2){
                 $n++;
@@ -313,6 +314,7 @@ class ClienteAdminController extends Controller
                 $cliente->apellido_paterno = mb_strtoupper($array2['apellido_paterno'], 'UTF-8');
                 $cliente->apellido_materno = mb_strtoupper($array2['apellido_materno'], 'UTF-8');
                 $cliente->fecha_nacimiento = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($array2['fecha_nacimiento'])->format('d/m/Y');
+                $cliente->fecha_alta = \PhpOffice\PhpSpreadsheet\Shared\Date::excelToDateTimeObject($array2['fecha_alta'])->format('d/m/Y');
                 $cliente->ciudad_nacimiento = mb_strtoupper($array2['ciudad_nacimiento'], 'UTF-8');
                 $cliente->estado_nacimiento = mb_strtoupper($array2['estado_nacimiento'], 'UTF-8');
                 $cliente->estados_nacimientos_clave = $array2['estados_nacimientos_clave'] ?? '7';
@@ -329,7 +331,6 @@ class ClienteAdminController extends Controller
                 $cliente->ciudad = mb_strtoupper($array2['ciudad'], 'UTF-8');
                 $cliente->estado = mb_strtoupper($array2['estado'], 'UTF-8');
                 $cliente->celular = $array2['celular'];
-                $cliente->fecha_alta = $array2['fecha_alta'];
                 $cliente->escolaridad = mb_strtoupper($array2['escolaridad'], 'UTF-8');
                 $cliente->profesion = mb_strtoupper($array2['profesion'], 'UTF-8');
                 $cliente->religion = mb_strtoupper($array2['religion'], 'UTF-8');

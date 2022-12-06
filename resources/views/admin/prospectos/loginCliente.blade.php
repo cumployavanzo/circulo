@@ -90,27 +90,29 @@
                             <p>4.- ¿Cuál es tu Fecha de Nacimiento? *</p>
                             <input type="hidden" id="txt_edad" name="txt_edad" value="">
                             <input type="text" id="txt_fecha_nac" name="txt_fecha_nac" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" placeholder="dd/mm/yyyy"><br>                            
-                            <p>5.- ¿Cuál es tu Curp? *</p>
-                            <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="Escribe aquí tu respuesta" maxlength="18"><br>                            
-                            <p>6.- ¿Cuál es tu Genero? *</p>
+                           
+                            <p>5.- ¿Cuál es tu Genero? *</p>
                             <select name="genero" id="genero" class="custom-select" required>
                                 <option value="x" selected disabled>ELIJA UNA OPCIÓN</option>
                                 <option value="M">MASCULINO</option>
                                 <option value="F">FEMENINO</option>
                                 <option value="x">INDISTINTO</option>
                             </select>
+                           
                             <a href="#" type="button" class="btn btn-info text-white font-bold w-full rounded shadow p-1 mt-3 send" onclick="siguientePregunta('2')">Siguiente</a>
                         </div>  
                     </div>
                     <div class="col-md-6 ml-5" id="form3" style="display: none">
                         <div class="card p-2 my-5 cardForm">
-                            <p>7.- ¿Cuál es tu Estado de Nacimiento? *</p>
+                            <p>6.- ¿Cuál es tu Estado de Nacimiento? *</p>
                             <select type="select" id="txt_estado_nacimiento" name="txt_estado_nacimiento" class="form-control  @error('state') is-invalid @enderror">
                                 <option value="">Selecciona</option>
                                 @foreach($estados_nac as $estados)
                                     <option {{ old('txt_estado_nacimiento') == $estados->clave ? 'selected' : '' }} value="{{$estados->clave}}">{{$estados->nombre}}</option>
                                 @endforeach
                             </select><br>
+                            <p>7.- ¿Cuál es tu Curp? *</p>
+                            <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="Escribe aquí tu respuesta" maxlength="18"><br>                            
                             <p>8.- ¿Cuál es tu Teléfono? *</p>
                             <input type="text" id="txt_celular" name="txt_celular" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask><br>
                             <a href="#" type="button" class="btn btn-info text-white font-bold w-full rounded shadow p-1 mt-3 send" onclick="siguientePregunta('3')">Siguiente</a>
@@ -147,7 +149,7 @@
                                 <img class="rounded-circle mx-auto d-block m-2 logo" style="width: 25%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo">
                                 <h5 class="card-title my-3">BIENVENIDO</h5>
                             </div>
-                            <p class="card-text mx-5">Con el fin de mejorar nuestra atención hacia nuestros clientes, podra realizar su solicitud de crédito, esperamos pueda responderla de la manera más sincera posible.</p>
+                            <p class="card-text mx-5">Con el fin de mejorar nuestra atención a nuestros clientes, podras realizar tu solicitud de crédito, esperamos que puedas responderla de la manera más sincera posible.</p>
                             <p class="card-text"><small class="text-muted">¡Gracias por confiar en CFOWOLF!</small></p>
                         </div>
                         </div>

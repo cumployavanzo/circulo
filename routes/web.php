@@ -61,6 +61,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::resource('prospecto', 'ProspectoController')->middleware('permiso');
     Route::resource('bono', 'BonoController')->middleware('permiso');
     Route::resource('detalleBono', 'DetalleBonoController');
+    Route::resource('colocacion', 'ColocacionController')->middleware('permiso');
+
 
 
     // Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
@@ -130,6 +132,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::post('solicitud/detalleTablaAmortizacion/', 'SolicitudAdminController@tablaAmortizacion')->name('tablaAmortizacion');
     Route::get('solicitud/productos/{id}', 'SolicitudAdminController@verProductos')->name('verProductos');
     Route::get('solicitud/pdf/solicitudCredito/{id}','SolicitudAdminController@pdfSolicitud')->name('solicitudCredito');
+    Route::get('solicitud/pdf/tablaPagos/{id}','SolicitudAdminController@pdfTablePagos')->name('tablaPagos');
 
 
     Route::get('cuentas/addcuentas', 'CuentaController@create')->name('addcuenta');
@@ -218,6 +221,11 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('asignacion/detalleActivo/{id}', 'AsignacionController@verDetalleCompraActivo')->name('verDetalleCompraActivo');
 
     Route::get('detalleBono/verDetalleBono/{id}', 'DetalleBonoController@verDetallesBono')->name('verDetallesBono');
+
+    Route::get('colocacion/detalleClienteSeg/{curp}', 'ColocacionController@obtenerDetallesCliente');
+    Route::get('colocacion/periodoSeg/{idProducto}', 'ColocacionController@verPeriodo')->name('verPeriodo');
+    Route::post('colocacion/verMontosProducto/', 'ColocacionController@detallesMontoSeg')->name('detallesMontoSeg');
+    Route::get('colocacion/montoSumaAseg/{idPrima}', 'ColocacionController@obtenerMonto');
 
 
 

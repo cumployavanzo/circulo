@@ -129,6 +129,9 @@ class ProspectoController extends Controller
                 $prospecto->estado = mb_strtoupper($request->input('txt_estado'), 'UTF-8');
                 $prospecto->referencia = mb_strtoupper($request->input('referencias'), 'UTF-8');
                 $prospecto->entre_calles = mb_strtoupper($request->input('entre_calles'), 'UTF-8');
+                $prospecto->users_id = '1';
+                $prospecto->personals_id = '1';
+                $prospecto->sucursales_id = '1';
                 $prospecto->save();
                 return back()->with('mensaje', 'Tus datos se han enviado exitosamente');
             }

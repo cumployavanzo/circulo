@@ -22,7 +22,7 @@
       <a href="../../index2.html" class="h1"><b>CFO</b>WOLF</a>
     </div> --}}
     <div class="card-header text-center mx-auto">
-        <img class="rounded-circle mx-auto d-block" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"><b>CFO</b>WOLF
+        <img class="rounded-circle mx-auto d-block m-2" style="width: 55%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"><b>CFO</b>WOLF
         {{-- <img class="rounded-circle mx-auto d-block m-2 logo" style="width: 25%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"> PARA MEGANA--}}
 
         <h2>Bienvenido</h2>
@@ -59,6 +59,12 @@
           <!-- /.col -->
           <div class="col-4">
             <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+          </div>
+          <!-- /.col -->
+        </div><br>
+        <div class="row">
+          <div class="col-12">
+              <a href="{{ route('loginCliente') }}"  method="POST" type="button" class="btn btn-info btn-block btn-flat"><i class="fa fa-bell"></i> Solicita tu prestamo aquí</a>
           </div>
           <!-- /.col -->
         </div>
