@@ -359,7 +359,7 @@
                 @endphp  
             <tr class="text-center">
                 <td>{{$cont}}</td>
-                <td>{{ $tAmortizacion->fecha_pago }}</td>
+                <td>{{ date('d/m/Y', strtotime($tAmortizacion->fecha_pago))}}</td> 
                 <td>{{ $tAmortizacion->pago }}</td>
                 <td>{{ $tAmortizacion->capital }}</td>
                 <td>{{ $tAmortizacion->interes }}</td>

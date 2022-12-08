@@ -316,25 +316,20 @@
             <td  width="100px" ><b>{{$referencia_comercial ? $referencia_comercial->telefono : ''}}</b></td>
         </tr>
     </table>
-    <table class="table  " style="width: 90% !important">
+    <table class="table  " style="width: 100% !important">
         <tbody>
-        <tr class="tr-borderless">
-            <td class="" style="font-size:7px !important;" width="305px" align="center">
-                <b class="text-center">{{$solicitud[0]->cliente->getFullName()}}<br><br><br>
-                    ______________________________________________________________________________________________
-                </b>
-                <b class="text-center">NOMBRE Y FIRMA DEL SOLICITANTE</b>
-            </td>
-            <td width="40px" ></td>
-            <td width="100px" align="center">
-                <div class="cuadrado">Titular</div>
-            </td>
-            <td width="100px" align="center">
-                <div class="cuadrado">Aval</div>
-            </td>
-            <td width="15px" ></td>
-
-        </tr>
+            <tr class="tr-borderless">
+                <td width="150px" ></td>
+                <td class="" style="font-size:7px !important;" width="305px" align="center">
+                    <b class="text-center">{{$solicitud[0]->cliente->getFullName()}}<br><br><br><br>
+                        ______________________________________________________________________________________________
+                    </b>
+                    
+                    <b class="text-center">NOMBRE Y FIRMA DEL SOLICITANTE</b>
+                </td>
+                <td width="150px" ></td>
+            </tr>
+            <br>
         </tbody>
     </table>
     <h6 class="text-center">TABLA DE AMORTIZACIÓN</h6>
@@ -359,7 +354,7 @@
                 @endphp  
             <tr class="text-center">
                 <td>{{$cont}}</td>
-                <td>{{ $tAmortizacion->fecha_pago }}</td>
+                <td>{{ date('d/m/Y', strtotime($tAmortizacion->fecha_pago))}}</td> 
                 <td>{{ $tAmortizacion->pago }}</td>
                 <td>{{ $tAmortizacion->capital }}</td>
                 <td>{{ $tAmortizacion->interes }}</td>
@@ -395,33 +390,52 @@
                     AUTORIZO EXPRESAMENTE A <strong>{{$empresa->razon_social}}</strong> EN ADELANTE LA FINANCIERA O LA INSTITUCIÓN INDISTINTAMENTE, PARA QUE POR SU CONDUCTO, LLEVEN A CABO LA INVESTIGACIÓN SOBRE MI HISTORIAL CREDITICIO CON LAS SOCIEDADES DE INFORMACIÓN QUE SE SOLICITARÁ, DEL USO QUE LA FINANCIERA Y DE QUE ESTA PODRÁ REALIZAR CONSULTAS PERIODICAS DE MI HISTORIAL CREDITICIO.<br><br>
                 </td>
             </tr>
-            <tr class="tr-borderless">
-                <td width="150px" ></td>
-                <td class="" style="font-size:7px !important;" width="305px" align="center">
-                    <b class="text-center">{{$solicitud[0]->cliente->getFullName()}}<br><br><br><br>
-                        ______________________________________________________________________________________________
-                    </b>
-                    
-                    <b class="text-center">NOMBRE Y FIRMA DEL SOLICITANTE</b>
-                </td>
-                <td width="150px" ></td>
-            </tr>
-            <br>
-            <br><br>
-            <tr class="tr-borderless">
-                <td width="150px" ></td>
-                <td class="" style="font-size:7px !important;" width="305px" align="center">
-                    <b class="text-center">{{$solicitud[0]->cliente->aval->getFullName()}}<br><br><br><br>
-                        ______________________________________________________________________________________________
-                    </b>
-                    
-                    <b class="text-center">NOMBRE Y FIRMA DEL AVAL</b>
-                </td>
-                <td width="150px" ></td>
-            </tr>
-            <br>
-        
+           
+           
         </tbody>
     </table>     
+
+    <table class="table  " style="width: 90% !important">
+        <tbody>
+        <tr class="tr-borderless">
+            <td width="40px" ></td>
+            <td class="" style="font-size:7px !important;" width="305px" align="center">
+                <b class="text-center">{{$solicitud[0]->cliente->getFullName()}}<br><br><br>
+                    ______________________________________________________________________________________________
+                </b>
+                <b class="text-center">NOMBRE Y FIRMA DEL SOLICITANTE</b>
+            </td>
+            <td width="40px" ></td>
+            <td width="100px" align="center">
+                <div class="cuadrado">Titular</div>
+            </td>
+            <td width="100px" align="center">
+                <div ></div>
+            </td>
+            <td width="15px" ></td>
+
+        </tr>
+        <br>
+        <tr class="tr-borderless">
+            <td width="40px" ></td>
+            <td class="" style="font-size:7px !important;" width="305px" align="center">
+                <b class="text-center">{{$solicitud[0]->cliente->aval->getFullName()}}<br><br><br>
+                    ______________________________________________________________________________________________
+                </b>
+                <b class="text-center">NOMBRE Y FIRMA DEL AVAL</b>
+            </td>
+            <td width="40px" ></td>
+            <td width="100px" align="center">
+                <div class="cuadrado">Aval</div>
+            </td>
+            <td width="100px" align="center">
+                <div ></div>
+            </td>
+            <td width="15px" ></td>
+
+        </tr>
+        </tbody>
+    </table>
+
 </body>
 </html>
