@@ -17,22 +17,7 @@
         <form method="POST" action="{{ route('admin.cliente.store') }}" autocomplete="off">
         @csrf
         <div class="card-body">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label for="txt_nombre_prospecto" class="">Prospectos</label>
-                    <select type="select" id="txt_nombre_prospecto" name="txt_nombre_prospecto" class="form-control select2 " onchange="cargarProspecto();">
-                        <option value="">Selecciona</option>
-                        @foreach($prospectos as $prospecto)
-                            <option {{ old('txt_nombre_prospecto') == $prospecto->id ? 'selected' : '' }} value="{{$prospecto->id}}">{{$prospecto->getFullname()}}</option>
-                        @endforeach
-                    </select>
-                    @error('userType')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
-                </div>
-            </div>
+          
             <div class="d-flex justify-content-start">
                 <div class="col-sm-4">
                     <div class="form-group">
@@ -305,93 +290,7 @@
                     </div>
                 </div>
             </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_num_tarjeta">N° de Tarjeta</label>
-                        <input type="text" id="txt_num_tarjeta" name="txt_num_tarjeta" class="form-control" placeholder="N° de Tarjeta" maxlength="16">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_num_cuenta">N° de Cuenta</label>
-                        <input type="text" id="txt_num_cuenta" name="txt_num_cuenta" class="form-control" placeholder="N° de Cuenta" maxlength="20">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_clave_interbancaria">Clabe Interbancaria</label>
-                        <input type="text" id="txt_clave_interbancaria" name="txt_clave_interbancaria" class="form-control" placeholder="Clabe Interbancaria" maxlength="18">
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_banco">Banco</label>
-                        <input type="text" id="txt_banco" name="txt_banco" class="form-control text-uppercase" placeholder="Banco">
-                    </div>
-                </div>
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        <label for="txt_cuenta" class="">Cuenta Contable</label>
-                        <select type="select" id="txt_cuenta" name="txt_cuenta" class="form-control select2 " required>
-                            <option value="">Selecciona</option>
-                            @foreach($cuentas as $cuenta)
-                                <option {{ old('txt_cuenta') == $cuenta->id ? 'selected' : '' }} value="{{$cuenta->id}}">{{$cuenta->nombre_cuenta}}</option>
-                            @endforeach
-                        </select>
-                        @error('userType')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="txt_tipo_cliente">Tipo de Cliente</label>
-                        <select class="form-control" id="txt_tipo_cliente" name="txt_tipo_cliente">
-                            <option>Nuevo</option>
-                            <option>Reingreso</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="txt_nombre_asociado" class="">Nombre Asociado</label>
-                        <select type="select" id="txt_nombre_asociado" name="txt_nombre_asociado" class="form-control select2 " required>
-                            <option value="">Selecciona</option>
-                            @foreach($asociados as $asociado)
-                                <option {{ old('txt_nombre_asociado') == $asociado->id ? 'selected' : '' }} value="{{$asociado->id}}">{{$asociado->getFullname()}}</option>
-                            @endforeach
-                        </select>
-                        @error('userType')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <label for="txt_nombre_aval" class="">Nombre Aval</label>
-                        <select type="select" id="txt_nombre_aval" name="txt_nombre_aval" class="form-control select2 " required>
-                            <option value="">Selecciona</option>
-                            @foreach($avales as $aval)
-                                <option {{ old('txt_nombre_aval') == $aval->id ? 'selected' : '' }} value="{{$aval->id}}">{{$aval->getFullname()}}</option>
-                            @endforeach
-                        </select>
-                        @error('userType')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-            </div>
+           
         </div>              
         <div class="card-footer">
             <div class="col-12">

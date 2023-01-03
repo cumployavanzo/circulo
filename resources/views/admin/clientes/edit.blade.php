@@ -11,26 +11,15 @@
             </div>  
         @endif 
         
-        @if(Session::has('mensaje') == 'Referencia agregada' || Session::has('mensaje') == 'Registro exitoso')
-            @php
-                $activeC = '';
-                $activeR = 'active';
-            @endphp
-        @else
-            @php
-                $activeC = 'active';
-                $activeR = '';
-            @endphp
-        @endif 
+      
         <div class="card-header">
             <ul class="nav nav-pills">
-                <li class="nav-item"><a class="nav-link {{$activeC}}" href="#navCliente" data-toggle="tab">Nuevo Cliente</a></li>
-                <li class="nav-item"><a class="nav-link {{$activeR}}" href="#navReferencia" data-toggle="tab">Referencias</a></li>
+                <li class="nav-item"><a class="nav-link active" href="#navCliente" data-toggle="tab">Nuevo Cliente</a></li>
             </ul>
         </div>
       
         <div class="tab-content">
-            <div class="{{$activeC}} tab-pane" id="navCliente">
+            <div class="active tab-pane" id="navCliente">
                 <form method="POST" action="{{action('ClienteAdminController@update', $cliente->id)}}" autocomplete="off">
                 @method('PUT')	
                 @csrf
@@ -306,93 +295,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_num_tarjeta">N° de Tarjeta</label>
-                                <input type="text" id="txt_num_tarjeta" name="txt_num_tarjeta" class="form-control" placeholder="N° de Tarjeta" value="{{ $cliente->numero_tarjeta}}" maxlength="16">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_num_cuenta">N° de Cuenta</label>
-                                <input type="text" id="txt_num_cuenta" name="txt_num_cuenta" class="form-control" placeholder="N° de Cuenta" value="{{ $cliente->numero_cuenta}}" maxlength="20">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_clave_interbancaria">Clabe Interbancaria</label>
-                                <input type="text" id="txt_clave_interbancaria" name="txt_clave_interbancaria" class="form-control" placeholder="Clabe Interbancaria" value="{{ $cliente->clave_interbancaria}}" maxlength="18">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_banco">Banco</label>
-                                <input type="text" id="txt_banco" name="txt_banco" class="form-control text-uppercase" placeholder="Banco" value="{{ $cliente->banco}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label for="txt_cuenta" class="">Cuenta Contable del Producto</label>
-                                <select type="select" id="txt_cuenta" name="txt_cuenta" class="form-control select2 " required>
-                                    <option value="">Seleccionar</option>
-                                    @foreach($cuentas as $cuenta)
-                                        <option {{ old('txt_cuenta') == $cuenta->id ? 'selected' : ($opcionCuenta != "N/A" ? ($opcionCuenta == $cuenta->id ? 'selected' : '')  : '') }} value="{{$cuenta->id}}">{{$cuenta->nombre_cuenta}}</option>
-                                    @endforeach
-                                </select>
-                                @error('userType')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="txt_tipo_cliente">Tipo de Cliente</label>
-                                <select class="form-control" id="txt_tipo_cliente" name="txt_tipo_cliente">
-                                    <option {{ $cliente->tipo_cliente == 'NUEVO' ? 'selected' : ''}} value="NUEVO">Nuevo</option>
-                                    <option {{ $cliente->tipo_cliente == 'REINGRESO' ? 'selected' : ''}} value="REINGRESO">Reingreso</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="txt_nombre_asociado" class="">Nombre Asociado</label>
-                                <select type="select" id="txt_nombre_asociado" name="txt_nombre_asociado" class="form-control select2 " required>
-                                    <option value="">Seleccionar</option>
-                                    @foreach($asociados as $asociado)
-                                        <option {{ old('txt_nombre_asociado') == $asociado->id ? 'selected' : ($personAsociado != "N/A" ? ($personAsociado == $asociado->id ? 'selected' : '')  : '') }} value="{{$asociado->id}}">{{$asociado->getFullname()}}</option>
-                                    @endforeach
-                                </select>
-                                @error('userType')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label for="txt_nombre_aval" class="">Nombre Aval</label>
-                                <select type="select" id="txt_nombre_aval" name="txt_nombre_aval" class="form-control select2 " required>
-                                    <option value="">Seleccionar</option>
-                                    @foreach($avales as $aval)
-                                        <option {{ old('txt_nombre_aval') == $aval->id ? 'selected' : ($personAval != "N/A" ? ($personAval == $aval->id ? 'selected' : '')  : '') }} value="{{$aval->id}}">{{$aval->getFullname()}}</option>
-                                    @endforeach
-                                </select>
-                                @error('userType')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
+                   
+                  
                 </div>              
                 <div class="card-footer">
                     <div class="col-12">
@@ -402,176 +306,7 @@
                 </div>
                 </form>
             </div>
-            <div class="{{$activeR}} tab-pane" id="navReferencia">
-                <form method="POST" action="{{ route('admin.addreferencias', $cliente->id) }}" autocomplete="off">
-                @csrf
-                <div class="card-body">
-                    <input type="hidden" id="idReferencia" name="idReferencia" value="0">
-                    <input type="hidden" id="idClienteRef" name="idClienteRef" value="0">
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_nombre_ref">Nombre</label>
-                                <input type="text" id="txt_nombre_ref" name="txt_nombre_ref" class="form-control text-uppercase" placeholder="Nombre(s)">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_apellido_paterno_ref">Apellido Paterno</label>
-                                <input type="text" id="txt_apellido_paterno_ref" name="txt_apellido_paterno_ref" class="form-control text-uppercase" placeholder="Apellido Paterno">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_apellido_materno_ref">Apellido Materno</label>
-                                <input type="text" id="txt_apellido_materno_ref" name="txt_apellido_materno_ref" class="form-control text-uppercase" placeholder="Apellido Materno">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_parentesco_ref">Parentesco</label>
-                                <select class="form-control" id="txt_parentesco_ref" name="txt_parentesco_ref">
-                                    <option>-- Elíge --</option>
-                                    <option>HIJO(A)</option>
-                                    <option>PADRE</option>
-                                    <option>MADRE</option>
-                                    <option>ESPOSO(A)</option>
-                                    <option>HERMANO(A)</option>
-                                    <option>ABUELO(A)</option>
-                                    <option>NIETO(A)</option>
-                                    <option>SOBRINO(A)</option>
-                                    <option>YERNO</option>
-                                    <option>NUERA</option>
-                                    <option>CUÑADO(A)</option>
-                                    <option>TIO(A)</option>
-                                    <option>PRIMO(A)</option>
-                                    <option>CONOCIDO(A)</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_celular_ref">Celular</label>
-                                <input type="text" id="txt_celular_ref" name="txt_celular_ref" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_tipo_ref">Tipo</label>
-                                <select class="form-control" id="txt_tipo_ref" name="txt_tipo_ref">
-                                    <option>FAMILIAR</option>
-                                    <option>COMERCIAL</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label for="txt_direccion_ref">Dirección</label>
-                                <input type="text" id="txt_direccion_ref" name="txt_direccion_ref" class="form-control text-uppercase" placeholder="Dirección">
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                <label for="txt_entre_calles_ref">Entre calles</label>
-                                <input type="text" id="txt_entre_calles_ref" name="txt_entre_calles_ref" class="form-control text-uppercase" placeholder="Entre calles">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-3">
-                            <div class="form-group" id="theCpRef">
-                                <label for="txt_codigo_postal_ref">Codigo Postal</label>
-                                <input type="text" id="txt_codigo_postal_ref" name="txt_codigo_postal_ref" class="form-control" placeholder="Codigo Postal">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group" id="theSuburbRef">
-                                <label for="txt_colonia_ref">Colonia</label>
-                                <select name="txt_colonia_ref" id="txt_colonia_ref" class="form-control text-uppercase theSuburbs" required>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group" id="theCityRef">
-                                <label for="txt_ciudad_ref">Ciudad</label>
-                                <input type="text" id="txt_ciudad_ref" name="txt_ciudad_ref" class="form-control" placeholder="Ciudad">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group" id="theStateRef">
-                                <label for="txt_estado_ref">Estado</label>
-                                <input type="text" id="txt_estado_ref" name="txt_estado_ref" class="form-control" placeholder="Estado">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-8">
-                            <div class="form-group">
-                                <label for="txt_referencia_ref">Referencias</label>
-                                <input type="text" id="txt_referencia_ref" name="txt_referencia_ref" class="form-control text-uppercase" placeholder="Referencias">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for=""></label>
-                                <div style="position: absolute;top: 45%;">
-                                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar">
-                                        <i class="fas fa-plus-circle"></i> &nbsp;Agregar Referencia
-                                    </button>
-                                </div>
-                                   
-                            </div>    
-                        </div>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <div class="col-12 table-responsive">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">#</th>
-                                        <th>Nombre</th>
-                                        <th>Parentesco</th>
-                                        <th>Tipo</th>
-                                        <th style="width: 40px">Acción</th>
-                                    </tr>
-                                </thead>
-                                @if (!empty($referencias))
-                                    <tbody>
-                                            @php
-                                                $cont = 0;
-                                            @endphp
-                                        @foreach($referencias as $referencia)
-                                            @php
-                                                $cont ++;
-                                            @endphp
-                                        <tr>
-                                            <td>{{ $cont }}.</td>
-                                            <td>{{ $referencia->getFullName() }}</td>
-                                            <td>{{ $referencia->parentesco}}</td>
-                                            <td>{{ $referencia->tipo_referencia}}</td>
-                                            <td><a href="#" class="badge bg-info" title="Click para editar" onclick="cargarReferencia('{{ $referencia->id }}')">Editar</a></td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                @endif
-                               
-                            </table>
-                        </div>
-                        <!-- /.col -->
-                      </div>
-                </div> 
-                <div class="card-footer">
-                    <div class="col-12">
-                        <a type="button" href="{{ route('admin.cliente.index') }}" class="btn btn-danger float-right">Cerrar</a>
-                    </div>
-                </div>
-                </form>
-            </div>
+           
         </div>
     </div>
 </div>

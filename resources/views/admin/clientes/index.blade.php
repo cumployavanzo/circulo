@@ -16,7 +16,7 @@
             <div class="form-group float-right">
               
                 <div class="d-flex">
-                    <div class="col-sm-7">
+                    <!-- <div class="col-sm-7">
                         <form action="{{ route('admin.importClients') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row text-right">
@@ -28,10 +28,9 @@
                                 </div>  
                             </div>  
                         </form>
-                    </div>  
-                    <div class="col-sm-6">
+                    </div>   -->
+                    <div class="col-sm-12">
                         <a href="{{ route('admin.cliente.create') }}"  type="button" class="btn btn-sm btn-primary" title="Agregar Cliente"><li class="fas fa-plus"></li>&nbsp; Nuevo Cliente</a>
-                        <a href="#" type="button" data-toggle="modal" data-target="#exampleModal" class="btn btn-sm btn-info" title="Generar Reporte"><i class="fas fa-file-excel"></i>&nbsp; Reporte Clientes</a>
                     </div>  
                 
                 </div>

@@ -4,7 +4,7 @@
   <div class="card">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container">
-          <a class="navbar-brand" href="Sistema.php">CFOWOLF</a>
+          <a class="navbar-brand">CUMPLO Y AVANZO</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
           </button>
@@ -19,10 +19,10 @@
       </div>
     </nav>
     {{-- <div class="card-header text-center">
-      <a href="../../index2.html" class="h1"><b>CFO</b>WOLF</a>
+      <a href="../../index2.html" class="h1"><b>CUMPLO</b>Y AVANZO</a>
     </div> --}}
     <div class="card-header text-center mx-auto">
-        <img class="rounded-circle mx-auto d-block m-2" style="width: 55%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"><b>CFO</b>WOLF
+        <img class="rounded-circle mx-auto d-block m-2" style="width: 55%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"><b>CUMPLO </b>Y AVANZO
         {{-- <img class="rounded-circle mx-auto d-block m-2 logo" style="width: 25%;" src="{{ asset('img/lobo1.jpg') }}" alt="Logo"> PARA MEGANA--}}
 
         <h2>Bienvenido</h2>

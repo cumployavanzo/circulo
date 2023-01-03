@@ -5,12 +5,6 @@ namespace App\Http\Controllers;
 use App\Asociado;
 use App\Cliente;
 use App\EstadoNacimiento;
-use App\Cuenta;
-use App\Aval;
-use App\Prospecto;
-use App\Referencia;
-use App\Imports\ClientesImport;
-use Excel;
 
 
 use Illuminate\Http\Request;
@@ -44,12 +38,9 @@ class ClienteAdminController extends Controller
 
     public function create()
     {
-        $cuentas = Cuenta::all();
-        $asociados = Asociado::all();
-        $avales = Aval::all();
+        
         $estados_nac = EstadoNacimiento::all();
-        $prospectos = Prospecto::where('estatus','Prospecto')->get();
-        return view('admin.clientes.addClientes', compact('avales','asociados','cuentas','estados_nac','prospectos'));
+        return view('admin.clientes.addClientes', compact('estados_nac'));
     }
 
     public function store(Request $request)
@@ -77,7 +68,6 @@ class ClienteAdminController extends Controller
         $cliente->tipo_vivienda = mb_strtoupper($request->input('txt_tipo_vivienda'), 'UTF-8');
         $cliente->direccion = mb_strtoupper($request->input('txt_direccion'), 'UTF-8');
         $cliente->anios_residencia = mb_strtoupper($request->input('txt_residencia'), 'UTF-8');
-        $cliente->referencia = mb_strtoupper($request->input('txt_referencia'), 'UTF-8');
         $cliente->cp = $request->input('txt_codigo_postal');
         $cliente->colonia = mb_strtoupper($request->input('txt_colonia'), 'UTF-8');
         $cliente->ciudad = mb_strtoupper($request->input('txt_ciudad'), 'UTF-8');
@@ -92,13 +82,10 @@ class ClienteAdminController extends Controller
         $cliente->folio_ine = mb_strtoupper($request->input('txt_folio_ine'), 'UTF-8');
         $cliente->ocr = mb_strtoupper($request->input('txt_ocr'), 'UTF-8');
         $cliente->numero_tarjeta = $request->input('txt_num_tarjeta');
-        $cliente->numero_cuenta = $request->input('txt_num_cuenta');
         $cliente->clave_interbancaria = $request->input('txt_clave_interbancaria');
         $cliente->banco = mb_strtoupper($request->input('txt_banco'), 'UTF-8');
         $cliente->tipo_cliente = mb_strtoupper($request->input('txt_tipo_cliente'), 'UTF-8');
         $cliente->asociado_id = $request->input('txt_nombre_asociado');
-        $cliente->aval_id = $request->input('txt_nombre_aval');
-        $cliente->cuentas_id = $request->input('txt_cuenta');
         $cliente->tipo_vialidad = $request->input('txt_vialidad');
         $cliente->entre_calles = mb_strtoupper($request->input('txt_entre_calles'), 'UTF-8');
         $cliente->save();
@@ -125,25 +112,14 @@ class ClienteAdminController extends Controller
             $personAsociado = $cliente->asociados()->first('id')->id;
         }
 
-        $avales = Aval::all(); 
-        $personAval = "N/A";
-        if($cliente->aval()->first('id') != null){
-            $personAval = $cliente->aval()->first('id')->id;
-        }
-        $cuentas = Cuenta::all();
-        $opcionCuenta = "N/A";
-        if($cliente->cuentas()->first('id') != null){
-            $opcionCuenta = $cliente->cuentas()->first('id')->id;
-        }
-
+      
         $estados_nac = EstadoNacimiento::all(); 
         $opcionEstado = "N/A";
         if($cliente->estadoNac()->first('clave') != null){
             $opcionEstado = $cliente->estadoNac()->first('clave')->clave;
         }
-        $referencias = Referencia::where('clientes_id',$id)->get();
 
-        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','cuentas','opcionCuenta','avales','personAval','estados_nac','opcionEstado','referencias'));
+        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','estados_nac','opcionEstado'));
     }
 
     public function update(Request $request, $id)
@@ -164,7 +140,6 @@ class ClienteAdminController extends Controller
             'tipo_vivienda' => mb_strtoupper($request->txt_tipo_vivienda,'UTF-8'),
             'direccion' => mb_strtoupper($request->txt_direccion,'UTF-8'),
             'anios_residencia' => mb_strtoupper($request->txt_residencia,'UTF-8'),
-            'referencia' => mb_strtoupper($request->txt_referencia,'UTF-8'),
             'cp' => mb_strtoupper($request->txt_codigo_postal,'UTF-8'),
             'colonia' => mb_strtoupper($request->txt_colonia,'UTF-8'),
             'ciudad' => mb_strtoupper($request->txt_ciudad,'UTF-8'),
@@ -179,13 +154,10 @@ class ClienteAdminController extends Controller
             'folio_ine' => mb_strtoupper($request->txt_folio_ine,'UTF-8'),
             'ocr' => mb_strtoupper($request->txt_ocr,'UTF-8'),
             'numero_tarjeta' => $request->txt_num_tarjeta,
-            'numero_cuenta' => $request->txt_num_cuenta,
             'clave_interbancaria' => $request->txt_clave_interbancaria,
             'banco' => mb_strtoupper($request->txt_banco,'UTF-8'),
             'tipo_cliente' => mb_strtoupper($request->txt_tipo_cliente,'UTF-8'),
             'asociado_id' => $request->txt_nombre_asociado,
-            'aval_id' => $request->txt_nombre_aval,
-            'cuentas_id' => $request->txt_cuenta,
             'tipo_vialidad' => $request->txt_vialidad,
             'entre_calles' => mb_strtoupper($request->txt_entre_calles,'UTF-8')
         ]);
@@ -226,52 +198,7 @@ class ClienteAdminController extends Controller
         return response()->json(["data" => "ok"]);
     }
 
-    public function guardarReferencias(Request $request, $idCliente){
-    //    dd($request);
-       $referencia = new Referencia();
-       if($request->idReferencia == 0){
-            $referencia->clientes_id = $idCliente;
-            $referencia->nombre = mb_strtoupper($request->input('txt_nombre_ref'), 'UTF-8');
-            $referencia->apellido_paterno = mb_strtoupper($request->input('txt_apellido_paterno_ref'), 'UTF-8');
-            $referencia->apellido_materno = mb_strtoupper($request->input('txt_apellido_materno_ref'), 'UTF-8');
-            $referencia->parentesco = mb_strtoupper($request->input('txt_parentesco_ref'), 'UTF-8');
-            $referencia->telefono = $request->input('txt_celular_ref');
-            $referencia->tipo_referencia = mb_strtoupper($request->input('txt_tipo_ref'), 'UTF-8');
-            $referencia->direccion = mb_strtoupper($request->input('txt_direccion_ref'), 'UTF-8');
-            $referencia->referencia = mb_strtoupper($request->input('txt_referencia_ref'), 'UTF-8');
-            $referencia->cp = $request->input('txt_codigo_postal_ref');
-            $referencia->colonia = mb_strtoupper($request->input('txt_colonia_ref'), 'UTF-8');
-            $referencia->ciudad = mb_strtoupper($request->input('txt_ciudad_ref'), 'UTF-8');
-            $referencia->estado = mb_strtoupper($request->input('txt_estado_ref'), 'UTF-8');
-            $referencia->entre_calles = mb_strtoupper($request->input('txt_entre_calles_ref'), 'UTF-8');
-            $referencia->save();
-       }else{
-            Referencia::where('id', $request->idReferencia)->update([
-                'nombre' => mb_strtoupper($request->txt_nombre_ref , 'UTF-8'),
-                'apellido_paterno' => mb_strtoupper($request->txt_apellido_paterno_ref, 'UTF-8'),
-                'apellido_materno' => mb_strtoupper($request->txt_apellido_materno_ref , 'UTF-8'),
-                'parentesco' => mb_strtoupper($request->txt_parentesco_ref , 'UTF-8'),
-                'telefono' => $request->txt_celular_ref,
-                'tipo_referencia' => mb_strtoupper($request->txt_tipo_ref,'UTF-8'),
-                'direccion' => mb_strtoupper($request->txt_direccion_ref,'UTF-8'),
-                'entre_calles' => mb_strtoupper($request->txt_entre_calles_ref,'UTF-8'),
-                'referencia' => mb_strtoupper($request->txt_referencia_ref,'UTF-8'),
-                'cp' => mb_strtoupper($request->txt_codigo_postal_ref,'UTF-8'),
-                'colonia' => mb_strtoupper($request->txt_colonia_ref,'UTF-8'),
-                'ciudad' => mb_strtoupper($request->txt_ciudad_ref,'UTF-8'),
-                'estado' => mb_strtoupper($request->txt_estado_ref,'UTF-8'),
-            ]);
-            $idCliente = $request->idClienteRef;
-       }
-       
-       return redirect()->route('admin.cliente.edit',[$idCliente])->with('mensaje', 'Referencia agregada');
-    }
-
-
-    public function verReferencia($id){
-        $referencia = Referencia::where('id', $id)->first();
-        return response()->json(["referencia" => $referencia]);
-    }
+  
 
    
     // public function import(Request $request)
@@ -307,9 +234,7 @@ class ClienteAdminController extends Controller
                
                 $cliente = new Cliente();
                 $cliente->user_id = $array2['user_id'] ?? '';
-                $cliente->aval_id = $array2['aval_id'] ?? '';
                 $cliente->asociado_id = $array2['asociado_id'] ?? '';
-                $cliente->cuentas_id = $array2['cuentas_id'] ?? '';
                 $cliente->nombre = mb_strtoupper($array2['nombre'], 'UTF-8');
                 $cliente->apellido_paterno = mb_strtoupper($array2['apellido_paterno'], 'UTF-8');
                 $cliente->apellido_materno = mb_strtoupper($array2['apellido_materno'], 'UTF-8');
@@ -325,7 +250,6 @@ class ClienteAdminController extends Controller
                 $cliente->tipo_vivienda = mb_strtoupper($array2['tipo_vivienda'], 'UTF-8');
                 $cliente->direccion = mb_strtoupper($array2['direccion'], 'UTF-8');
                 $cliente->anios_residencia = mb_strtoupper($array2['anios_residencia'], 'UTF-8');
-                $cliente->referencia = mb_strtoupper($array2['referencia'], 'UTF-8');
                 $cliente->cp = $array2['cp'];
                 $cliente->colonia = mb_strtoupper($array2['colonia'], 'UTF-8');
                 $cliente->ciudad = mb_strtoupper($array2['ciudad'], 'UTF-8');
@@ -340,7 +264,6 @@ class ClienteAdminController extends Controller
                 $cliente->folio_ine = mb_strtoupper($array2['folio_ine'], 'UTF-8');
                 $cliente->ocr = mb_strtoupper($array2['ocr'], 'UTF-8');
                 $cliente->numero_tarjeta = $array2['numero_tarjeta'];
-                $cliente->numero_cuenta = $array2['numero_cuenta'];
                 $cliente->clave_interbancaria = $array2['clave_interbancaria'];
                 $cliente->banco = mb_strtoupper($array2['banco'], 'UTF-8');
                 $cliente->tipo_cliente = $array2['tipo_cliente'] ?? 'Nuevo';
