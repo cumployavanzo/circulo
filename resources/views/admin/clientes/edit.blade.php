@@ -10,8 +10,6 @@
             {{Session::get('mensaje')}}
             </div>  
         @endif 
-        
-      
         <div class="card-header">
             <ul class="nav nav-pills">
                 <li class="nav-item"><a class="nav-link active" href="#navCliente" data-toggle="tab">Nuevo Cliente</a></li>
