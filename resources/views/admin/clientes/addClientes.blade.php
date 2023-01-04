@@ -101,67 +101,25 @@
                         <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" maxlength="18">
                     </div>
                 </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="txt_clave_elector">Clave de Elector</label>
+                        <input type="text" id="txt_clave_elector" name="txt_clave_elector" class="form-control text-uppercase" placeholder="Clave de Elector" required maxlength="18" onchange="validarClaveElector()">
+                    </div>
+                    <small id="msjValidacion" class="text-danger"></small>
+                </div>
             </div>
             <div class="d-flex justify-content-start">
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label for="txt_tipo_vivienda">Tipo Vivienda</label>
-                        <select class="form-control" id="txt_tipo_vivienda" name="txt_tipo_vivienda">
-                            <option>Propia</option>
-                            <option>Rentada</option>
-                            <option>Familiar</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-6">
+               
+                <div class="col-sm-10">
                     <div class="form-group">
                         <label for="txt_direccion">Dirección</label>
                         <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección">
                     </div>
                 </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_residencia">Años de Residencia</label>
-                        <input type="text" id="txt_residencia" name="txt_residencia" class="form-control text-uppercase" placeholder="Años de Residencia">
-                    </div>
-                </div>
+              
             </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-5">
-                    <div class="form-group">
-                        <label for="txt_vialidad">Vialidad</label>
-                        <select class="form-control" id="txt_vialidad" name="txt_vialidad">
-                            <option value="Ampliacion">Ampliación</option>
-                            <option value="Andador">Andador</option>
-                            <option value="Avenida">Avenida</option>
-                            <option value="Boulevard">Boulevard</option>
-                            <option value="Calle">Calle</option>
-                            <option value="Callejon">Callejon</option>
-                            <option value="Calzada">Calzada</option>
-                            <option value="Cerrada">Cerrada</option>
-                            <option value="Circuito">Circuito</option>
-                            <option value="Circumbalacion">Circumbalación</option>
-                            <option value="Continuacion">Continuación</option>
-                            <option value="Corredor">Corredor</option>
-                            <option value="Diagonol">Diagonol</option>
-                            <option value="Eje Vial">Eje Vial</option>
-                            <option value="Pasaje">Pasaje</option>
-                            <option value="Peatonal">Peatonal</option>
-                            <option value="Periferico">Periferico</option>
-                            <option value="Privada">Privada</option>
-                            <option value="Prolongacion">Prolongación</option>
-                            <option value="Retorno">Retorno</option>
-                            <option value="Viaducto">Viaducto</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-7">
-                    <div class="form-group">
-                        <label for="txt_entre_calles">Entre calles</label>
-                        <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles">
-                    </div>
-                </div>
-            </div>
+           
             <div class="d-flex justify-content-start">
                 <div class="col-sm-8">
                     <div class="form-group">
@@ -204,93 +162,7 @@
                         <input type="text" id="txt_celular" name="txt_celular" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="txt_fecha_alta">Fecha de Alta</label>
-                        <input type="text" id="txt_fecha_alta" name="txt_fecha_alta" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" placeholder="dd/mm/yyyy">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="txt_escolaridad">Escolaridad</label>
-                        <select class="form-control" id="txt_escolaridad" name="txt_escolaridad">
-                            <option>Ninguna</option>
-                            <option>Leer y Escribir</option>
-                            <option>Preescolar</option>
-                            <option>Primaria</option>
-                            <option>Secundaria</option>
-                            <option>Preparatoria</option>
-                            <option>Licenciatura</option>
-                            <option>Maestria</option>
-                            <option>Doctorado</option>
-                        </select>
-                    </div>
-                </div>
             </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_profesion">Profesión</label>
-                        <input type="text" id="txt_profesion" name="txt_profesion" class="form-control text-uppercase" placeholder="Profesión">
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_religion">Religión</label>
-                        <select class="form-control" id="txt_religion" name="txt_religion">
-                            <option>Sin Religion</option>
-                            <option>Cristianismo</option>
-                            <option>Budismo</option>
-                            <option>Hinduismo</option>
-                            <option>Testigo de Jehova</option>
-                            <option>Presbiteriana</option>
-                            <option>Catolica</option>
-                            <option>Protestante</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_estado_civil">Estado Civil</label>
-                        <select class="form-control" id="txt_estado_civil" name="txt_estado_civil">
-                            <option>Soltero(a)</option>
-                            <option>Casado(a)</option>
-                            <option>Union Libre</option>
-                            <option>Divorciado(a)</option>
-                            <option>Viuda(a)</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            <div class="d-flex justify-content-start">
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label for="txt_clave_elector">Clave de Elector</label>
-                        <input type="text" id="txt_clave_elector" name="txt_clave_elector" class="form-control text-uppercase" placeholder="Clave de Elector" required maxlength="18" onchange="validarClaveElector()">
-                    </div>
-                    <small id="msjValidacion" class="text-danger"></small>
-                </div>
-            
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label for="txt_vencimiento_ine">Año de vencimiento</label>
-                        <input type="text" id="txt_vencimiento_ine" name="txt_vencimiento_ine" class="form-control" placeholder="aaaa" maxlength="4">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="txt_folio_ine">Folio INE</label>
-                        <input type="text" id="txt_folio_ine" name="txt_folio_ine" class="form-control text-uppercase" placeholder="Folio INE"  maxlength="20">
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label for="txt_ocr">OCR</label>
-                        <input type="text" id="txt_ocr" name="txt_ocr" class="form-control text-uppercase" placeholder="OCR"  maxlength="13">
-                    </div>
-                </div>
-            </div>
-           
         </div>              
         <div class="card-footer">
             <div class="col-12">

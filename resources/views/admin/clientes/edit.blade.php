@@ -104,67 +104,25 @@
                                 <input type="text" id="txt_curp" name="txt_curp" class="form-control text-uppercase" placeholder="CURP" value="{{ $cliente->curp}}" maxlength="18">
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="txt_clave_elector">Clave de Elector</label>
+                                <input type="text" id="txt_clave_elector" name="txt_clave_elector" class="form-control text-uppercase" placeholder="Clave de Elector" value="{{ $cliente->clave_elector}}"  maxlength="18" required onchange="validarClaveElector()">
+                            </div>
+                            <small id="msjValidacion" class="text-danger"></small>
+                        </div>
                     </div>
                     <div class="d-flex justify-content-start">
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="txt_tipo_vivienda">Tipo Vivienda</label>
-                                <select class="form-control" id="txt_tipo_vivienda" name="txt_tipo_vivienda">
-                                    <option {{ $cliente->tipo_vivienda == 'PROPIA' ? 'selected' : ''}} value="PROPIA">Propia</option>
-                                    <option {{ $cliente->tipo_vivienda == 'RENTADA' ? 'selected' : ''}} value="RENTADA">Rentada</option>
-                                    <option {{ $cliente->tipo_vivienda == 'FAMILIAR' ? 'selected' : ''}} value="FAMILIAR">Familiar</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
+                       
+                        <div class="col-sm-10">
                             <div class="form-group">
                                 <label for="txt_direccion">Dirección</label>
                                 <input type="text" id="txt_direccion" name="txt_direccion" class="form-control text-uppercase" placeholder="Dirección" value="{{ $cliente->direccion}}">
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_residencia">Años de Residencia</label>
-                                <input type="text" id="txt_residencia" name="txt_residencia" class="form-control text-uppercase" placeholder="Años de Residencia" value="{{ $cliente->anios_residencia}}">
-                            </div>
-                        </div>
+                       
                     </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-5">
-                            <div class="form-group">
-                                <label for="txt_vialidad">Vialidad</label>
-                                <select class="form-control" id="txt_vialidad" name="txt_vialidad">
-                                    <option {{ $cliente->tipo_vialidad == 'Ampliacion' ? 'selected' : ''}} value="Ampliacion">Ampliación</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Andador' ? 'selected' : ''}} value="Andador">Andador</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Avenida' ? 'selected' : ''}} value="Avenida">Avenida</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Boulevard' ? 'selected' : ''}} value="Boulevard">Boulevard</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Calle' ? 'selected' : ''}} value="Calle">Calle</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Callejon' ? 'selected' : ''}} value="Callejon">Callejon</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Calzada' ? 'selected' : ''}} value="Calzada">Calzada</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Cerrada' ? 'selected' : ''}} value="Cerrada">Cerrada</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Circuito' ? 'selected' : ''}} value="Circuito">Circuito</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Circumbalacion' ? 'selected' : ''}} value="Circumbalacion">Circumbalación</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Continuacion' ? 'selected' : ''}} value="Continuacion">Continuación</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Corredor' ? 'selected' : ''}} value="Corredor">Corredor</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Diagonol' ? 'selected' : ''}} value="Diagonol">Diagonol</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Eje Vial' ? 'selected' : ''}} value="Eje Vial">Eje Vial</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Pasaje' ? 'selected' : ''}} value="Pasaje">Pasaje</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Peatonal' ? 'selected' : ''}} value="Peatonal">Peatonal</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Periferico' ? 'selected' : ''}} value="Periferico">Periferico</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Privada' ? 'selected' : ''}} value="Privada">Privada</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Prolongacion' ? 'selected' : ''}} value="Prolongacion">Prolongación</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Retorno' ? 'selected' : ''}} value="Retorno">Retorno</option>
-                                    <option {{ $cliente->tipo_vialidad == 'Viaducto' ? 'selected' : ''}} value="Viaducto">Viaducto</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-7">
-                            <div class="form-group">
-                                <label for="txt_entre_calles">Entre calles</label>
-                                <input type="text" id="txt_entre_calles" name="txt_entre_calles" class="form-control text-uppercase" placeholder="Entre calles" value="{{ $cliente->entre_calles}}">
-                            </div>
-                        </div>
-                    </div>
+                   
                     <div class="d-flex justify-content-start">
                         <div class="col-sm-8">
                             <div class="form-group">
@@ -208,90 +166,7 @@
                                 <input type="text" id="txt_celular" name="txt_celular" class="form-control" placeholder="(999) 999-9999" data-inputmask='"mask": "(999) 999-9999"' data-mask value="{{ $cliente->celular}}">
                             </div>
                         </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="txt_fecha_alta">Fecha de Alta</label>
-                                <input type="text" id="txt_fecha_alta" name="txt_fecha_alta" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" placeholder="dd/mm/yyyy" value="{{ $cliente->fecha_alta}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="txt_escolaridad">Escolaridad</label>
-                                <select class="form-control" id="txt_escolaridad" name="txt_escolaridad">
-                                    <option {{ $cliente->escolaridad == 'NINGUNA' ? 'selected' : ''}} value="NINGUNA">Ninguna</option>
-                                    <option {{ $cliente->escolaridad == 'LEER Y ESCRIBIR' ? 'selected' : ''}} value="LEER Y ESCRIBIR">Leer y Escribir</option>
-                                    <option {{ $cliente->escolaridad == 'PREESCOLAR' ? 'selected' : ''}} value="PREESCOLAR">Preescolar</option>
-                                    <option {{ $cliente->escolaridad == 'PRIMARIA' ? 'selected' : ''}} value="PRIMARIA">Primaria</option>
-                                    <option {{ $cliente->escolaridad == 'SECUNDARIA' ? 'selected' : ''}} value="SECUNDARIA">Secundaria</option>
-                                    <option {{ $cliente->escolaridad == 'PREPARATORIA' ? 'selected' : ''}} value="SOCIO FUNDADOR">Preparatoria</option>
-                                    <option {{ $cliente->escolaridad == 'LICENCIATURA' ? 'selected' : ''}} value="LICENCIATURA">Licenciatura</option>
-                                    <option {{ $cliente->escolaridad == 'MAESTRIA' ? 'selected' : ''}} value="MAESTRIA">Maestria</option>
-                                    <option {{ $cliente->escolaridad == 'DOCTORADO' ? 'selected' : ''}} value="DOCTORADO">Doctorado</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_profesion">Profesión</label>
-                                <input type="text" id="txt_profesion" name="txt_profesion" class="form-control text-uppercase" placeholder="Profesión" value="{{ $cliente->profesion}}">
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_religion">Religión</label>
-                                <select class="form-control" id="txt_religion" name="txt_religion">
-                                    <option {{ $cliente->religion == 'SIN RELIGION' ? 'selected' : ''}} value="SIN RELIGION">Sin Religion</option>
-                                    <option {{ $cliente->religion == 'CRISTIANISMO' ? 'selected' : ''}} value="CRISTIANISMO">Cristianismo</option>
-                                    <option {{ $cliente->religion == 'BUDISMO' ? 'selected' : ''}} value="BUDISMO">Budismo</option>
-                                    <option {{ $cliente->religion == 'HINDUISMO' ? 'selected' : ''}} value="HINDUISMO">Hinduismo</option>
-                                    <option {{ $cliente->religion == 'TESTIGO DE JEHOVA' ? 'selected' : ''}} value="TESTIGO DE JEHOVA">Testigo de Jehova</option>
-                                    <option {{ $cliente->religion == 'PRESBISTERIANA' ? 'selected' : ''}} value="PRESBISTERIANA">Presbiteriana</option>
-                                    <option {{ $cliente->religion == 'CATOLICA' ? 'selected' : ''}} value="CATOLICA">Catolica</option>
-                                    <option {{ $cliente->religion == 'PROTESTANTE' ? 'selected' : ''}} value="PROTESTANTE">Protestante</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_estado_civil">Estado Civil</label>
-                                <select class="form-control" id="txt_estado_civil" name="txt_estado_civil">
-                                    <option {{ $cliente->estado_civil == 'SOLTERO(A)' ? 'selected' : ''}} value="SOLTERO(A)">Soltera</option>
-                                    <option {{ $cliente->estado_civil == 'CASADO(A)' ? 'selected' : ''}} value="CASADO(A)">Casada</option>
-                                    <option {{ $cliente->estado_civil == 'UNION LIBRE' ? 'selected' : ''}} value="UNION LIBRE">Union Libre</option>
-                                    <option {{ $cliente->estado_civil == 'DIVORCIADO(A)' ? 'selected' : ''}} value="DIVORCIADO(A)">Divorciada</option>
-                                    <option {{ $cliente->estado_civil == 'VIUDO(A)' ? 'selected' : ''}} value="VIUDO(A)">Viuda</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex justify-content-start">
-                        <div class="col-sm-4">
-                            <div class="form-group">
-                                <label for="txt_clave_elector">Clave de Elector</label>
-                                <input type="text" id="txt_clave_elector" name="txt_clave_elector" class="form-control text-uppercase" placeholder="Clave de Elector" value="{{ $cliente->clave_elector}}"  maxlength="18" required onchange="validarClaveElector()">
-                            </div>
-                            <small id="msjValidacion" class="text-danger"></small>
-                        </div>
-                        <div class="col-sm-2">
-                            <div class="form-group">
-                                <label for="txt_vencimiento_ine">Año de vencimiento</label>
-                                <input type="text" id="txt_vencimiento_ine" name="txt_vencimiento_ine" class="form-control" placeholder="aaaa" value="{{ $cliente->anio_vencimiento_ine}}" maxlength="4">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="txt_folio_ine">Folio INE</label>
-                                <input type="text" id="txt_folio_ine" name="txt_folio_ine" class="form-control" placeholder="Folio INE" value="{{ $cliente->folio_ine}}" maxlength="20">
-                            </div>
-                        </div>
-                        <div class="col-sm-3">
-                            <div class="form-group">
-                                <label for="txt_ocr">OCR</label>
-                                <input type="text" id="txt_ocr" name="txt_ocr" class="form-control" placeholder="OCR" value="{{ $cliente->ocr}}"  maxlength="13">
-                            </div>
-                        </div>
+                        
                     </div>
                    
                   

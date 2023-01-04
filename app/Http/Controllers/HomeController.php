@@ -45,41 +45,42 @@ class HomeController extends Controller
     public function consultasDashboard()
     { 
         ///** COMERCIAL **///
-        $rutas = SucursalRuta::count();
-        $productos = Producto::count();
-        $avales = Aval::count();
+        // $rutas = SucursalRuta::count();
+        // $productos = Producto::count();
+        // $avales = Aval::count();
         $clientes = Cliente::count();
-        $asociados = Asociado::count();
-        $prospectos = Prospecto::where('estatus','Prospecto')->count();
-        ///** CAPTACION **///
-        $solicitudes = Solicitud::count();
-        $solAutorizadas = Solicitud::where('estatus','Autorizado')->count();
-        $solPendientes = Solicitud::where('estatus','Pendiente')->count();
-        $solNoDesembolsadas = Analisis_credito::where('desembolso','Pendiente')->count();
-         ///** CARTERA **///
-        $capitalMinistrado = Analisis_credito::selectRaw('SUM(monto_autorizado) as monto_autorizado')->where('desembolso','Desembolsado')->get();
-        $interesesGenerados = TablaAmortizacion::selectRaw('SUM(interes) as intereses')->get();
-        $interesesRecuperados = TablaAmortizacion::selectRaw('SUM(interes) as intereses_rec')->where('estatus','Cobrado')->get();
-        $capitalRecuperado = TablaAmortizacion::selectRaw('SUM(capital) as capital')->where('estatus','Cobrado')->get();
-         ///** RECURSOS HUMANOS **///
-        $plantilla = Personal::count();
-        $altas = Personal::where('state','Activo')->count();
-        $bajas = Personal::where('state','Inactivo')->count();
-        $montoNomina = DetalleNomina::selectRaw('SUM(neto_pagar) as total_pagar')->get();
-         ///** COMPRAS **///
-        $articulos = Articulo::count();
-        $proveedor = Proveedor::count();
-        $gasto = Gasto::selectRaw('SUM(total) as total_gasto')->where('bandera', 'Compra')->get();
-        $activo = Gasto::selectRaw('SUM(total) as total_activo')->where('bandera', 'Activo')->get();
-        $noDeducible = Gasto::selectRaw('SUM(total) as total_noDeducible')->where('bandera', 'No deducible')->get();
-        ///** COMPRAS **///
-        $bancos = Banco::count();
-        $cajas = Caja::count();
-        $pagos = Gasto::selectRaw('SUM(total) as total_pago')->where('concepto','!=', 'APORTACIONES DE CAPITAL')->get();
-        $cobros = TablaAmortizacion::selectRaw('SUM(pago) as monto_pago')->where('estatus','Cobrado')->get();
-        $capital = Gasto::selectRaw('SUM(total) as capital_invertido')->where('bandera', 'Capital')->get();
+        // $asociados = Asociado::count();
+        // $prospectos = Prospecto::where('estatus','Prospecto')->count();
+        // ///** CAPTACION **///
+        // $solicitudes = Solicitud::count();
+        // $solAutorizadas = Solicitud::where('estatus','Autorizado')->count();
+        // $solPendientes = Solicitud::where('estatus','Pendiente')->count();
+        // $solNoDesembolsadas = Analisis_credito::where('desembolso','Pendiente')->count();
+        //  ///** CARTERA **///
+        // $capitalMinistrado = Analisis_credito::selectRaw('SUM(monto_autorizado) as monto_autorizado')->where('desembolso','Desembolsado')->get();
+        // $interesesGenerados = TablaAmortizacion::selectRaw('SUM(interes) as intereses')->get();
+        // $interesesRecuperados = TablaAmortizacion::selectRaw('SUM(interes) as intereses_rec')->where('estatus','Cobrado')->get();
+        // $capitalRecuperado = TablaAmortizacion::selectRaw('SUM(capital) as capital')->where('estatus','Cobrado')->get();
+        //  ///** RECURSOS HUMANOS **///
+        // $plantilla = Personal::count();
+        // $altas = Personal::where('state','Activo')->count();
+        // $bajas = Personal::where('state','Inactivo')->count();
+        // $montoNomina = DetalleNomina::selectRaw('SUM(neto_pagar) as total_pagar')->get();
+        //  ///** COMPRAS **///
+        // $articulos = Articulo::count();
+        // $proveedor = Proveedor::count();
+        // $gasto = Gasto::selectRaw('SUM(total) as total_gasto')->where('bandera', 'Compra')->get();
+        // $activo = Gasto::selectRaw('SUM(total) as total_activo')->where('bandera', 'Activo')->get();
+        // $noDeducible = Gasto::selectRaw('SUM(total) as total_noDeducible')->where('bandera', 'No deducible')->get();
+        // ///** COMPRAS **///
+        // $bancos = Banco::count();
+        // $cajas = Caja::count();
+        // $pagos = Gasto::selectRaw('SUM(total) as total_pago')->where('concepto','!=', 'APORTACIONES DE CAPITAL')->get();
+        // $cobros = TablaAmortizacion::selectRaw('SUM(pago) as monto_pago')->where('estatus','Cobrado')->get();
+        // $capital = Gasto::selectRaw('SUM(total) as capital_invertido')->where('bandera', 'Capital')->get();
 
-        $data = compact('clientes','plantilla','altas','bajas','montoNomina','avales','productos','solicitudes','rutas','solAutorizadas','solNoDesembolsadas','asociados','solPendientes','capitalMinistrado','interesesGenerados','capitalRecuperado','interesesRecuperados','articulos','proveedor','gasto','activo','noDeducible','bancos','cajas','pagos','cobros','capital','prospectos');
+        // $data = compact('clientes','plantilla','altas','bajas','montoNomina','avales','productos','solicitudes','rutas','solAutorizadas','solNoDesembolsadas','asociados','solPendientes','capitalMinistrado','interesesGenerados','capitalRecuperado','interesesRecuperados','articulos','proveedor','gasto','activo','noDeducible','bancos','cajas','pagos','cobros','capital','prospectos');
+        $data = compact('clientes');
         return $data;
     }
 
