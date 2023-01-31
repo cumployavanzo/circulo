@@ -62,11 +62,11 @@
           </div>
           <!-- /.col -->
         </div><br>
-        <!-- <div class="row">
+        <div class="row">
           <div class="col-12">
               <a href="{{ route('loginCliente') }}"  method="POST" type="button" class="btn btn-info btn-block btn-flat"><i class="fa fa-bell"></i> Solicita tu prestamo aquí</a>
           </div>
-        </div> -->
+        </div>
       </form>
     </div>
     <!-- /.card-body -->

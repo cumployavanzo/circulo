@@ -34,6 +34,10 @@ class Cliente extends Model
         return $this->hasOne(EstadoNacimiento::class, 'clave', 'estados_nacimientos_clave');
     }
 
+    public function scoreing (){
+        return $this->hasOne(Scoring::class, 'clientes_id', 'id');
+    }
+
     public function scopeName ($query, $name){
         if($name)
         return $query->orWhereRaw("CONCAT(nombre, ' ', apellido_paterno, ' ', apellido_materno) LIKE '%$name%' ");

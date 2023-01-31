@@ -74,43 +74,35 @@
                         <th style="width: 1%">#</th>
                         <th>Nombre</th>
                         <th>Genero</th>
-                        <th>Fecha Nac.</th>
                         <th>Edad</th>
-                        <th>Estatus</th>
+                        <th>Score</th>
+                        <th>Historial</th>
+                        <th>Precalificación</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($clientes as $cliente)
-                    @php
-                        if($cliente->genero == 'M'){
-                            $genero = 'MASCULINO'; 
-                        }else if($cliente->genero == 'F'){
-                            $genero = 'FEMENINO';  
-                        }else{
-                            $genero = 'INDISTINTO';
-                        }
-                    @endphp
+                   
                     <tr>
                         <td>#{{ $cliente->id }}</td>
                         <td>{{ $cliente->getFullName() }}</td>
-                        <td>{{ $genero }}</td>
-                        <td>{{ $cliente->fecha_nacimiento }}</td>
+                        <td>{{ $cliente->genero }}</td>
                         <td>{{ $cliente->edad }} Años</td>
+                        <td>{{ $cliente->scoreing->score }}</td>
+                        <td>{{ $cliente->scoreing->historial_crediticio }}</td>
                         <td>
-                            @if ($cliente->estatus == 'Activo')
-                                <span data-id="{{ $cliente->id }}" class="badge bg-success badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para inactivar cliente">{{$cliente->estatus}}</span>
+                            @if ($cliente->state_encuesta == 'Aceptado')
+                                <span class="badge bg-success badgebtn">{{$cliente->state_encuesta}}</span>
                             @else
-                                <span data-id="{{ $cliente->id }}" class="badge bg-danger badgebtn" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Haz click para activar cliente">{{$cliente->estatus}}</span>
+                                <span class="badge bg-danger badgebtn">{{$cliente->state_encuesta}}</span>
                             @endif
                         </td>
                         <td class="project-actions d-flex">
-                            <a class="btn btn-info btn-sm mr-2" href="{{ route('admin.cliente.edit', [$cliente->id]) }}"><i class="fas fa-pencil-alt"></i>Editar</a>
-                            {{-- <form action="{{ route('admin.deleteCliente', [$cliente->id]) }}" method="POST">
-                                @method('delete')
-                                @csrf
-                                <button class="btn btn-danger btn-sm" type="submit" href="#"><i class="fas fa-trash"></i> Borrar</button>
-                            </form> --}}
+                             <a class="btn btn-info btn-sm mr-2" href="{{ route('admin.ccCliente', ['idCliente'=>$cliente->id]) }}"><i class="fas fa-edit"></i> CC</a>
+
+                       
+                            <a class="btn btn-info btn-sm mr-2" href="{{ route('admin.cliente.edit', [$cliente->id]) }}"><i class="fas fa-eye"></i> Ver</a>
                         </td>
                     </tr>
                     @endforeach

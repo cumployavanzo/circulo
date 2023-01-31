@@ -8,22 +8,23 @@
                 <div class="col-md-4">
                     <div class="card card-primary card-outline">
                         <div class="card-body box-profile">
-                            <h3 class="profile-username text-center">{{$cliente->getFullName()}}</h3>
-                            <p class="text-muted text-center">{{$cliente->edad}} Años</p>
+                            <h3 class="profile-username text-center">{{$cliente->cliente->getFullName()}}</h3>
+                            <p class="text-muted text-center">{{$cliente->personal->sucursal->nombre_ruta}}</p>
                             <ul class="list-group list-group-unbordered mb-3">
                                 <li class="list-group-item">
-                                    <b>Telefono</b> <a class="float-right">{{$cliente->celular}}</a>
+                                    <b>{{$cliente->primaSuma->productocliente->nombre}}</b> <a class="float-right"></a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>E-mail</b> <a class="float-right">{{$cliente->email}}</a>
+                                    <b>Periodo</b> <a class="float-right">{{$cliente->primaSuma->periodo->descripcion}}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Monto Solicitado</b> <a class="float-right">$ {{$cliente->scoreing->cuanto_dinero_necesitas}}</a>
+                                    <b>Suma Asegurada</b> <a class="float-right">$ {{$cliente->primaSuma->suma_asegurada}}</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Plazo</b> <a class="float-right">{{$cliente->scoreing->plazo}}</a>
+                                    <b>Monto</b> <a class="float-right">$ {{$cliente->primaSuma->monto}}</a>
                                 </li>
                             </ul>
+                            {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
                         </div>
                     </div>
                     <div class="card card-primary">
@@ -37,9 +38,9 @@
                                 <table class="table table-striped table-valign-middle">
                                     <thead>
                                     <tr>
-                                      <th>INE Anverso</th>
-                                      <th>INE Reverso</th>
-                                      <th>Comprobante Domicilio</th>
+                                      <th>INE</th>
+                                      <th>Poliza</th>
+                                      <th>Endoso</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -54,44 +55,29 @@
 
                                                 
                                                 @if($ext[1] == 'pdf')
-                                                    <a target="_blank" href="{{asset($expediente->ine_anverso)}}"><img id="logo" src="{{ asset('img/ine_anverso.jpeg') }}" style="width:30px;height:30px;cursor: pointer" ></a>
+                                                    <a target="_blank" href="{{asset($expediente->ine_anverso)}}"><img id="logo" src="{{ asset('img/id-card.png') }}" style="width:30px;height:30px;cursor: pointer" ></a>
                                                 @else
-                                                    <img src="{{ asset('img/ine_anverso.jpeg') }}" style="width:30px;height:30px;cursor: pointer" onclick="verIneBenefToc('{{ $expediente->ine_anverso }}')" title="Click para ver INE" alt="">
+                                                    <img src="{{ asset('img/id-card.png') }}" style="width:30px;height:30px;cursor: pointer" onclick="verIneBenefToc('{{ $expediente->ine_anverso }}')" title="Click para ver INE" alt="">
                                                 @endif
                                             @endif
                                         </td>
                                         <td>
-                                            @if ($expediente->ine_reverso == '')
-                                                <img src="{{ asset('img/ban.png') }}" style="width:30px;height:30px;" title="Sin documento" alt="">
+                                            @if ($expediente->comprobante_ingresos == '')
+                                                <img src="{{ asset('img/contract.png') }}" style="width:30px;height:30px;" title="Sin documento" alt="">
                                             @else
                                                 @php 
-                                                    $ext = explode('.', $expediente->ine_reverso);
-                                                @endphp
-
-                                                
-                                                @if($ext[1] == 'pdf')
-                                                    <a target="_blank" href="{{asset($expediente->ine_reverso)}}"><img id="logo" src="{{ asset('img/ine_reverso.jpeg') }}" style="width:30px;height:30px;cursor: pointer" ></a>
-                                                @else
-                                                    <img src="{{ asset('img/ine_reverso.jpeg') }}" style="width:30px;height:30px;cursor: pointer" onclick="verIneBenefToc('{{ $expediente->ine_reverso }}')" title="Click para ver INE" alt="">
-                                                @endif
-                                            @endif
-                                        </td>
-                                        <td>
-                                            @if ($expediente->comprobante_domici == '')
-                                                <img src="{{ asset('img/recibo_luz.jpeg') }}" style="width:30px;height:30px;" title="Sin documento" alt="">
-                                            @else
-                                                @php 
-                                                    $extPoliza = explode('.', $expediente->comprobante_domici);
+                                                    $extPoliza = explode('.', $expediente->comprobante_ingresos );
                                                 @endphp
 
                                                 
                                                 @if($extPoliza[1] == 'pdf')
-                                                    <a target="_blank" href="{{asset($expediente->comprobante_domici)}}"><img id="logo" src="{{ asset('img/recibo_luz.jpeg') }}" style="width:30px;height:30px;cursor: pointer" ></a>
+                                                    <a target="_blank" href="{{asset($expediente->comprobante_ingresos )}}"><img id="logo" src="{{ asset('img/contract.png') }}" style="width:30px;height:30px;cursor: pointer" ></a>
                                                 @else
-                                                    <img src="{{ asset('img/recibo_luz.jpeg') }}" style="width:30px;height:30px;cursor: pointer" onclick="verIneBenefToc('{{ $expediente->comprobante_domici }}')" title="Click para ver INE" alt="">
+                                                    <img src="{{ asset('img/id-card.png') }}" style="width:30px;height:30px;cursor: pointer" onclick="verIneBenefToc('{{$expediente->comprobante_ingresos  }}')" title="Click para ver INE" alt="">
                                                 @endif
                                             @endif
                                         </td>
+                                      <td><img src="{{ asset('img/ban.png') }}" style="width:30px;height:30px;" title="Sin documento" alt=""></td>
                                      
                                     </tbody>
                                   </table>
@@ -112,10 +98,11 @@
                                     
                                     <div class="post clearfix">
                                         <div class="user-block">
-                                            <div >
-                                                <b>SCORE OBTENIDO:</b> <span class="text-danger"><h4>{{$cliente->scoreing->score}}</h4></span>
+                                            <img class="img-circle img-bordered-sm" src="{{ asset('img/group.png') }}" alt="User Image">
+                                            <span class="username">
+                                                <a href="#">BENEFICIARIOS</a>
                                                 <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                                            </div>
+                                            </span>
                                         </div>
 
                                         <div class="row">
@@ -124,9 +111,9 @@
                                                     <thead>
                                                         <tr>
                                                             <th>#</th>
-                                                            <th>Pregunta</th>
-                                                            <th>Respuesta</th>
-                                                            <th>Puntuación</th>
+                                                            <th>Nombre Beneficiario</th>
+                                                            <th>Parentesco</th>
+                                                            <th>Porcentaje</th>
                                                         </tr>
                                                     </thead>
                                                 <tbody>

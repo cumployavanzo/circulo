@@ -4,7 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Asociado;
 use App\Cliente;
+use App\Expediente;
 use App\EstadoNacimiento;
+
+
+use App\CirculoCredito\Simulacion\Api\FSApi as Instance;
+use App\CirculoCredito\Simulacion\Configuration;
+
+use \GuzzleHttp\Client;
+
+use App\CirculoCredito\Simulacion\Model\Peticion;
+use App\CirculoCredito\Simulacion\Model\Persona;
+use App\CirculoCredito\Simulacion\Model\Domicilio;
 
 
 use Illuminate\Http\Request;
@@ -104,22 +115,10 @@ class ClienteAdminController extends Controller
 
     public function edit($id)
     {
-        $ClienteController = new ClienteController();
-        $cliente = $ClienteController->getCliente($id); // Cliente::where('id', $id)->first();
-        $asociados = Asociado::all(); 
-        $personAsociado = "N/A";
-        if($cliente->asociados()->first('id') != null){
-            $personAsociado = $cliente->asociados()->first('id')->id;
-        }
+        $cliente = Cliente::where('id', $id)->first();
+        $expediente = Expediente::where('clientes_id', $id)->first();
 
-      
-        $estados_nac = EstadoNacimiento::all(); 
-        $opcionEstado = "N/A";
-        if($cliente->estadoNac()->first('clave') != null){
-            $opcionEstado = $cliente->estadoNac()->first('clave')->clave;
-        }
-
-        return view('admin.clientes.edit', compact('cliente', 'asociados','personAsociado','estados_nac','opcionEstado'));
+        return view('admin.clientes.edit', compact('cliente', 'expediente'));
     }
 
     public function update(Request $request, $id)
@@ -200,14 +199,6 @@ class ClienteAdminController extends Controller
 
   
 
-   
-    // public function import(Request $request)
-    // {
-    //     $file = $request->file('documento');
-    //     Excel::import(new ClientesImport, $file);
-
-    //     return back();
-    // }
 
     public function import(Request $request)
     {
@@ -278,4 +269,92 @@ class ClienteAdminController extends Controller
         }
         return back()->with('mensaje', 'Se realizo la carga exitosamente');
     }
+
+
+
+    public function cdcTest(Request $request, $cliente_id)
+    {
+        $this->cdcSetUp();
+        $request = $this->cdcPersona($cliente_id);
+
+        try {
+            $result = $this->apiInstance->getReporte($this->x_api_key, $request);
+
+            dd(__FUNCTION__, $this->apiInstance, $request, $result);
+
+            print_r($result);
+        } catch (Exception $e) {
+            echo 'Exception when calling ApiTest->testGetReporte: ', $e->getMessage(), PHP_EOL;
+        }
+
+        dd(__FUNCTION__, $this->apiInstance, $request);
+    }
+
+    public function cdcSetUp()
+    {
+        // Set Up
+        $cdc_url = env('CDC_SANDBOX_URL').'/v1/fintechscore';
+        $cdc_x_api_key = env('CDC_SANDBOX_API_KEY');
+
+        $config = new Configuration();
+        $config->setHost($cdc_url);
+        $client = new Client();
+        $this->apiInstance = new Instance($client, $config);
+        $this->x_api_key = $cdc_x_api_key;
+
+    }
+
+    public function cdcPersona($cliente_id = false)
+    {
+        $peticion = new Peticion();
+        $persona = new Persona();
+        $domicilio = new Domicilio();
+
+        $cliente_id = 10;
+
+        // $cliente = Cliente::where('id', $cliente_id)->get();
+
+        $peticion->setFolioOtorgante("123456");
+        
+        $persona->setNombres("JUAN");
+        $persona->setApellidoPaterno("SESENTAYDOS");
+        $persona->setApellidoMaterno("PRUEBA");
+        $persona->setFechaNacimiento("1965-08-09");
+        $persona->setRFC("SEPJ650809JG1");
+
+        $domicilio->setDireccion("PASADISO ENCONTRADO 58");
+        $domicilio->setColoniaPoblacion("MONTEVIDEO");
+        $domicilio->setCiudad("CIUDAD DE MÉXICO");
+        $domicilio->setCP("07730");
+        $domicilio->setDelegacionMunicipio("GUSTAVO A MADERO");
+        $domicilio->setEstado("CDMX");
+
+        $persona->setDomicilio($domicilio);
+
+        return $peticion->setPersona($persona);
+
+
+        // Status Code 200 Score 720
+        /*
+        $cliente_json = '{
+            "folio": "123456",
+            "persona":{
+                "nombres": "JUAN",
+                "apellidoPaterno": "SESENTAYDOS",
+                "apellidoMaterno": "PRUEBA",
+                "fechaNacimiento": "1965-08-09",
+                "RFC": "SEPJ650809JG1",
+                "domicilio": {
+                    "direccion": "PASADISO ENCONTRADO 58",
+                    "coloniaPoblacion": "MONTEVIDEO",
+                    "delegacionMunicipio": "GUSTAVO A MADERO",
+                    "ciudad": "CIUDAD DE MÉXICO",
+                    "estado": "CDMX",
+                    "CP": "07730"
+                }
+            }
+        }';
+        */
+    }
+
 }

@@ -16,9 +16,12 @@ Route::get('login', 'HomeController@login')->name('login');
 Route::post('login', 'Auth\LoginController@login')->name('login');
 Route::get('logout', 'HomeController@logout')->name('logout');
 Route::resource('registro', 'Auth\RegisterController');
-Route::get('register/verify/{code}', 'Auth\RegisterController@verify')->name('verificacion');
+Route::get('cargaExp/verify/{idCliente}', 'ProspectoController@verifyExp')->name('cargaExpediente');
 Route::get('/encuesta-prospecto', 'ProspectoController@loginCliente')->name('loginCliente'); // primera vista que verá el cliente al hacer la encuesta
+Route::get('/subir-expediente', 'ProspectoController@subirExpedientes')->name('subirExpedientes'); // primera vista que verá el cliente al hacer la encuesta
 Route::post('/encuesta-prospecto', 'ProspectoController@listadoEncuestas')->name('listadoEncuestas');
+Route::post('/perfil/foto', 'ExpedienteController@upExp');
+
 
 Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
     Route::get('/', 'HomeController@index')->name('index');
@@ -78,6 +81,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () 
     Route::get('clientes/datosReferencia/{id}', 'ClienteAdminController@verReferencia')->name('verReferencia');
     Route::post('clientes/clientesimport', 'ClienteAdminController@import')->name('importClients');
     Route::post('reportes/reporteCliente/','ReporteController@reporteClientes')->name('reporteClientes');
+    Route::get('cientes/consultaCirculoCredito/{idCliente}','ClienteAdminController@cdcTest')->name('ccCliente');
 
 
 
