@@ -272,6 +272,8 @@ class ClienteAdminController extends Controller
 
 
 
+    
+
     public function cdcTest(Request $request, $cliente_id)
     {
         $this->cdcSetUp();
@@ -296,38 +298,42 @@ class ClienteAdminController extends Controller
         $cdc_url = env('CDC_SANDBOX_URL').'/v1/fintechscore';
         $cdc_x_api_key = env('CDC_SANDBOX_API_KEY');
 
-        $config = new Configuration();
+
+
+        $config = new \App\CirculoCredito\FintechScore\Simulacion\Configuration();
         $config->setHost($cdc_url);
         $client = new Client();
-        $this->apiInstance = new Instance($client, $config);
+        $this->apiInstance = new \App\CirculoCredito\FintechScore\Simulacion\Api\FintechScoreSimulacionApi($client, $config);
         $this->x_api_key = $cdc_x_api_key;
 
     }
 
     public function cdcPersona($cliente_id = false)
     {
-        $peticion = new Peticion();
-        $persona = new Persona();
-        $domicilio = new Domicilio();
+        $peticion = new \App\CirculoCredito\FintechScore\Simulacion\Model\Peticion();
+        $persona = new \App\CirculoCredito\FintechScore\Simulacion\Model\Persona();
+        $domicilio = new \App\CirculoCredito\FintechScore\Simulacion\Model\Domicilio();
 
         $cliente_id = 10;
 
         // $cliente = Cliente::where('id', $cliente_id)->get();
 
-        $peticion->setFolioOtorgante("123456");
+        $peticion->setFolioOtorgante("20210304");
         
-        $persona->setNombres("JUAN");
         $persona->setApellidoPaterno("SESENTAYDOS");
         $persona->setApellidoMaterno("PRUEBA");
+        $persona->setPrimerNombre("JUAN");
+        $persona->setSegundoNombre("JUAN");
         $persona->setFechaNacimiento("1965-08-09");
         $persona->setRFC("SEPJ650809JG1");
-
+        
         $domicilio->setDireccion("PASADISO ENCONTRADO 58");
         $domicilio->setColoniaPoblacion("MONTEVIDEO");
-        $domicilio->setCiudad("CIUDAD DE MÉXICO");
-        $domicilio->setCP("07730");
         $domicilio->setDelegacionMunicipio("GUSTAVO A MADERO");
+        $domicilio->setCiudad("CIUDAD DE MÉXICO");
         $domicilio->setEstado("CDMX");
+        $domicilio->setCP("07730");
+        $domicilio->setPais("MX");
 
         $persona->setDomicilio($domicilio);
 
@@ -356,5 +362,4 @@ class ClienteAdminController extends Controller
         }';
         */
     }
-
 }

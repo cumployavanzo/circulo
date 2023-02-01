@@ -18,7 +18,7 @@ Route::get('logout', 'HomeController@logout')->name('logout');
 Route::resource('registro', 'Auth\RegisterController');
 Route::get('cargaExp/verify/{idCliente}', 'ProspectoController@verifyExp')->name('cargaExpediente');
 Route::get('/encuesta-prospecto', 'ProspectoController@loginCliente')->name('loginCliente'); // primera vista que verá el cliente al hacer la encuesta
-Route::get('/subir-expediente', 'ProspectoController@subirExpedientes')->name('subirExpedientes'); // primera vista que verá el cliente al hacer la encuesta
+Route::get('/subir-expediente/{idCliente}', 'ProspectoController@subirExpedientes')->name('subirExpedientes'); // primera vista que verá el cliente al hacer la encuesta
 Route::post('/encuesta-prospecto', 'ProspectoController@listadoEncuestas')->name('listadoEncuestas');
 Route::post('/perfil/foto', 'ExpedienteController@upExp');
 

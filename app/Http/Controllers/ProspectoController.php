@@ -28,11 +28,9 @@ class ProspectoController extends Controller
         return view('admin.prospectos.index', compact('prospectos','name'));
     }
 
-    public function subirExpedientes(Request $request){
-        // dd($request->url());
-        $cliente = Expediente::where('clientes_id', 61)->first(); 
-
-        return view('admin.prospectos.upExpediente', compact('cliente'));
+    public function subirExpedientes(Request $request , $idCliente){
+        $expediente = Expediente::where('clientes_id', $idCliente)->first(); 
+        return view('admin.prospectos.upExpediente', compact('expediente','idCliente'));
 
     }
 
@@ -621,13 +619,12 @@ class ProspectoController extends Controller
         $celdaTit = 'border:solid windowtext 0.8pt;border-top:solid windowtext 2.25pt;background:#f57c9a;padding:0cm 5.4pt 0cm 5.4pt;height:3.15pt';
         $cuepo = 'border-top:none;border-left:none;border-bottom:solid #7f7f7f 1.0pt;border-right:solid windowtext 1.0pt;background:#f2f2f2;padding:0cm 5.4pt 0cm 5.4pt;height:3.35pt;font-size:14.0px;font-family:Century Gothic,sans-serif;color:black';
         try {	
-            if($prospecto->state_encuesta == 'Aceptado'){
+            if($prospecto->state_encuesta == 'Rechazado'){
                 $body = "<html><body>Hola <b>$prospecto->nombre<b>";
                 $body .= "<p>¡Felicidades! De acuerdo a tus respuestas y a los criterios de las diferentes instituciones, el otorgamiento de tu crédito es altamente viable.</p>";
                 $body .= "<br><strong>El siguiente paso es la integración de tu expediente en nuestra plataforma totalmente segura.<br>Puedes empezar a cargar  tu información aquí: </strong><br><p></p>";
-                $body .= "<button class='btn btn-block btn-info btn-sm'><a href='http://cfowolf.test/subir-expediente'>Clic para continuar</a></button><br><br></body></html>";
-                // $body .= "<button class='btn btn-block btn-info btn-sm'><a href='http://cfowolf.test/subir-expediente/10'>Clic para continuar</a></button><br><br></body></html>";
-                // $body .= "<button class='btn btn-block btn-info btn-sm'>$link</button><br><br></body></html>";
+                // $body .= "<button class='btn btn-block btn-info btn-sm'><a href='http://cfowolf.test/subir-expediente'>Clic para continuar</a></button><br><br></body></html>";
+                $body .= "<button class='btn btn-block btn-info btn-sm'><a href='http://cfowolf.test/subir-expediente/$prospecto->id'>Clic para continuar</a></button><br><br></body></html>";
             }else{
                 $body = "<html><body>Hola <b>$prospecto->nombre<b>";
                 $body .= "<p>De acuerdo a tus respuestas y considerando los criterios de los bancos, por el momento no es posible autorizarte un crédito.</p>";

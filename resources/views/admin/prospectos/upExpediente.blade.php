@@ -23,14 +23,15 @@
 		<a href="https://www.cumployavanzo.com.mx/" class="btn btn-success">Salir</a> 
 	</div>
 	<div class="row">
-	@if(empty($cliente->ine_anverso))
+	@if(empty($expediente->ine_anverso))
+	  {{-- dd($idCliente) --}} 
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-pink order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">INE Anverso</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarForm"  enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/ine_anverso.jpeg)"></div>
 						
@@ -55,7 +56,7 @@
 			</div>
 		@endif
 
-		@if(empty($cliente->ine_reverso))
+		@if(empty($expediente->ine_reverso))
 
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-green order-card">
@@ -63,7 +64,7 @@
 					<h6 class="m-b-20">INE Reverso</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormIneRev"  enctype="multipart/form-data">
 					{{ csrf_field() }}
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/ine_reverso.jpeg)"></div>
 					<div>
 						<input type="file" name="ine_reverso" id="ine_reverso" class="inputfile inputfile-5" data-multiple-caption="{count} archivos seleccionados" multiple />
@@ -88,14 +89,14 @@
 			</div>
 		@endif
 
-		@if(empty($cliente->foto_conIne))
+		@if(empty($expediente->foto_conIne))
 
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-pink order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">Foto con INE</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormIneFoto"  enctype="multipart/form-data">
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 
 					{{ csrf_field() }}
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/foto_ine.png)"></div>
@@ -123,14 +124,14 @@
 		@endif
 
 
-		@if(empty($cliente->curp))
+		@if(empty($expediente->curp))
 
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-green order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">Curp</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormCurp"  enctype="multipart/form-data">
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 					{{ csrf_field() }}
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/curp.png)"></div>
 					<!-- <h2 class="text-right"><i class="fa fa-rocket f-left"></i></h2><br> -->
@@ -157,13 +158,13 @@
 		@endif
 
 
-		@if(empty($cliente->comprobante_domici))
+		@if(empty($expediente->comprobante_domici))
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-pink order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">Comprobante de Domicilio</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormRecibo"  enctype="multipart/form-data">
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 					{{ csrf_field() }}
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/recibo_luz.jpeg)"></div>
 					<!-- <h2 class="text-right"><i class="fa fa-rocket f-left"></i></h2><br> -->
@@ -188,13 +189,13 @@
 			</div>
 		@endif
 
-		@if(empty($cliente->comprobante_ingresos))
+		@if(empty($expediente->comprobante_ingresos))
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-green order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">Comprobante de Ingresos</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormIngreso"  enctype="multipart/form-data">
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 					{{ csrf_field() }}
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/ingresos.png)"></div>
 					<!-- <h2 class="text-right"><i class="fa fa-rocket f-left"></i></h2><br> -->
@@ -219,13 +220,13 @@
 			</div>
 		@endif
 		
-		@if(empty($cliente->estado_cuenta))
+		@if(empty($expediente->estado_cuenta))
 		<div class="col-md-4 col-xl-3">
 			<div class="card bg-c-pink order-card">
 				<div class="card-block">
 					<h6 class="m-b-20">Estado de Cuenta Bancario</h6>
 					<form action="{{ url('perfil/foto') }}" method="post" id="avatarFormCuenta"  enctype="multipart/form-data">
-					<input type="hidden" id="idCliente" name="idCliente" value="61">
+					<input type="hidden" id="idCliente" name="idCliente" value="{{$idCliente}}">
 					{{ csrf_field() }}
 					<div class="avatar pull-left" style="background-image: url(http://cfowolf.com/img/estado_cuenta.png)"></div>
 					<!-- <h2 class="text-right"><i class="fa fa-rocket f-left"></i></h2><br> -->

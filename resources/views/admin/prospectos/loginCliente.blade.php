@@ -399,8 +399,8 @@ body {
   <fieldset>
     <h2 class="fs-title">1.- ¿Cuánto dinero necesitas?</h2>
     <h3 class="fs-subtitle">Por favor escribe cualquier monto en pesos de 1,000 a 3,000</h3>
-        <input type="text" name="dinero" placeholder="" />
-        <input type="button" name="next" class="next action-button" value="Aceptar" />
+        <input type="text" name="dinero" placeholder="" maxlength="4"/>
+        <input type="button" name="next" class="next action-button" value="Aceptar">
   </fieldset>
  
   <fieldset class="form-wrapper container">
@@ -487,6 +487,13 @@ body {
   </fieldset>
   <fieldset>
     <h2 class="fs-title">8.- ¿Cuál es tu correo electrónico?*</h2>
+    <h3 class="fs-subtitle">Por favor verifica que esté correcto antes de pasar a la siguiente pregunta ya que será nuestro principal punto de contacto contigo.</h3>
+        <input type="text" name="email" placeholder="correo@hotmail.com"/>
+        <input type="button" name="previous" class="previous action-button" value="Regresar" />
+        <input type="button" name="next" class="next action-button" value="Aceptar" />
+  </fieldset>
+  <fieldset>
+    <h2 class="fs-title">¿Cuál es tu CURP?</h2>
     <h3 class="fs-subtitle">Por favor verifica que esté correcto antes de pasar a la siguiente pregunta ya que será nuestro principal punto de contacto contigo.</h3>
         <input type="text" name="email" placeholder="correo@hotmail.com"/>
         <input type="button" name="previous" class="previous action-button" value="Regresar" />
